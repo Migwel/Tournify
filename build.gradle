@@ -1,0 +1,38 @@
+group 'net.migwel.tournify'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.spring_boot_version = '1.5.3.RELEASE'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+    }
+}
+
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'application'
+
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-rest'
+}
+
+springBoot {
+    mainClass = 'net.migwel.tournify.Application'
+}
+
+applicationDefaultJvmArgs = [
+
+        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" ]
