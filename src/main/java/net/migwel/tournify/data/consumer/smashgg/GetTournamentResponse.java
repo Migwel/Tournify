@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class GetTournamentResponse {
 
-    private Entities entities;
+    private TournamentEntities entities;
 
-    public Entities getEntities() {
+    public TournamentEntities getEntities() {
         return entities;
     }
 }

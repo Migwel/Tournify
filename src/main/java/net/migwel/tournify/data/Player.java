@@ -2,30 +2,20 @@ package net.migwel.tournify.data;
 
 public class Player {
 
-    private String firstName;
-    private String lastName;
+    private String prefix;
     private String username;
 
-    public Player(String firstName, String lastName, String username) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Player(String prefix, String username) {
+        this.prefix = prefix;
         this.username = username;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getPrefix() {
+        return prefix;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
     }
 
     public String getUsername() {
@@ -39,8 +29,7 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "prefix='" + prefix + '\'' +
                 ", username='" + username + '\'' +
                 '}';
     }

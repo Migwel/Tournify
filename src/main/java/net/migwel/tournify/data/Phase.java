@@ -4,20 +4,20 @@ import java.util.List;
 
 public class Phase {
 
-    private List<Set> sets;
+    private List<PhaseGroup> phaseGroups;
     private String phaseName;
 
-    public Phase(List<Set> sets, String phaseName) {
-        this.sets = sets;
+    public Phase(List<PhaseGroup> phaseGroups, String phaseName) {
+        this.phaseGroups = phaseGroups;
         this.phaseName = phaseName;
     }
 
-    public List<Set> getSets() {
-        return sets;
+    public List<PhaseGroup> getPhaseGroups() {
+        return phaseGroups;
     }
 
-    public void setSets(List<Set> sets) {
-        this.sets = sets;
+    public void setPhaseGroups(List<PhaseGroup> phaseGroups) {
+        this.phaseGroups = phaseGroups;
     }
 
     public String getPhaseName() {
@@ -31,7 +31,7 @@ public class Phase {
     @Override
     public String toString() {
         return "Phase{" +
-                "sets=" + sets +
+                "phaseGroups=" + phaseGroups +
                 ", phaseName='" + phaseName + '\'' +
                 '}';
     }
