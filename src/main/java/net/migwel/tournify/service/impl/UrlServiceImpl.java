@@ -10,10 +10,10 @@ import java.util.regex.Pattern;
 @Service
 public class UrlServiceImpl implements UrlService {
 
-    public Sources parseUrl(String url) {
-        String smashGGPattern = "^(http(s)?:\\/\\/(www\\.)?)?smash\\.gg\\/tournament\\/([0-9a-zA-Z-]+)";
+    private static String tournamentPattern = "^((http(s)?:\\/\\/)?((www|api)\\.)?)?smash\\.gg\\/tournament\\/([0-9a-zA-Z-]+)";
 
-        Pattern p = Pattern.compile(smashGGPattern);
+    public Sources parseUrl(String url) {
+        Pattern p = Pattern.compile(tournamentPattern);
         Matcher m = p.matcher(url);
 
         if (m.find()) {
@@ -24,7 +24,7 @@ public class UrlServiceImpl implements UrlService {
     }
 
     public String formatUrl(String url) throws IllegalArgumentException{
-        String pattern = "^(http(s)?:\\/\\/((www|api)\\.)?)?smash\\.gg\\/tournament\\/([0-9a-zA-Z-]+)\\/event\\/([0-9a-zA-Z-]+)";
+        String pattern = tournamentPattern;
 
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(url);
@@ -33,7 +33,7 @@ public class UrlServiceImpl implements UrlService {
             throw new IllegalArgumentException("Invalid url: "+ url);
         }
 
-        return "https://api.smash.gg/tournament/"+ m.group(5);
+        return "https://api.smash.gg/tournament/"+ m.group(6);
 
     }
 }
