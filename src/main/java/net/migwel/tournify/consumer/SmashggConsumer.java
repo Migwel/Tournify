@@ -6,6 +6,8 @@ import net.migwel.tournify.data.Phase;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.data.consumer.smashgg.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +16,8 @@ import java.util.*;
 
 @Component
 public class SmashggConsumer {
+
+    private static final Logger log = LoggerFactory.getLogger(SmashggConsumer.class);
 
     private static String EXPAND_TOURNAMENT = "?expand[]=event&expand[]=phase&expand[]=groups";
     private static String PHASE_GROUP_URL = "https://api.smash.gg/phase_group/";
@@ -29,6 +33,13 @@ public class SmashggConsumer {
     public Tournament getTournament(String url) {
         String tournamentWithEventsUrl = url + EXPAND_TOURNAMENT;
         GetTournamentResponse tournamentResponse = restTemplate.getForObject(tournamentWithEventsUrl, GetTournamentResponse.class);
+
+        if(tournamentResponse == null ||
+           tournamentResponse.getEntities() == null ||
+           tournamentResponse.getEntities().getTournament() == null) {
+            log.info("Could not retrieve tournament for url: "+ url);
+            return null;
+        }
 
         Map<Long, GameType> videoGames = new HashMap<>();
         for(VideoGame videoGame : tournamentResponse.getEntities().getVideogame()) {
@@ -57,8 +68,18 @@ public class SmashggConsumer {
 
                     GetPhaseGroupResponse phaseGroupResponse = restTemplate.getForObject(phaseGroupUrl, GetPhaseGroupResponse.class);
 
+                    if(phaseGroupResponse.getEntities() == null ||
+                       phaseGroupResponse.getEntities().getSeeds() == null ||
+                       phaseGroupResponse.getEntities().getSets() == null) {
+                        continue;
+                    }
+
                     Map<Long, Player> participants = new HashMap<>();
                     for(Seed seed : phaseGroupResponse.getEntities().getSeeds()) {
+                        if(seed.getMutations() == null || seed.getMutations().getParticipants() == null) {
+                            continue;
+                        }
+
                         Map<String, Participant> participantsMap = seed.getMutations().getParticipants();
                         for(Participant participant : participantsMap.values()) {
                             Player player = new Player(participant.getPrefix(), participant.getGamerTag());
@@ -76,11 +97,17 @@ public class SmashggConsumer {
             }
         }
 
+        Address address = buildAddress(tournamentResponse.getEntities().getTournament());
+
         return new Tournament(events,
                 tournamentResponse.getEntities().getTournament().getName(),
-                "Amsterdam",
+                address,
                 tournamentWithEventsUrl,
                 new Date(tournamentResponse.getEntities().getTournament().getStartAt()*1000));
+    }
+
+    private Address buildAddress(net.migwel.tournify.data.consumer.smashgg.Tournament tournament) {
+        return new Address(tournament.getCity(), tournament.getAddrState(), tournament.getVenueAddress(), null, tournament.getCountryCode());
     }
 
     private List<Player> getParticipants(net.migwel.tournify.data.consumer.smashgg.Set set, Map<Long, Player> participants) {

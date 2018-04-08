@@ -1,7 +1,10 @@
 package net.migwel.tournify.data;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Event {
 
     private List<Phase> phases;

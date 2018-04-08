@@ -12,6 +12,7 @@ public class UrlServiceImpl implements UrlService {
 
     private static String tournamentPattern = "^((http(s)?:\\/\\/)?((www|api)\\.)?)?smash\\.gg\\/tournament\\/([0-9a-zA-Z-]+)";
 
+    @Override
     public Sources parseUrl(String url) {
         Pattern p = Pattern.compile(tournamentPattern);
         Matcher m = p.matcher(url);
@@ -23,6 +24,7 @@ public class UrlServiceImpl implements UrlService {
         return Sources.Unknown;
     }
 
+    @Override
     public String formatUrl(String url) throws IllegalArgumentException{
         String pattern = tournamentPattern;
 

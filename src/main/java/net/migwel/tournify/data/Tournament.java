@@ -1,20 +1,23 @@
 package net.migwel.tournify.data;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Date;
 import java.util.List;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Tournament {
 
     private List<Event> events;
     private String name;
-    private String location;
+    private Address address;
     private String url;
     private Date date;
 
-    public Tournament(List<Event> events, String name, String location, String url, Date date) {
+    public Tournament(List<Event> events, String name, Address address, String url, Date date) {
         this.events = events;
         this.name = name;
-        this.location = location;
+        this.address = address;
         this.url = url;
         this.date = date;
     }
@@ -35,12 +38,12 @@ public class Tournament {
         this.name = name;
     }
 
-    public String getLocation() {
-        return location;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Date getDate() {
@@ -64,7 +67,7 @@ public class Tournament {
         return "Tournament{" +
                 "events=" + events +
                 ", name='" + name + '\'' +
-                ", location='" + location + '\'' +
+                ", address='" + address + '\'' +
                 ", url='" + url + '\'' +
                 ", date=" + date +
                 '}';
