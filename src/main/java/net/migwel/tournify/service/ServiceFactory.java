@@ -15,6 +15,11 @@ public class ServiceFactory {
     @Autowired
     private UrlService urlService;
 
+    public ServiceFactory(TournamentService smashggTournamentService, UrlService urlService) {
+        this.smashggTournamentService = smashggTournamentService;
+        this.urlService = urlService;
+    }
+
     public TournamentService getTournamentService(String url) {
 
         switch(urlService.parseUrl(url)) {

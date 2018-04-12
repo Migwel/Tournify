@@ -17,6 +17,10 @@ public class TournamentController {
     @Autowired
     private ServiceFactory serviceFactory;
 
+    public TournamentController(ServiceFactory serviceFactory) {
+        this.serviceFactory = serviceFactory;
+    }
+
     @RequestMapping(method= RequestMethod.GET)
     public Tournament getTournament(@RequestBody TournamentRequest request) {
         TournamentService tournamentService = serviceFactory.getTournamentService(request.getUrl());
