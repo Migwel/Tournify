@@ -1,27 +1,39 @@
 package net.migwel.tournify.consumer;
 
+import net.migwel.tournify.data.Address;
 import net.migwel.tournify.data.Event;
-import net.migwel.tournify.data.*;
+import net.migwel.tournify.data.GameType;
 import net.migwel.tournify.data.Phase;
+import net.migwel.tournify.data.PhaseGroup;
+import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.Tournament;
-import net.migwel.tournify.data.consumer.smashgg.*;
+import net.migwel.tournify.data.consumer.smashgg.GetPhaseGroupResponse;
+import net.migwel.tournify.data.consumer.smashgg.GetTournamentResponse;
+import net.migwel.tournify.data.consumer.smashgg.Participant;
+import net.migwel.tournify.data.consumer.smashgg.Seed;
+import net.migwel.tournify.data.consumer.smashgg.VideoGame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 @Component
 public class SmashggConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(SmashggConsumer.class);
 
-    private static String EXPAND_TOURNAMENT = "?expand[]=event&expand[]=phase&expand[]=groups";
-    private static String PHASE_GROUP_URL = "https://api.smash.gg/phase_group/";
-    private static String EXPAND_PHASE_GROUP = "?expand[]=sets&expand[]=seeds";
+    private static final String EXPAND_TOURNAMENT = "?expand[]=event&expand[]=phase&expand[]=groups";
+    private static final String PHASE_GROUP_URL = "https://api.smash.gg/phase_group/";
+    private static final String EXPAND_PHASE_GROUP = "?expand[]=sets&expand[]=seeds";
 
     @Autowired
     private RestTemplate restTemplate;
