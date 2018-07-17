@@ -1,25 +1,26 @@
-package net.migwel.tournify.service.impl;
+package net.migwel.tournify.smashgg.service.impl;
 
-import net.migwel.tournify.consumer.SmashggConsumer;
+import net.migwel.tournify.consumer.TournamentConsumer;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.service.TournamentService;
 import net.migwel.tournify.service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service("SmashggTournamentService")
-public class SmashggTournamentServiceImpl implements TournamentService {
+public class SmashggTournamentService implements TournamentService {
 
     @Autowired
+    @Qualifier("SmashggUrlService")
     private UrlService urlService;
 
     @Autowired
-    private SmashggConsumer smashggConsumer;
+    @Qualifier("SmashggConsumer")
+    private TournamentConsumer tournamentConsumer;
 
     @Override
     public Tournament getTournament(String url) {
-
-        String formattedUrl = urlService.formatUrl(url);
-        return smashggConsumer.getTournament(formattedUrl);
+        return getTournament(urlService, tournamentConsumer, url);
     }
 }

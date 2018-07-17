@@ -1,6 +1,6 @@
 package net.migwel.tournify.data;
 
-public enum Sources {
+public enum Source {
     Smashgg,
     Unknown,
 }

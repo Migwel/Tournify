@@ -1,6 +1,6 @@
 package net.migwel.tournify;
 
-import net.migwel.tournify.consumer.SmashggConsumer;
+import net.migwel.tournify.smashgg.consumer.SmashggConsumer;
 import org.junit.Test;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 

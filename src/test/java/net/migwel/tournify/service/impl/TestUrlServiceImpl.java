@@ -1,13 +1,14 @@
 package net.migwel.tournify.service.impl;
 
-import net.migwel.tournify.data.Sources;
+import net.migwel.tournify.data.Source;
 import net.migwel.tournify.service.UrlService;
+import net.migwel.tournify.smashgg.service.impl.SmashggUrlService;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class TestUrlServiceImpl {
 
-    private UrlService urlService = new UrlServiceImpl();
+    private UrlService urlService = new SmashggUrlService();
 
     private String[] validSmashggUrls = {"https://api.smash.gg/tournament/genesis-3",
             "www.smash.gg/tournament/genesis-3",
@@ -31,14 +32,14 @@ public class TestUrlServiceImpl {
     @Test
     public void parseUrlTest_validSmashggUrls() {
         for(String validSmashggUrl : validSmashggUrls) {
-            Assert.assertEquals("Parse valid Smashgg URL "+ validSmashggUrl, Sources.Smashgg, urlService.parseUrl(validSmashggUrl));
+            Assert.assertEquals("Parse valid Smashgg URL "+ validSmashggUrl, Source.Smashgg, urlService.parseUrl(validSmashggUrl));
         }
     }
 
     @Test
     public void parseUrlTest_invalidUrls() {
         for(String invalidUrl : invalidUrls) {
-            Assert.assertEquals("Parse invalid URL "+ invalidUrl, Sources.Unknown, urlService.parseUrl(invalidUrl));
+            Assert.assertEquals("Parse invalid URL "+ invalidUrl, Source.Unknown, urlService.parseUrl(invalidUrl));
         }
     }
 

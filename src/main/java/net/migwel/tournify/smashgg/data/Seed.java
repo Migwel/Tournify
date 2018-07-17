@@ -1,4 +1,4 @@
-package net.migwel.tournify.data.consumer.smashgg;
+package net.migwel.tournify.smashgg.data;
 
 public class Seed {
 

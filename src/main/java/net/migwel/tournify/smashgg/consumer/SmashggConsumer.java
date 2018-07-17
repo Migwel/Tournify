@@ -1,5 +1,6 @@
-package net.migwel.tournify.consumer;
+package net.migwel.tournify.smashgg.consumer;
 
+import net.migwel.tournify.consumer.TournamentConsumer;
 import net.migwel.tournify.data.Address;
 import net.migwel.tournify.data.Event;
 import net.migwel.tournify.data.GameType;
@@ -8,11 +9,12 @@ import net.migwel.tournify.data.PhaseGroup;
 import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.Tournament;
-import net.migwel.tournify.data.consumer.smashgg.GetPhaseGroupResponse;
-import net.migwel.tournify.data.consumer.smashgg.GetTournamentResponse;
-import net.migwel.tournify.data.consumer.smashgg.Participant;
-import net.migwel.tournify.data.consumer.smashgg.Seed;
-import net.migwel.tournify.data.consumer.smashgg.VideoGame;
+import net.migwel.tournify.smashgg.data.GetPhaseGroupResponse;
+import net.migwel.tournify.smashgg.data.GetTournamentResponse;
+import net.migwel.tournify.smashgg.data.Participant;
+import net.migwel.tournify.smashgg.data.Seed;
+import net.migwel.tournify.smashgg.data.VideoGame;
+import net.migwel.tournify.smashgg.data.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 
-@Component
-public class SmashggConsumer {
+@Component("SmashggConsumer")
+public class SmashggConsumer implements TournamentConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(SmashggConsumer.class);
 
@@ -42,6 +44,7 @@ public class SmashggConsumer {
         this.restTemplate = restTemplate;
     }
 
+    @Override
     public Tournament getTournament(String url) {
         String tournamentWithEventsUrl = url + EXPAND_TOURNAMENT;
         GetTournamentResponse tournamentResponse = restTemplate.getForObject(tournamentWithEventsUrl, GetTournamentResponse.class);
@@ -59,17 +62,17 @@ public class SmashggConsumer {
         }
 
         Map<Long, List<PhaseGroup>> groups = new HashMap<>();
-        for(net.migwel.tournify.data.consumer.smashgg.Group group : tournamentResponse.getEntities().getGroups()) {
+        for(Group group : tournamentResponse.getEntities().getGroups()) {
             groups.computeIfAbsent(group.getPhaseId(), k -> new ArrayList<>()).add(new PhaseGroup(group.getId(), group.getDisplayIdentifier(), null));
         }
 
         Map<Long, List<Phase>> phases = new HashMap<>();
-        for(net.migwel.tournify.data.consumer.smashgg.Phase phase : tournamentResponse.getEntities().getPhase()) {
+        for(net.migwel.tournify.smashgg.data.Phase phase : tournamentResponse.getEntities().getPhase()) {
             phases.computeIfAbsent(phase.getEventId(), k -> new ArrayList<>()).add(new Phase(groups.get(phase.getId()), phase.getName()));
         }
 
         List<Event> events = new ArrayList<>();
-        for(net.migwel.tournify.data.consumer.smashgg.Event event : tournamentResponse.getEntities().getEvent()) {
+        for(net.migwel.tournify.smashgg.data.Event event : tournamentResponse.getEntities().getEvent()) {
             events.add(new Event(phases.get(event.getId()), videoGames.get(event.getVideogameId()), event.getName(), event.getDescription()));
         }
 
@@ -100,7 +103,7 @@ public class SmashggConsumer {
                     }
 
                     List<Set> sets = new ArrayList<>();
-                    for(net.migwel.tournify.data.consumer.smashgg.Set set : phaseGroupResponse.getEntities().getSets()) {
+                    for(net.migwel.tournify.smashgg.data.Set set : phaseGroupResponse.getEntities().getSets()) {
                         List<Player> listParticipants = getParticipants(set, participants);
                         sets.add(new Set(listParticipants, set.getWinnerId()));
                     }
@@ -118,11 +121,11 @@ public class SmashggConsumer {
                 new Date(tournamentResponse.getEntities().getTournament().getStartAt()*1000));
     }
 
-    private Address buildAddress(net.migwel.tournify.data.consumer.smashgg.Tournament tournament) {
+    private Address buildAddress(net.migwel.tournify.smashgg.data.Tournament tournament) {
         return new Address(tournament.getCity(), tournament.getAddrState(), tournament.getVenueAddress(), null, tournament.getCountryCode());
     }
 
-    private List<Player> getParticipants(net.migwel.tournify.data.consumer.smashgg.Set set, Map<Long, Player> participants) {
+    private List<Player> getParticipants(net.migwel.tournify.smashgg.data.Set set, Map<Long, Player> participants) {
         List<Player> listParticipants = new ArrayList<>();
         listParticipants.add(participants.get(set.getEntrant1Id()));
         listParticipants.add(participants.get(set.getEntrant2Id()));
