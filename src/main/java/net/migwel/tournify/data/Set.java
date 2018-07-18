@@ -1,12 +1,25 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
+@Entity
 public class Set {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @OneToMany
     private List<Player> participants;
     private Long winner;
     private String round;
+
+    public Set() {
+    }
 
     public Set(List<Player> participants, Long winner) {
         this.participants = participants;

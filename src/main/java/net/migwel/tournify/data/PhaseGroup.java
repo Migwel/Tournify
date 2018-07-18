@@ -1,13 +1,25 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 //This is basically a bracket (TODO: check how it works with pools)
+@Entity
 public class PhaseGroup {
 
-    private long id;
+    @Id
+    @GeneratedValue
+    private Long id;
     private String displayIdentifier;
+
+    @OneToMany
     private List<Set> sets;
+
+    public PhaseGroup() {
+    }
 
     public PhaseGroup(long id, String displayIdentifier, List<Set> sets) {
         this.id = id;

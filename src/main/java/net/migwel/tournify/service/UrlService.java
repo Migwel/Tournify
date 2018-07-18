@@ -20,5 +20,5 @@ public interface UrlService {
         return Source.Unknown;
     }
 
-    String formatUrl(String url);
+    String normalizeUrl(String url);
 }

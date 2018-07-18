@@ -1,11 +1,23 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Address {
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String city;
     private String state;
     private String street;
     private String houseNumber;
     private String country;
+
+    public Address() {
+    }
 
     public Address(String city, String state, String street, String houseNumber, String country) {
         this.city = city;

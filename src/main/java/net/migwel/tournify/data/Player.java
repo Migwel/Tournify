@@ -1,9 +1,21 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Player {
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private String prefix;
     private String username;
+
+    public Player() {
+    }
 
     public Player(String prefix, String username) {
         this.prefix = prefix;

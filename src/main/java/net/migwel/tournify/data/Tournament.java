@@ -1,18 +1,35 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Date;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class Tournament {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @OneToMany
     private List<Event> events;
     private String name;
+
+    @ManyToOne
     private Address address;
     private String url;
     private Date date;
+
+    public Tournament() {
+    }
 
     public Tournament(List<Event> events, String name, Address address, String url, Date date) {
         this.events = events;

@@ -1,17 +1,33 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@Entity
 public class Event {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @OneToMany
     private List<Phase> phases;
+
+    @ManyToOne
     private GameType gameType;
 
     private String name;
     private String description;
+
+    public Event() {
+    }
 
     public Event(List<Phase> phases, GameType gameType, String name, String description) {
         this.phases = phases;

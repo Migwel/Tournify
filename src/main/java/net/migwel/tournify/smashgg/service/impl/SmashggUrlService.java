@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class SmashggUrlService implements UrlService {
 
     @Override
-    public String formatUrl(String url) throws IllegalArgumentException{
+    public String normalizeUrl(String url) throws IllegalArgumentException{
         Pattern p = Pattern.compile(smashggURLPattern);
         Matcher m = p.matcher(url);
 

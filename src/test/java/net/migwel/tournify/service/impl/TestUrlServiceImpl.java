@@ -48,7 +48,7 @@ public class TestUrlServiceImpl {
         for(int i = 0; i < validSmashggUrls.length; i++) {
             Assert.assertEquals("Format Smashgg URL "+ validSmashggUrls[i],
                                 expectedSmashggUrls[i],
-                                urlService.formatUrl(validSmashggUrls[i]));
+                                urlService.normalizeUrl(validSmashggUrls[i]));
         }
     }
 }

@@ -4,6 +4,7 @@ import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.request.TournamentRequest;
 import net.migwel.tournify.service.ServiceFactory;
 import net.migwel.tournify.service.TournamentService;
+import net.migwel.tournify.store.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,9 @@ public class TournamentController {
     @Autowired
     private ServiceFactory serviceFactory;
 
+    @Autowired
+    private TournamentRepository tournamentRepository;
+
     public TournamentController(ServiceFactory serviceFactory) {
         this.serviceFactory = serviceFactory;
     }
@@ -25,7 +29,6 @@ public class TournamentController {
     public Tournament getTournament(@RequestBody TournamentRequest request) {
         TournamentService tournamentService = serviceFactory.getTournamentService(request.getUrl());
         return tournamentService.getTournament(request.getUrl());
-
     }
 
 }
