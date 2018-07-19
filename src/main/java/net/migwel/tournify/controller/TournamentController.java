@@ -28,15 +28,6 @@ public class TournamentController {
     @RequestMapping(method= RequestMethod.GET)
     public Tournament getTournament(@RequestBody TournamentRequest request) {
         TournamentService tournamentService = serviceFactory.getTournamentService(request.getUrl());
-        String formattedUrl = tournamentService.getUrlService().normalizeUrl(request.getUrl());
-        Tournament tournament = tournamentRepository.findByUrl(formattedUrl);
-        if(tournament != null) {
-            return tournament;
-        }
-
-        tournament = tournamentService.getTournament(formattedUrl);
-        tournamentRepository.save(tournament);
-        return tournament;
+        return tournamentService.getTournament(request.getUrl());
     }
-
 }

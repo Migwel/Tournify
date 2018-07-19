@@ -45,7 +45,7 @@ public class SmashggConsumer implements TournamentConsumer {
     }
 
     @Override
-    public Tournament getTournament(String url) {
+    public Tournament fetchTournament(String url) {
         String tournamentWithEventsUrl = url + EXPAND_TOURNAMENT;
         GetTournamentResponse tournamentResponse = restTemplate.getForObject(tournamentWithEventsUrl, GetTournamentResponse.class);
 

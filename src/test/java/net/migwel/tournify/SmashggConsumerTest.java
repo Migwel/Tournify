@@ -10,6 +10,6 @@ public class SmashggConsumerTest {
     public void testGetTournament() {
         RestTemplateBuilder templateBuilder = new RestTemplateBuilder();
         SmashggConsumer consumer = new SmashggConsumer(templateBuilder.build());
-        System.out.println(consumer.getTournament("https://api.smash.gg/tournament/nhl18-community-tournament-series-at-square-one"));
+        System.out.println(consumer.fetchTournament("https://api.smash.gg/tournament/nhl18-community-tournament-series-at-square-one"));
     }
 }

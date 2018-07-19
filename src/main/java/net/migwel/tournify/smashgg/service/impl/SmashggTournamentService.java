@@ -4,6 +4,7 @@ import net.migwel.tournify.consumer.TournamentConsumer;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.service.TournamentService;
 import net.migwel.tournify.service.UrlService;
+import net.migwel.tournify.store.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -16,16 +17,15 @@ public class SmashggTournamentService implements TournamentService {
     private UrlService urlService;
 
     @Autowired
+    private TournamentRepository tournamentRepository;
+
+    @Autowired
     @Qualifier("SmashggConsumer")
     private TournamentConsumer tournamentConsumer;
 
     @Override
-    public Tournament getTournament(String formattedUrl) {
-        return getTournament(tournamentConsumer, formattedUrl);
-    }
-
-    @Override
-    public UrlService getUrlService() {
-        return urlService;
+    public Tournament getTournament(String url) {
+        String formattedUrl = urlService.normalizeUrl(url);
+        return getTournament(tournamentConsumer, tournamentRepository, formattedUrl);
     }
 }

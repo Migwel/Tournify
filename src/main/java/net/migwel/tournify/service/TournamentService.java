@@ -2,15 +2,24 @@ package net.migwel.tournify.service;
 
 import net.migwel.tournify.consumer.TournamentConsumer;
 import net.migwel.tournify.data.Tournament;
+import net.migwel.tournify.store.TournamentRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface TournamentService {
 
     Tournament getTournament(String url);
-    UrlService getUrlService();
 
-    default Tournament getTournament(TournamentConsumer tournamentConsumer, String formattedUrl) {
-        return tournamentConsumer.getTournament(formattedUrl);
+    default Tournament getTournament(TournamentConsumer tournamentConsumer,
+                                     TournamentRepository tournamentRepository,
+                                     String formattedUrl) {
+        Tournament tournament = tournamentRepository.findByUrl(formattedUrl);
+        if(tournament != null) {
+            return tournament;
+        }
+
+        tournament = tournamentConsumer.fetchTournament(formattedUrl);
+        tournamentRepository.save(tournament);
+        return tournament;
     }
 }
