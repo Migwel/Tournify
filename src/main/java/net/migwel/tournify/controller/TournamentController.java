@@ -28,7 +28,9 @@ public class TournamentController {
     @RequestMapping(method= RequestMethod.GET)
     public Tournament getTournament(@RequestBody TournamentRequest request) {
         TournamentService tournamentService = serviceFactory.getTournamentService(request.getUrl());
-        return tournamentService.getTournament(request.getUrl());
+        Tournament tournament = tournamentService.getTournament(request.getUrl());
+        tournamentRepository.save(tournament);
+        return tournament;
     }
 
 }

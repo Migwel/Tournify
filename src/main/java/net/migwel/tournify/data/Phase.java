@@ -1,5 +1,6 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,7 +14,7 @@ public class Phase {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<PhaseGroup> phaseGroups;
     private String phaseName;
 

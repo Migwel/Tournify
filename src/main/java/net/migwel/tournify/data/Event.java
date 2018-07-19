@@ -1,5 +1,6 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,10 +18,10 @@ public class Event {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Phase> phases;
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private GameType gameType;
 
     private String name;

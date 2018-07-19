@@ -1,5 +1,6 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,26 +14,28 @@ public class PhaseGroup {
     @Id
     @GeneratedValue
     private Long id;
+
+    private long externalId;
     private String displayIdentifier;
 
-    @OneToMany
+    @OneToMany(cascade=CascadeType.ALL)
     private List<Set> sets;
 
     public PhaseGroup() {
     }
 
-    public PhaseGroup(long id, String displayIdentifier, List<Set> sets) {
-        this.id = id;
+    public PhaseGroup(long externalId, String displayIdentifier, List<Set> sets) {
+        this.externalId = externalId;
         this.displayIdentifier = displayIdentifier;
         this.sets = sets;
     }
 
-    public long getId() {
-        return id;
+    public long getExternalId() {
+        return externalId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setExternalId(long id) {
+        this.externalId = id;
     }
 
     public String getDisplayIdentifier() {

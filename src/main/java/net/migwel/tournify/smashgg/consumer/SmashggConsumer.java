@@ -79,7 +79,7 @@ public class SmashggConsumer implements TournamentConsumer {
         for(Event event : events) {
             for(Phase phase : event.getPhases()) {
                 for(PhaseGroup phaseGroup : phase.getPhaseGroups()) {
-                    String phaseGroupUrl = PHASE_GROUP_URL + phaseGroup.getId() + EXPAND_PHASE_GROUP;
+                    String phaseGroupUrl = PHASE_GROUP_URL + phaseGroup.getExternalId() + EXPAND_PHASE_GROUP;
 
                     GetPhaseGroupResponse phaseGroupResponse = restTemplate.getForObject(phaseGroupUrl, GetPhaseGroupResponse.class);
 
