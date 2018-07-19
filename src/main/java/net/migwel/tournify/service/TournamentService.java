@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 public interface TournamentService {
 
     Tournament getTournament(String url);
+    UrlService getUrlService();
 
-    default Tournament getTournament(UrlService urlService, TournamentConsumer tournamentConsumer, String url) {
-        String formattedUrl = urlService.normalizeUrl(url);
+    default Tournament getTournament(TournamentConsumer tournamentConsumer, String formattedUrl) {
         return tournamentConsumer.getTournament(formattedUrl);
     }
 }

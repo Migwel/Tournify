@@ -20,7 +20,12 @@ public class SmashggTournamentService implements TournamentService {
     private TournamentConsumer tournamentConsumer;
 
     @Override
-    public Tournament getTournament(String url) {
-        return getTournament(urlService, tournamentConsumer, url);
+    public Tournament getTournament(String formattedUrl) {
+        return getTournament(tournamentConsumer, formattedUrl);
+    }
+
+    @Override
+    public UrlService getUrlService() {
+        return urlService;
     }
 }

@@ -1,0 +1,1 @@
+curl -H "Content-Type: application/json" -X GET -d '{"url":"https://api.smash.gg/tournament/nhl18-community-tournament-series-at-square-one"}' http://localhost:8090/tournament | json_pp

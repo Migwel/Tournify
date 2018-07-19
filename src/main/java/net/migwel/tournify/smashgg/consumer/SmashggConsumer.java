@@ -117,7 +117,7 @@ public class SmashggConsumer implements TournamentConsumer {
         return new Tournament(events,
                 tournamentResponse.getEntities().getTournament().getName(),
                 address,
-                tournamentWithEventsUrl,
+                url,
                 new Date(tournamentResponse.getEntities().getTournament().getStartAt()*1000));
     }
 

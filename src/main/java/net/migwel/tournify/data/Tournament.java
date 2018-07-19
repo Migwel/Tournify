@@ -1,5 +1,7 @@
 package net.migwel.tournify.data;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class Tournament {
     @ManyToOne(cascade=CascadeType.ALL)
     private Address address;
     private String url;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;
 
     public Tournament() {
