@@ -10,14 +10,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service("SmashggTournamentService")
-public class SmashggTournamentService implements TournamentService {
+public class SmashggTournamentService extends TournamentService {
 
     @Autowired
     @Qualifier("SmashggUrlService")
     private UrlService urlService;
-
-    @Autowired
-    private TournamentRepository tournamentRepository;
 
     @Autowired
     @Qualifier("SmashggConsumer")
@@ -26,6 +23,6 @@ public class SmashggTournamentService implements TournamentService {
     @Override
     public Tournament getTournament(String url) {
         String formattedUrl = urlService.normalizeUrl(url);
-        return getTournament(tournamentConsumer, tournamentRepository, formattedUrl);
+        return getTournament(tournamentConsumer, formattedUrl);
     }
 }
