@@ -61,7 +61,7 @@ public abstract class TournamentService {
         Tournament oldTournament = tournamentRepository.findByUrl(url);
         boolean hasChanged = !compareTournaments(oldTournament, newTournament);
         if(hasChanged) {
-            tournamentRepository.save(newTournament);
+            tournamentRepository.save(newTournament); //TODO: Fix... This saves a new tournament...
         }
         return hasChanged;
     }
