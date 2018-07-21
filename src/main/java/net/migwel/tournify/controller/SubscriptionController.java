@@ -18,7 +18,7 @@ public class SubscriptionController {
     private SubscriptionService subscriptionService;
 
     @RequestMapping(method= RequestMethod.PUT)
-    public SubscriptionResponse addSubscription(@RequestBody SubscriptionRequest request) {
+    public SubscriptionResponse addSubscription(@RequestBody SubscriptionRequest request) throws Exception {
         Subscription subscription = subscriptionService.addSubscription(request.getTournamentUrl(), request.getCallbackUrl());
         SubscriptionResponse subscriptionResponse = new SubscriptionResponse();
         subscriptionResponse.setTournamentUrl(subscription.getTournament().getUrl());

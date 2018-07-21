@@ -19,13 +19,13 @@ public class Set {
 
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Player> players;
-    private Long winner;
+    private String winner;
     private String round;
 
     public Set() {
     }
 
-    public Set(String externalId, List<Player> players, Long winner, String round) {
+    public Set(String externalId, List<Player> players, String winner, String round) {
         this.externalId = externalId;
         this.players = players;
         this.winner = winner;
@@ -48,11 +48,11 @@ public class Set {
         this.players = players;
     }
 
-    public Long getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    public void setWinner(Long winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
 

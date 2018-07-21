@@ -2,10 +2,10 @@ package net.migwel.tournify.smashgg.data;
 
 public class Seed {
 
-    private long entrantId;
+    private String entrantId;
     private Mutation mutations;
 
-    public long getEntrantId() {
+    public String getEntrantId() {
         return entrantId;
     }
 

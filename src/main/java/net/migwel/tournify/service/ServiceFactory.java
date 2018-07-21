@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.CheckForNull;
+
 
 @Component
 public class ServiceFactory {
@@ -20,13 +22,14 @@ public class ServiceFactory {
         this.urlService = urlService;
     }
 
+    @CheckForNull
     public TournamentService getTournamentService(String url) {
 
         switch(urlService.parseUrl(url)) {
             case Smashgg:
                 return smashggTournamentService;
             default:
-                return smashggTournamentService;
+                return null;
         }
     }
 

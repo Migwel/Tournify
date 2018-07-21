@@ -49,6 +49,11 @@ public class Tracker implements ApplicationRunner { //TODO: Tracking should be m
         for(TournamentTracking tracking : trackingList) {
             Tournament tournament = tracking.getTournament();
             TournamentService tournamentService = serviceFactory.getTournamentService(tournament.getUrl());
+            if(tournamentService == null) {
+                log.warn("No service could be found for url: "+ tournament.getUrl());
+                continue;
+            }
+
             boolean isSame = !tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
 
             if(isSame) {

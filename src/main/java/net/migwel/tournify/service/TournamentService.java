@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.validation.constraints.NotNull;
+import javax.annotation.Nonnull;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +59,11 @@ public abstract class TournamentService {
     public boolean updateTournament(String url) {
         Tournament newTournament = fetchTournament(url);
         Tournament oldTournament = tournamentRepository.findByUrl(url);
-        return !compareTournaments(oldTournament, newTournament);
+        boolean hasChanged = !compareTournaments(oldTournament, newTournament);
+        if(hasChanged) {
+            tournamentRepository.save(newTournament);
+        }
+        return hasChanged;
     }
 
     //Returns true if tournaments are the same
@@ -184,7 +188,7 @@ public abstract class TournamentService {
         return phasesMap;
     }
 
-    @NotNull
+    @Nonnull
     private Map<String, Event> eventsToMap(List<Event> events) {
         Map<String, Event> eventsMap = new HashMap<>();
         for(Event event : events) {

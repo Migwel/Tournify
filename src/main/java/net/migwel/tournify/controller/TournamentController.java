@@ -26,8 +26,11 @@ public class TournamentController {
     }
 
     @RequestMapping(method= RequestMethod.GET)
-    public Tournament getTournament(@RequestBody TournamentRequest request) {
+    public Tournament getTournament(@RequestBody TournamentRequest request) throws Exception {
         TournamentService tournamentService = serviceFactory.getTournamentService(request.getUrl());
+        if(tournamentService == null) {
+            throw new Exception("Couldn't find any service for url: "+ request.getUrl()); //TODO: Send more specific exception (and send it inside serviceFactory?)
+        }
         return tournamentService.getTournament(request.getUrl());
     }
 }

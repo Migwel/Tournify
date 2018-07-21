@@ -3,9 +3,9 @@ package net.migwel.tournify.smashgg.data;
 public class Set {
 
     private String id;
-    private Long entrant1Id;
-    private Long entrant2Id;
-    private Long winnerId;
+    private String entrant1Id;
+    private String entrant2Id;
+    private String winnerId;
     private Long phaseGroupId;
     private Long bestOf;
     private String fullRoundText;
@@ -14,15 +14,15 @@ public class Set {
         return id;
     }
 
-    public Long getEntrant1Id() {
+    public String getEntrant1Id() {
         return entrant1Id;
     }
 
-    public Long getEntrant2Id() {
+    public String getEntrant2Id() {
         return entrant2Id;
     }
 
-    public Long getWinnerId() {
+    public String getWinnerId() {
         return winnerId;
     }
 

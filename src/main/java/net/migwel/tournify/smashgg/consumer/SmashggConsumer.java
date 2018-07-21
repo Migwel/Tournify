@@ -90,7 +90,7 @@ public class SmashggConsumer implements TournamentConsumer {
                         continue;
                     }
 
-                    Map<Long, Player> participants = new HashMap<>();
+                    Map<String, Player> participants = new HashMap<>();
                     for(Seed seed : phaseGroupResponse.getEntities().getSeeds()) {
                         if(seed.getMutations() == null || seed.getMutations().getParticipants() == null) {
                             continue;
@@ -129,7 +129,7 @@ public class SmashggConsumer implements TournamentConsumer {
         return new Address(tournament.getCity(), tournament.getAddrState(), tournament.getVenueAddress(), null, tournament.getCountryCode());
     }
 
-    private List<Player> getParticipants(net.migwel.tournify.smashgg.data.Set set, Map<Long, Player> participants) {
+    private List<Player> getParticipants(net.migwel.tournify.smashgg.data.Set set, Map<String, Player> participants) {
         List<Player> listParticipants = new ArrayList<>();
         listParticipants.add(participants.get(set.getEntrant1Id()));
         listParticipants.add(participants.get(set.getEntrant2Id()));
