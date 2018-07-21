@@ -2,6 +2,7 @@ package net.migwel.tournify.data;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -14,7 +15,9 @@ public class Set {
     @GeneratedValue
     private Long id;
 
-    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+    private String externalId;
+
+    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private List<Player> players;
     private Long winner;
     private String round;
@@ -22,9 +25,19 @@ public class Set {
     public Set() {
     }
 
-    public Set(List<Player> players, Long winner) {
+    public Set(String externalId, List<Player> players, Long winner, String round) {
+        this.externalId = externalId;
         this.players = players;
         this.winner = winner;
+        this.round = round;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     public List<Player> getPlayers() {
@@ -41,6 +54,14 @@ public class Set {
 
     public void setWinner(Long winner) {
         this.winner = winner;
+    }
+
+    public String getRound() {
+        return round;
+    }
+
+    public void setRound(String round) {
+        this.round = round;
     }
 
     @Override

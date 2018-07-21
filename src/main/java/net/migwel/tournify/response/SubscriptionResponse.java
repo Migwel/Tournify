@@ -1,4 +1,4 @@
-package net.migwel.tournify;
+package net.migwel.tournify.response;
 
 public class SubscriptionResponse {
     private String tournamentUrl;

@@ -46,6 +46,7 @@ public class SmashggConsumer implements TournamentConsumer {
 
     @Override
     public Tournament fetchTournament(String url) {
+        log.info("Fetching tournament at url: "+ url);
         String tournamentWithEventsUrl = url + EXPAND_TOURNAMENT;
         GetTournamentResponse tournamentResponse = restTemplate.getForObject(tournamentWithEventsUrl, GetTournamentResponse.class);
 
@@ -105,7 +106,7 @@ public class SmashggConsumer implements TournamentConsumer {
                     List<Set> sets = new ArrayList<>();
                     for(net.migwel.tournify.smashgg.data.Set set : phaseGroupResponse.getEntities().getSets()) {
                         List<Player> listParticipants = getParticipants(set, participants);
-                        sets.add(new Set(listParticipants, set.getWinnerId()));
+                        sets.add(new Set(set.getId(), listParticipants, set.getWinnerId(), set.getFullRoundText()));
                     }
                     phaseGroup.setSets(sets);
                 }
@@ -113,6 +114,9 @@ public class SmashggConsumer implements TournamentConsumer {
         }
 
         Address address = buildAddress(tournamentResponse.getEntities().getTournament());
+
+        log.info("Done with fetching tournament at url: "+ url);
+
 
         return new Tournament(events,
                 tournamentResponse.getEntities().getTournament().getName(),

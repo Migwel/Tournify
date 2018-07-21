@@ -1,6 +1,6 @@
 package net.migwel.tournify.controller;
 
-import net.migwel.tournify.SubscriptionResponse;
+import net.migwel.tournify.response.SubscriptionResponse;
 import net.migwel.tournify.data.Subscription;
 import net.migwel.tournify.request.SubscriptionRequest;
 import net.migwel.tournify.service.SubscriptionService;

@@ -19,6 +19,8 @@ public class TournamentTracking {
 
     private boolean done;
 
+    private int noUpdateRetries;
+
     private Date startDate;
 
     private Date nextDate;
@@ -70,5 +72,13 @@ public class TournamentTracking {
 
     public void setNextDate(Date nextDate) {
         this.nextDate = nextDate;
+    }
+
+    public int getNoUpdateRetries() {
+        return noUpdateRetries;
+    }
+
+    public void setNoUpdateRetries(int noUpdateRetries) {
+        this.noUpdateRetries = noUpdateRetries;
     }
 }
