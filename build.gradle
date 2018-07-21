@@ -24,12 +24,6 @@ findbugs {
     reportsDir = file("$project.buildDir/reports/findbugs")
     effort = "max"
 }
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled false
-        html.enabled true
-    }
-}
 
 
 sourceCompatibility = 1.8
