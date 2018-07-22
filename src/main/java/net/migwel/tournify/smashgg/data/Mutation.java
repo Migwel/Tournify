@@ -9,4 +9,8 @@ public class Mutation {
     public Map<String, Participant> getParticipants() {
         return participants;
     }
+
+    public void setParticipants(Map<String, Participant> participants) {
+        this.participants = participants;
+    }
 }

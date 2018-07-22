@@ -17,4 +17,16 @@ public class Group {
     public String getDisplayIdentifier() {
         return displayIdentifier;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setPhaseId(long phaseId) {
+        this.phaseId = phaseId;
+    }
+
+    public void setDisplayIdentifier(String displayIdentifier) {
+        this.displayIdentifier = displayIdentifier;
+    }
 }

@@ -30,8 +30,8 @@ public class TournamentTracking {
 
     public TournamentTracking(Tournament tournament, Date startDate, Date nextDate) {
         this.tournament = tournament;
-        this.startDate = startDate;
-        this.nextDate = nextDate;
+        this.startDate = new Date(startDate.getTime());
+        this.nextDate = new Date(nextDate.getTime());
     }
 
     public Long getId() {
@@ -59,19 +59,19 @@ public class TournamentTracking {
     }
 
     public Date getStartDate() {
-        return startDate;
+        return new Date(startDate.getTime());
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+        this.startDate = new Date(startDate.getTime());
     }
 
     public Date getNextDate() {
-        return nextDate;
+        return new Date(nextDate.getTime());
     }
 
     public void setNextDate(Date nextDate) {
-        this.nextDate = nextDate;
+        this.nextDate = new Date(nextDate.getTime());
     }
 
     public int getNoUpdateRetries() {

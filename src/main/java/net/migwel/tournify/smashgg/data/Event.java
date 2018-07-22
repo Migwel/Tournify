@@ -24,4 +24,20 @@ public class Event {
     public String getDescription() {
         return description;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setVideogameId(long videogameId) {
+        this.videogameId = videogameId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

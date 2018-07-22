@@ -41,7 +41,7 @@ public class Tournament {
         this.name = name;
         this.address = address;
         this.url = url;
-        this.date = date;
+        this.date = new Date(date.getTime());
     }
 
     public List<Event> getEvents() {
@@ -69,11 +69,11 @@ public class Tournament {
     }
 
     public Date getDate() {
-        return date;
+        return new Date(date.getTime());
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.date = new Date(date.getTime());
     }
 
     public String getUrl() {

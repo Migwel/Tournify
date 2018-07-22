@@ -22,4 +22,20 @@ public class Participant {
     public String getPrefix() {
         return prefix;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setPlayerId(long playerId) {
+        this.playerId = playerId;
+    }
+
+    public void setGamerTag(String gamerTag) {
+        this.gamerTag = gamerTag;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 }

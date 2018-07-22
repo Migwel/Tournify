@@ -12,4 +12,12 @@ public class Seed {
     public Mutation getMutations() {
         return mutations;
     }
+
+    public void setEntrantId(String entrantId) {
+        this.entrantId = entrantId;
+    }
+
+    public void setMutations(Mutation mutations) {
+        this.mutations = mutations;
+    }
 }

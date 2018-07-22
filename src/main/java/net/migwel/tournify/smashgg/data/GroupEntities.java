@@ -19,4 +19,16 @@ public class GroupEntities {
     public List<Seed> getSeeds() {
         return seeds;
     }
+
+    public void setGroups(Group groups) {
+        this.groups = groups;
+    }
+
+    public void setSets(List<Set> sets) {
+        this.sets = sets;
+    }
+
+    public void setSeeds(List<Seed> seeds) {
+        this.seeds = seeds;
+    }
 }
