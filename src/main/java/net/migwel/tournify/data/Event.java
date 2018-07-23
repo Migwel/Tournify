@@ -1,5 +1,6 @@
 package net.migwel.tournify.data;
 
+import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.ArrayList;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -28,6 +30,8 @@ public class Event {
     private String name;
     private String description;
 
+    private boolean done;
+
     public Event() {
     }
 
@@ -38,8 +42,9 @@ public class Event {
         this.description = description;
     }
 
+    @Nonnull
     public List<Phase> getPhases() {
-        return phases;
+        return phases != null ? phases : new ArrayList<>();
     }
 
     public void setPhases(List<Phase> phases) {
@@ -68,6 +73,14 @@ public class Event {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
     @Override

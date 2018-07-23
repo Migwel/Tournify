@@ -2,6 +2,7 @@ package net.migwel.tournify.data;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +35,8 @@ public class Tournament {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;
 
+    private boolean done;
+
     public Tournament() {
     }
 
@@ -44,8 +48,9 @@ public class Tournament {
         this.date = new Date(date.getTime());
     }
 
+    @Nonnull
     public List<Event> getEvents() {
-        return events;
+        return events != null ? events : new ArrayList<>();
     }
 
     public void setEvents(List<Event> events) {
@@ -82,6 +87,14 @@ public class Tournament {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
     @Override

@@ -48,9 +48,11 @@ public class Tracker implements ApplicationRunner { //TODO: Tracking should be m
         log.info("Tracking list size: "+ trackingList.size());
         for(TournamentTracking tracking : trackingList) {
             Tournament tournament = tracking.getTournament();
-            TournamentService tournamentService = serviceFactory.getTournamentService(tournament.getUrl());
-            if(tournamentService == null) {
-                log.warn("No service could be found for url: "+ tournament.getUrl());
+            TournamentService tournamentService;
+            try {
+                tournamentService = serviceFactory.getTournamentService(tournament.getUrl());
+            }
+            catch(IllegalArgumentException e) {
                 continue;
             }
 

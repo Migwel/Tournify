@@ -1,6 +1,6 @@
-package net.migwel.tournify.smashgg.consumer;
+package net.migwel.tournify.smashgg.client;
 
-import net.migwel.tournify.consumer.TournamentConsumer;
+import net.migwel.tournify.client.TournamentClient;
 import net.migwel.tournify.data.Address;
 import net.migwel.tournify.data.Event;
 import net.migwel.tournify.data.GameType;
@@ -28,10 +28,10 @@ import java.util.List;
 import java.util.Map;
 
 
-@Component("SmashggConsumer")
-public class SmashggConsumer implements TournamentConsumer {
+@Component("SmashggClient")
+public class SmashggClient implements TournamentClient {
 
-    private static final Logger log = LoggerFactory.getLogger(SmashggConsumer.class);
+    private static final Logger log = LoggerFactory.getLogger(SmashggClient.class);
 
     private static final String EXPAND_TOURNAMENT = "?expand[]=event&expand[]=phase&expand[]=groups";
     private static final String PHASE_GROUP_URL = "https://api.smash.gg/phase_group/";
@@ -40,7 +40,7 @@ public class SmashggConsumer implements TournamentConsumer {
     @Autowired
     private RestTemplate restTemplate;
 
-    public SmashggConsumer(RestTemplate restTemplate) {
+    public SmashggClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -131,9 +131,14 @@ public class SmashggConsumer implements TournamentConsumer {
 
     private List<Player> getParticipants(net.migwel.tournify.smashgg.data.Set set, Map<String, Player> participants) {
         List<Player> listParticipants = new ArrayList<>();
-        listParticipants.add(participants.get(set.getEntrant1Id()));
-        listParticipants.add(participants.get(set.getEntrant2Id()));
-
+        String entrant1Id = set.getEntrant1Id();
+        if(entrant1Id != null) {
+            listParticipants.add(participants.get(entrant1Id));
+        }
+        String entrant2Id = set.getEntrant1Id();
+        if(entrant2Id != null) {
+            listParticipants.add(participants.get(entrant1Id));
+        }
         return listParticipants;
     }
 }

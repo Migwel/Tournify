@@ -1,6 +1,6 @@
 package net.migwel.tournify.smashgg.service.impl;
 
-import net.migwel.tournify.consumer.TournamentConsumer;
+import net.migwel.tournify.client.TournamentClient;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.service.TournamentService;
 import net.migwel.tournify.service.UrlService;
@@ -16,18 +16,18 @@ public class SmashggTournamentService extends TournamentService {
     private UrlService urlService;
 
     @Autowired
-    @Qualifier("SmashggConsumer")
-    private TournamentConsumer tournamentConsumer;
+    @Qualifier("SmashggClient")
+    private TournamentClient tournamentClient;
 
     @Override
     public Tournament getTournament(String url) {
         String formattedUrl = urlService.normalizeUrl(url);
-        return getTournament(tournamentConsumer, formattedUrl);
+        return getTournament(tournamentClient, formattedUrl);
     }
 
     @Override
     protected Tournament fetchTournament(String url) {
         String formattedUrl = urlService.normalizeUrl(url);
-        return fetchTournament(tournamentConsumer, formattedUrl);
+        return fetchTournament(tournamentClient, formattedUrl);
     }
 }

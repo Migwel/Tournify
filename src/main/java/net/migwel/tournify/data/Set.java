@@ -1,11 +1,13 @@
 package net.migwel.tournify.data;
 
+import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,6 +23,8 @@ public class Set {
     private List<Player> players;
     private String winner;
     private String round;
+
+    private boolean done;
 
     public Set() {
     }
@@ -40,8 +44,9 @@ public class Set {
         this.externalId = externalId;
     }
 
+    @Nonnull
     public List<Player> getPlayers() {
-        return players;
+        return players != null ? players : new ArrayList<>();
     }
 
     public void setPlayers(List<Player> players) {
@@ -62,6 +67,14 @@ public class Set {
 
     public void setRound(String round) {
         this.round = round;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
     @Override

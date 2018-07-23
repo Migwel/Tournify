@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 
 @Component
@@ -22,14 +23,14 @@ public class ServiceFactory {
         this.urlService = urlService;
     }
 
-    @CheckForNull
+    @Nonnull
     public TournamentService getTournamentService(String url) {
 
         switch(urlService.parseUrl(url)) {
             case Smashgg:
                 return smashggTournamentService;
             default:
-                return null;
+                throw new IllegalArgumentException("Couldn't find any service for url: "+ url );
         }
     }
 

@@ -1,10 +1,12 @@
 package net.migwel.tournify.service;
 
-import net.migwel.tournify.consumer.TournamentConsumer;
+import net.migwel.tournify.client.TournamentClient;
 import net.migwel.tournify.data.Event;
 import net.migwel.tournify.data.Phase;
 import net.migwel.tournify.data.PhaseGroup;
+import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
+import net.migwel.tournify.data.SetUpdate;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.data.TournamentTracking;
 import net.migwel.tournify.store.TournamentRepository;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.Nonnull;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +33,7 @@ public abstract class TournamentService {
     @Autowired
     private TrackingRepository trackingRepository;
 
-    protected Tournament getTournament(TournamentConsumer tournamentConsumer,
+    protected Tournament getTournament(TournamentClient tournamentClient,
                                        String formattedUrl) {
         Tournament tournament = tournamentRepository.findByUrl(formattedUrl);
         if (tournament != null) {
@@ -39,15 +42,15 @@ public abstract class TournamentService {
         }
 
         log.info("No tournament was found, let's fetch it. url = "+ formattedUrl);
-        tournament = fetchTournament(tournamentConsumer, formattedUrl);
+        tournament = fetchTournament(tournamentClient, formattedUrl);
         tournamentRepository.save(tournament);
         trackTournament(tournament);
         return tournament;
     }
 
-    protected Tournament fetchTournament(TournamentConsumer tournamentConsumer,
+    protected Tournament fetchTournament(TournamentClient tournamentClient,
                                        String formattedUrl) {
-        return tournamentConsumer.fetchTournament(formattedUrl);
+        return tournamentClient.fetchTournament(formattedUrl);
     }
 
     private void trackTournament(Tournament tournament) {
@@ -57,35 +60,42 @@ public abstract class TournamentService {
 
     //Returns true if tournament has changed
     public boolean updateTournament(String url) {
-        Tournament newTournament = fetchTournament(url);
         Tournament oldTournament = tournamentRepository.findByUrl(url);
-        boolean hasChanged = !compareTournaments(oldTournament, newTournament);
+        Tournament newTournament = fetchTournament(url);
+        //We could/should probably use some comparison framework, like JaVers
+        List<SetUpdate> setUpdates = compareTournaments(oldTournament, newTournament);
+        boolean hasChanged = !setUpdates.isEmpty();
         if(hasChanged) {
-            tournamentRepository.save(newTournament); //TODO: Fix... This saves a new tournament...
+            log.info("Tournament has changed: saving modifications");
+            tournamentRepository.save(oldTournament); //TODO: Fix... This saves a new tournament...
         }
         return hasChanged;
     }
 
     //Returns true if tournaments are the same
-    private boolean compareTournaments(Tournament oldTournament, Tournament newTournament) {
+    @Nonnull
+    private List<SetUpdate> compareTournaments(Tournament oldTournament, Tournament newTournament) {
+        List<SetUpdate> setUpdates = new LinkedList<>();
         List<Event> oldEvents = oldTournament.getEvents();
         List<Event> newEvents = newTournament.getEvents();
 
         Map<String, Event> oldEventsMap = eventsToMap(oldEvents);
         for(Event newEvent : newEvents) {
-            if(!compareEvents(oldEventsMap.get(newEvent.getName()), newEvent)) {
-                log.info("Event "+ newEvent.getName() +" was updated");
-                return false;
+            Event oldEvent = oldEventsMap.get(newEvent.getName());
+            if(oldEvent == null) {
+                oldEvents.add(newEvent);
+                continue;
             }
+            compareEvents(oldEvent, newEvent, setUpdates);
         }
 
-        return true;
+        return setUpdates;
     }
 
     //Returns true if events are the same
-    private boolean compareEvents(Event oldEvent, Event newEvent) {
-        if(oldEvent == null) {
-            return false;
+    private void compareEvents(@Nonnull Event oldEvent, Event newEvent, List<SetUpdate> setUpdates) {
+        if(newEvent == null) {
+            return;
         }
 
         List<Phase> oldPhases = oldEvent.getPhases();
@@ -93,19 +103,19 @@ public abstract class TournamentService {
 
         Map<String, Phase> oldPhasesMap = phasesToMap(oldPhases);
         for(Phase newPhase : newPhases) {
-            if(!comparePhases(oldPhasesMap.get(newPhase.getPhaseName()), newPhase)) {
-                log.info("Phase "+ newPhase.getPhaseName() +" was updated");
-                return false;
+            Phase oldPhase = oldPhasesMap.get(newPhase.getPhaseName());
+            if(oldPhase == null) {
+                oldPhases.add(newPhase);
+                continue;
             }
+            comparePhases(oldPhase, newPhase, setUpdates);
         }
-
-        return true;
     }
 
     //Returns true if phases are the same
-    private boolean comparePhases(Phase oldPhase, Phase newPhase) {
-        if(oldPhase == null) {
-            return false;
+    private void comparePhases(@Nonnull Phase oldPhase, Phase newPhase, List<SetUpdate> setUpdates) {
+        if(newPhase == null) {
+            return;
         }
 
         List<PhaseGroup> oldPhaseGroups = oldPhase.getPhaseGroups();
@@ -113,23 +123,19 @@ public abstract class TournamentService {
 
         Map<Long, PhaseGroup> oldPhaseGroupsMap = phaseGroupsToMap(oldPhaseGroups);
         for(PhaseGroup newPhaseGroup : newPhaseGroups) {
-            if(!comparePhaseGroups(oldPhaseGroupsMap.get(newPhaseGroup.getExternalId()), newPhaseGroup)) {
-                log.info("Phase group "+ newPhaseGroup.getExternalId() +" was updated");
-                return false;
+            PhaseGroup oldPhaseGroup = oldPhaseGroupsMap.get(newPhaseGroup.getExternalId());
+            if(oldPhaseGroup == null) {
+                oldPhaseGroups.add(newPhaseGroup);
+                continue;
             }
+            comparePhaseGroups(oldPhaseGroup, newPhaseGroup, setUpdates);
         }
-
-        return true;
     }
 
     //Returns true if phase groups are the same
-    private boolean comparePhaseGroups(PhaseGroup oldPhaseGroup, PhaseGroup newPhaseGroup) {
-        if(oldPhaseGroup == null) {
-            return false;
-        }
-
-        if(newPhaseGroup.getSets() == null) {
-            return true;
+    private void comparePhaseGroups(@Nonnull PhaseGroup oldPhaseGroup, PhaseGroup newPhaseGroup, List<SetUpdate> setUpdates) {
+        if(newPhaseGroup == null) {
+            return;
         }
 
         List<Set> oldSets = oldPhaseGroup.getSets();
@@ -137,30 +143,33 @@ public abstract class TournamentService {
 
         Map<String, Set> oldSetsMap = setsToMap(oldSets);
         for(Set newSet : newSets) {
-            if(!compareSets(oldSetsMap.get(newSet.getExternalId()), newSet)) {
-                log.info("Set "+ newSet.getRound() +" was updated");
-                return false;
+            Set oldSet = oldSetsMap.get(newSet.getExternalId());
+            if(oldSet == null) {
+                oldSets.add(newSet);
+                continue;
             }
+
+            compareSets(oldSet, newSet, setUpdates);
         }
-        return true;
     }
 
     //Returns true if sets are the same
-    private boolean compareSets(Set oldSet, Set newSet) {
+    private void compareSets(@Nonnull Set oldSet, Set newSet, List<SetUpdate> setUpdates) {
         if(newSet == null || newSet.getWinner() == null) {
-            return true;
+            return;
         }
 
-        if(oldSet == null) {
-            return false;
+        List<Player> oldPlayers = oldSet.getPlayers();
+        for (Player player : newSet.getPlayers()) {
+            if(!oldPlayers.contains(player)) {
+                oldPlayers.add(player);
+            }
         }
 
         if(!newSet.getWinner().equals(oldSet.getWinner())) {
-            return false;
+            oldSet.setWinner(newSet.getWinner());
+            setUpdates.add(new SetUpdate(oldSet, "Set "+ oldSet.getExternalId() +" has been updated: winner is "+ newSet.getWinner()));
         }
-
-        return true;
-
     }
 
     private Map<String,Set> setsToMap(List<Set> sets) {

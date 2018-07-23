@@ -1,11 +1,13 @@
 package net.migwel.tournify.data;
 
+import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,6 +21,8 @@ public class Phase {
     private List<PhaseGroup> phaseGroups;
     private String phaseName;
 
+    private boolean done;
+
     public Phase() {
     }
 
@@ -27,8 +31,9 @@ public class Phase {
         this.phaseName = phaseName;
     }
 
+    @Nonnull
     public List<PhaseGroup> getPhaseGroups() {
-        return phaseGroups;
+        return phaseGroups != null ? phaseGroups : new ArrayList<>();
     }
 
     public void setPhaseGroups(List<PhaseGroup> phaseGroups) {
@@ -41,6 +46,14 @@ public class Phase {
 
     public void setPhaseName(String phaseName) {
         this.phaseName = phaseName;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
     @Override

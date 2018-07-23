@@ -1,8 +1,8 @@
-package net.migwel.tournify.consumer;
+package net.migwel.tournify.client;
 
 import net.migwel.tournify.data.Tournament;
 
-public interface TournamentConsumer {
+public interface TournamentClient {
 
     Tournament fetchTournament(String url);
 }
