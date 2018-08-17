@@ -2,13 +2,17 @@ package net.migwel.tournify.service;
 
 import net.migwel.tournify.client.TournamentClient;
 import net.migwel.tournify.data.Event;
+import net.migwel.tournify.data.Notification;
 import net.migwel.tournify.data.Phase;
 import net.migwel.tournify.data.PhaseGroup;
 import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.SetUpdate;
+import net.migwel.tournify.data.Subscription;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.data.TournamentTracking;
+import net.migwel.tournify.store.NotificationRepository;
+import net.migwel.tournify.store.SubscriptionRepository;
 import net.migwel.tournify.store.TournamentRepository;
 import net.migwel.tournify.store.TrackingRepository;
 import org.slf4j.Logger;
@@ -21,6 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //TODO: I'm not sure I'm happy with an abstract class. I'd rather have an interface but not sure how to do that...
 public abstract class TournamentService {
@@ -32,6 +37,12 @@ public abstract class TournamentService {
 
     @Autowired
     private TrackingRepository trackingRepository;
+
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
 
     protected Tournament getTournament(TournamentClient tournamentClient,
                                        String formattedUrl) {
@@ -67,9 +78,19 @@ public abstract class TournamentService {
         boolean hasChanged = !setUpdates.isEmpty();
         if(hasChanged) {
             log.info("Tournament has changed: saving modifications");
-            tournamentRepository.save(oldTournament); //TODO: Fix... This saves a new tournament...
+            tournamentRepository.save(oldTournament);
+            addNotification(oldTournament.getUrl(), setUpdates);
         }
         return hasChanged;
+    }
+
+    private void addNotification(String tournamentUrl, List<SetUpdate> setUpdates) {
+        List<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrl(tournamentUrl);
+        String setUpdatesStr = setUpdates.stream().map(e -> e.toString()).collect(Collectors.joining(","));
+        for(Subscription subscription : subscriptionList) {
+            Notification notification = new Notification(subscription, setUpdatesStr, new Date(), new Date());
+            notificationRepository.save(notification);
+        }
     }
 
     //Returns true if tournaments are the same

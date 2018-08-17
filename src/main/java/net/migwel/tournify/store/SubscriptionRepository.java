@@ -1,10 +1,13 @@
 package net.migwel.tournify.store;
 
 import net.migwel.tournify.data.Subscription;
-import net.migwel.tournify.data.Tournament;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 public interface SubscriptionRepository extends CrudRepository<Subscription, Long> {
 
-    public Subscription findByTournamentUrlAndCallbackUrl(String url, String callbackUrl);
+    Subscription findByTournamentUrlAndCallbackUrl(String url, String callbackUrl);
+
+    List<Subscription> findByTournamentUrl(String tournamentUrl);
 }

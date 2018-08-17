@@ -41,4 +41,14 @@ public class SetUpdate {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("SetUpdate{");
+        sb.append("id=").append(id);
+        sb.append(", set=").append(set);
+        sb.append(", description='").append(description).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
