@@ -8,15 +8,14 @@ import net.migwel.tournify.store.TrackingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
 
 @Component
-public class Tracker implements ApplicationRunner { //TODO: Tracking should be more fine-grained (events or sets)
+public class Tracker { //TODO: Tracking should be more fine-grained (events or sets)
 
     private static final Logger log = LoggerFactory.getLogger(Tracker.class);
 
@@ -34,15 +33,8 @@ public class Tracker implements ApplicationRunner { //TODO: Tracking should be m
     @Autowired
     private ServiceFactory serviceFactory;
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        while (true) {
-            log.info("Start tracking");
-            startTracking();
-            Thread.sleep(TRACKING_WAIT_MS);
-        }
-    }
 
+    @Scheduled(fixedDelay = TRACKING_WAIT_MS)
     private void startTracking() {
         List<TournamentTracking> trackingList = trackingRepository.findByNextDateBeforeAndDone(new Date(), false);
         log.info("Tracking list size: "+ trackingList.size());
