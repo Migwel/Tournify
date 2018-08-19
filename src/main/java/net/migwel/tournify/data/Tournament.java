@@ -25,8 +25,13 @@ public class Tournament {
     private Long id;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) //This needs to be changed to fetch in repository
-    private List<Event> events;
+    private List<Phase> phases;
     private String name;
+
+    @ManyToOne(cascade=CascadeType.ALL)
+    private GameType gameType;
+
+    private String description;
 
     @ManyToOne(cascade=CascadeType.ALL)
     private Address address;
@@ -39,21 +44,22 @@ public class Tournament {
     public Tournament() {
     }
 
-    public Tournament(List<Event> events, String name, Address address, String url, Date date) {
-        this.events = events;
+    public Tournament(List<Phase> phases, String name, GameType gameType, Address address, String url, Date date) {
+        this.phases = phases;
         this.name = name;
+        this.gameType = gameType;
         this.address = address;
         this.url = url;
         this.date = new Date(date.getTime());
     }
 
     @Nonnull
-    public List<Event> getEvents() {
-        return events != null ? events : new ArrayList<>();
+    public List<Phase> getPhases() {
+        return phases != null ? phases : new ArrayList<>();
     }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
+    public void setPhases(List<Phase> phases) {
+        this.phases = phases;
     }
 
     public String getName() {
@@ -99,7 +105,7 @@ public class Tournament {
     @Override
     public String toString() {
         return "Tournament{" +
-                "events=" + events +
+                "phases=" + phases +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", url='" + url + '\'' +

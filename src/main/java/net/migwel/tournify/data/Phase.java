@@ -18,7 +18,8 @@ public class Phase {
     private Long id;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<PhaseGroup> phaseGroups;
+    private List<Set> sets;
+
     private String phaseName;
 
     private boolean done;
@@ -26,18 +27,18 @@ public class Phase {
     public Phase() {
     }
 
-    public Phase(List<PhaseGroup> phaseGroups, String phaseName) {
-        this.phaseGroups = phaseGroups;
+    public Phase(List<Set> sets, String phaseName) {
+        this.sets = sets;
         this.phaseName = phaseName;
     }
 
     @Nonnull
-    public List<PhaseGroup> getPhaseGroups() {
-        return phaseGroups != null ? phaseGroups : new ArrayList<>();
+    public List<Set> getSets() {
+        return sets != null ? sets : new ArrayList<>();
     }
 
-    public void setPhaseGroups(List<PhaseGroup> phaseGroups) {
-        this.phaseGroups = phaseGroups;
+    public void setSets(List<Set> sets) {
+        this.sets = sets;
     }
 
     public String getPhaseName() {
@@ -59,7 +60,7 @@ public class Phase {
     @Override
     public String toString() {
         return "Phase{" +
-                "phaseGroups=" + phaseGroups +
+                "sets=" + sets +
                 ", phaseName='" + phaseName + '\'' +
                 '}';
     }

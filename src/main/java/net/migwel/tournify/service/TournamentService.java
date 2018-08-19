@@ -1,9 +1,7 @@
 package net.migwel.tournify.service;
 
 import net.migwel.tournify.client.TournamentClient;
-import net.migwel.tournify.data.Event;
 import net.migwel.tournify.data.Phase;
-import net.migwel.tournify.data.PhaseGroup;
 import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.SetUpdate;
@@ -79,30 +77,8 @@ public abstract class TournamentService {
     @Nonnull
     private List<SetUpdate> compareTournaments(Tournament oldTournament, Tournament newTournament) {
         List<SetUpdate> setUpdates = new LinkedList<>();
-        List<Event> oldEvents = oldTournament.getEvents();
-        List<Event> newEvents = newTournament.getEvents();
-
-        Map<String, Event> oldEventsMap = eventsToMap(oldEvents);
-        for(Event newEvent : newEvents) {
-            Event oldEvent = oldEventsMap.get(newEvent.getName());
-            if(oldEvent == null) {
-                oldEvents.add(newEvent);
-                continue;
-            }
-            compareEvents(oldEvent, newEvent, setUpdates);
-        }
-
-        return setUpdates;
-    }
-
-    //Returns true if events are the same
-    private void compareEvents(@Nonnull Event oldEvent, Event newEvent, List<SetUpdate> setUpdates) {
-        if(newEvent == null) {
-            return;
-        }
-
-        List<Phase> oldPhases = oldEvent.getPhases();
-        List<Phase> newPhases = newEvent.getPhases();
+        List<Phase> oldPhases = oldTournament.getPhases();
+        List<Phase> newPhases = newTournament.getPhases();
 
         Map<String, Phase> oldPhasesMap = phasesToMap(oldPhases);
         for(Phase newPhase : newPhases) {
@@ -113,6 +89,8 @@ public abstract class TournamentService {
             }
             comparePhases(oldPhase, newPhase, setUpdates);
         }
+
+        return setUpdates;
     }
 
     //Returns true if phases are the same
@@ -121,28 +99,8 @@ public abstract class TournamentService {
             return;
         }
 
-        List<PhaseGroup> oldPhaseGroups = oldPhase.getPhaseGroups();
-        List<PhaseGroup> newPhaseGroups = newPhase.getPhaseGroups();
-
-        Map<Long, PhaseGroup> oldPhaseGroupsMap = phaseGroupsToMap(oldPhaseGroups);
-        for(PhaseGroup newPhaseGroup : newPhaseGroups) {
-            PhaseGroup oldPhaseGroup = oldPhaseGroupsMap.get(newPhaseGroup.getExternalId());
-            if(oldPhaseGroup == null) {
-                oldPhaseGroups.add(newPhaseGroup);
-                continue;
-            }
-            comparePhaseGroups(oldPhaseGroup, newPhaseGroup, setUpdates);
-        }
-    }
-
-    //Returns true if phase groups are the same
-    private void comparePhaseGroups(@Nonnull PhaseGroup oldPhaseGroup, PhaseGroup newPhaseGroup, List<SetUpdate> setUpdates) {
-        if(newPhaseGroup == null) {
-            return;
-        }
-
-        List<Set> oldSets = oldPhaseGroup.getSets();
-        List<Set> newSets = newPhaseGroup.getSets();
+        List<Set> oldSets = oldPhase.getSets();
+        List<Set> newSets = newPhase.getSets();
 
         Map<String, Set> oldSetsMap = setsToMap(oldSets);
         for(Set newSet : newSets) {
@@ -183,14 +141,6 @@ public abstract class TournamentService {
         return setsMap;
     }
 
-    private Map<Long,PhaseGroup> phaseGroupsToMap(List<PhaseGroup> phaseGroups) {
-        Map<Long, PhaseGroup> phaseGroupsMap = new HashMap<>();
-        for(PhaseGroup phaseGroup : phaseGroups) {
-            phaseGroupsMap.put(phaseGroup.getExternalId(), phaseGroup);
-        }
-        return phaseGroupsMap;
-    }
-
     private Map<String,Phase> phasesToMap(List<Phase> phases) {
         Map<String, Phase> phasesMap = new HashMap<>();
         for(Phase phase : phases) {
@@ -198,16 +148,6 @@ public abstract class TournamentService {
         }
 
         return phasesMap;
-    }
-
-    @Nonnull
-    private Map<String, Event> eventsToMap(List<Event> events) {
-        Map<String, Event> eventsMap = new HashMap<>();
-        for(Event event : events) {
-            eventsMap.put(event.getName(), event); //TODO: Probably smarter to use hashcode
-        }
-
-        return eventsMap;
     }
 
     public abstract Tournament getTournament(String url);
