@@ -79,13 +79,13 @@ public abstract class TournamentService {
         if(hasChanged) {
             log.info("Tournament has changed: saving modifications");
             tournamentRepository.save(oldTournament);
-            addNotification(oldTournament.getUrl(), setUpdates);
+            addNotification(oldTournament.getUrl(), setUpdates); //This shouldn't be here
         }
         return hasChanged;
     }
 
     private void addNotification(String tournamentUrl, List<SetUpdate> setUpdates) {
-        List<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrl(tournamentUrl);
+        List<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrlAndActive(tournamentUrl, true);
         String setUpdatesStr = setUpdates.stream().map(e -> e.toString()).collect(Collectors.joining(","));
         for(Subscription subscription : subscriptionList) {
             Notification notification = new Notification(subscription, setUpdatesStr, new Date(), new Date());

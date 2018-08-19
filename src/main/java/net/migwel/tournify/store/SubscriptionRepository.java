@@ -9,5 +9,5 @@ public interface SubscriptionRepository extends CrudRepository<Subscription, Lon
 
     Subscription findByTournamentUrlAndCallbackUrl(String url, String callbackUrl);
 
-    List<Subscription> findByTournamentUrl(String tournamentUrl);
+    List<Subscription> findByTournamentUrlAndActive(String tournamentUrl, boolean active);
 }

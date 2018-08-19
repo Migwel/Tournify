@@ -24,7 +24,7 @@ public class SubscriptionService {
         TournamentService tournamentService = serviceFactory.getTournamentService(tournamentUrl);
         Tournament tournament = tournamentService.getTournament(tournamentUrl);
 
-        subscription = new Subscription(tournament, callbackUrl);
+        subscription = new Subscription(tournament, callbackUrl, true);
         subscriptionRepository.save(subscription);
 
         return subscription;

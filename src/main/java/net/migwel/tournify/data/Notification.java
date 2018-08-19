@@ -26,6 +26,9 @@ public class Notification {
 
     private String content;
 
+    public Notification() {
+    }
+
     public Notification(Subscription subscription, String content, Date startDate, Date nextDate) {
         this.subscription = subscription;
         this.content = content;

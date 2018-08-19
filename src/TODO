@@ -1,0 +1,3 @@
+- Remove test db password from properties file
+- Stop using eager fetching
+- Revise tournament structure
