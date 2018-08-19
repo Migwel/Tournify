@@ -21,7 +21,7 @@ public class TestUrlServiceImpl {
             "https://api.smash.gg/tournament/genesis-3",
             "https://api.smash.gg/tournament/genesis-3",
             "https://api.smash.gg/tournament/abcdeflkjfDDDD1235EEDDS5",
-            "https://api.smash.gg/tournament/ab", // This one is valid but will be formatted to tournament/ab
+            "https://api.smash.gg/tournament/ab",
     };
 
     private String[] invalidUrls = {"www.google.fr",

@@ -1,0 +1,32 @@
+Tournament:
+- represents a full tournament. For example, EVO
+- consists of several events
+
+Event:
+- represents a specific game within a tournament. For example, SSBM at EVO
+- consists of several phases
+
+Phase:
+- Represents a set of brackets within an event. For example, Pools of SSBM at EVO
+- consists of several phases groups
+
+PhaseGroup:
+- Represent a bracket. For example Pool 1 of SSBM at EVO
+- consists of several sets
+
+Set:
+- Represent matches. For example PlayerA vs PlayerB in Pool 1 of SSBM at EVO
+- consists of players and a winner
+
+-------------------------------------------------------- NEW WAY ------------------------------------------------------------
+
+Tournament:
+- represents a tournament for a specific game. For example SSBM at EVO
+- consists of several phases
+
+Phase:
+- represents a part of the tournament. For example Pool 1 of SSBM at EVO
+
+Match:
+- represent matches. For example PlayerA vs PlayerB in Pool 1 of SSBM at EVO
+- consists of players and a winner
