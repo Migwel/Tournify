@@ -1,3 +1,5 @@
 - Remove test db password from properties file
 - Stop using eager fetching
 - Revise tournament structure
+- Create SQL files for schemas
+- Write tests

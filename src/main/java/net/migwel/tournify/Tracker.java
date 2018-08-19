@@ -1,9 +1,16 @@
 package net.migwel.tournify;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import net.migwel.tournify.data.Notification;
+import net.migwel.tournify.data.SetUpdate;
+import net.migwel.tournify.data.Subscription;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.data.TournamentTracking;
 import net.migwel.tournify.service.ServiceFactory;
 import net.migwel.tournify.service.TournamentService;
+import net.migwel.tournify.store.NotificationRepository;
+import net.migwel.tournify.store.SubscriptionRepository;
 import net.migwel.tournify.store.TrackingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class Tracker { //TODO: Tracking should be more fine-grained (events or sets)
@@ -31,7 +39,16 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
     private TrackingRepository trackingRepository;
 
     @Autowired
+    private SubscriptionRepository subscriptionRepository;
+
+    @Autowired
+    private NotificationRepository notificationRepository;
+
+    @Autowired
     private ServiceFactory serviceFactory;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
 
     @Scheduled(fixedDelay = TRACKING_WAIT_MS)
@@ -48,9 +65,9 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
                 continue;
             }
 
-            boolean isSame = !tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
+            List<SetUpdate> setUpdates = tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
 
-            if(isSame) {
+            if(setUpdates.isEmpty()) {
                 tracking.setNextDate(computeNextDate(tracking.getNoUpdateRetries()));
                 tracking.setNoUpdateRetries(tracking.getNoUpdateRetries() + 1);
                 if(tracking.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) { //TODO: add other ways of setting tracking to done (e.g. tournament is finished)
@@ -58,13 +75,29 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
                 }
             }
             else {
+                addNotification(tournament.getUrl(), setUpdates); //This shouldn't be here
                 tracking.setNextDate(new Date());
                 tracking.setNoUpdateRetries(0);
             }
 
             trackingRepository.save(tracking);
         }
+    }
 
+    private void addNotification(String tournamentUrl, List<SetUpdate> setUpdates) {
+        List<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrlAndActive(tournamentUrl, true);
+        String setUpdatesStr;
+        try {
+            setUpdatesStr = objectMapper.writeValueAsString(setUpdates);
+        } catch (JsonProcessingException e) {
+            setUpdatesStr = setUpdates.stream().map(el -> el.toString()).collect(Collectors.joining(","));
+            log.warn("Could not serialize setUpdates "+ setUpdatesStr +": "+ e.getMessage());
+            return;
+        }
+        for(Subscription subscription : subscriptionList) {
+            Notification notification = new Notification(subscription, setUpdatesStr, new Date(), new Date());
+            notificationRepository.save(notification);
+        }
     }
 
     private Date computeNextDate(int noUpdateRetries) {

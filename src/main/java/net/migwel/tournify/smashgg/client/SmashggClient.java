@@ -11,10 +11,10 @@ import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.smashgg.data.GetPhaseGroupResponse;
 import net.migwel.tournify.smashgg.data.GetTournamentResponse;
+import net.migwel.tournify.smashgg.data.Group;
 import net.migwel.tournify.smashgg.data.Participant;
 import net.migwel.tournify.smashgg.data.Seed;
 import net.migwel.tournify.smashgg.data.VideoGame;
-import net.migwel.tournify.smashgg.data.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,8 +105,10 @@ public class SmashggClient implements TournamentClient {
 
                     List<Set> sets = new ArrayList<>();
                     for(net.migwel.tournify.smashgg.data.Set set : phaseGroupResponse.getEntities().getSets()) {
-                        List<Player> listParticipants = getParticipants(set, participants);
-                        sets.add(new Set(set.getId(), listParticipants, set.getWinnerId(), set.getFullRoundText()));
+                        Map<String, Player> participantsMap = getParticipants(set, participants);
+                        List<Player> listParticipants = new ArrayList<>(participantsMap.values());
+                        Player winner = participantsMap.get(set.getWinnerId());
+                        sets.add(new Set(set.getId(), listParticipants, winner, set.getFullRoundText()));
                     }
                     phaseGroup.setSets(sets);
                 }
@@ -129,15 +131,15 @@ public class SmashggClient implements TournamentClient {
         return new Address(tournament.getCity(), tournament.getAddrState(), tournament.getVenueAddress(), null, tournament.getCountryCode());
     }
 
-    private List<Player> getParticipants(net.migwel.tournify.smashgg.data.Set set, Map<String, Player> participants) {
-        List<Player> listParticipants = new ArrayList<>();
+    private Map<String, Player> getParticipants(net.migwel.tournify.smashgg.data.Set set, Map<String, Player> participants) {
+        Map<String, Player> listParticipants = new HashMap<>();
         String entrant1Id = set.getEntrant1Id();
         if(entrant1Id != null) {
-            listParticipants.add(participants.get(entrant1Id));
+            listParticipants.put(entrant1Id, participants.get(entrant1Id));
         }
-        String entrant2Id = set.getEntrant1Id();
+        String entrant2Id = set.getEntrant2Id();
         if(entrant2Id != null) {
-            listParticipants.add(participants.get(entrant1Id));
+            listParticipants.put(entrant2Id, participants.get(entrant2Id));
         }
         return listParticipants;
     }

@@ -2,17 +2,14 @@ package net.migwel.tournify.service;
 
 import net.migwel.tournify.client.TournamentClient;
 import net.migwel.tournify.data.Event;
-import net.migwel.tournify.data.Notification;
 import net.migwel.tournify.data.Phase;
 import net.migwel.tournify.data.PhaseGroup;
 import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.SetUpdate;
-import net.migwel.tournify.data.Subscription;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.data.TournamentTracking;
 import net.migwel.tournify.store.NotificationRepository;
-import net.migwel.tournify.store.SubscriptionRepository;
 import net.migwel.tournify.store.TournamentRepository;
 import net.migwel.tournify.store.TrackingRepository;
 import org.slf4j.Logger;
@@ -25,7 +22,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 //TODO: I'm not sure I'm happy with an abstract class. I'd rather have an interface but not sure how to do that...
 public abstract class TournamentService {
@@ -37,9 +33,6 @@ public abstract class TournamentService {
 
     @Autowired
     private TrackingRepository trackingRepository;
-
-    @Autowired
-    private SubscriptionRepository subscriptionRepository;
 
     @Autowired
     private NotificationRepository notificationRepository;
@@ -69,28 +62,17 @@ public abstract class TournamentService {
         trackingRepository.save(tournamentTracking);
     }
 
-    //Returns true if tournament has changed
-    public boolean updateTournament(String url) {
+    @Nonnull
+    public List<SetUpdate> updateTournament(String url) {
         Tournament oldTournament = tournamentRepository.findByUrl(url);
         Tournament newTournament = fetchTournament(url);
         //We could/should probably use some comparison framework, like JaVers
         List<SetUpdate> setUpdates = compareTournaments(oldTournament, newTournament);
-        boolean hasChanged = !setUpdates.isEmpty();
-        if(hasChanged) {
+        if(!setUpdates.isEmpty()) {
             log.info("Tournament has changed: saving modifications");
             tournamentRepository.save(oldTournament);
-            addNotification(oldTournament.getUrl(), setUpdates); //This shouldn't be here
         }
-        return hasChanged;
-    }
-
-    private void addNotification(String tournamentUrl, List<SetUpdate> setUpdates) {
-        List<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrlAndActive(tournamentUrl, true);
-        String setUpdatesStr = setUpdates.stream().map(e -> e.toString()).collect(Collectors.joining(","));
-        for(Subscription subscription : subscriptionList) {
-            Notification notification = new Notification(subscription, setUpdatesStr, new Date(), new Date());
-            notificationRepository.save(notification);
-        }
+        return setUpdates;
     }
 
     //Returns true if tournaments are the same
@@ -189,7 +171,7 @@ public abstract class TournamentService {
 
         if(!newSet.getWinner().equals(oldSet.getWinner())) {
             oldSet.setWinner(newSet.getWinner());
-            setUpdates.add(new SetUpdate(oldSet, "Set "+ oldSet.getExternalId() +" has been updated: winner is "+ newSet.getWinner()));
+            setUpdates.add(new SetUpdate(oldSet, "Set "+ oldSet.getExternalId() +" has been updated: winner is "+ newSet.getWinner().getUsername()));
         }
     }
 

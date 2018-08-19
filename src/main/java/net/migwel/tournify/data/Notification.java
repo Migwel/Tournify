@@ -1,5 +1,6 @@
 package net.migwel.tournify.data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,6 +25,7 @@ public class Notification {
 
     private Date nextDate;
 
+    @Column(columnDefinition="TEXT")
     private String content;
 
     public Notification() {
