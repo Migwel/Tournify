@@ -3,7 +3,7 @@ url=""
 if [[ $# -eq 0 ]];
 then
   echo "No argument"
-  url="https://api.smash.gg/tournament/nhl18-community-tournament-series-at-square-one"
+  url="https://smash.gg/tournament/nhl18-community-tournament-series-at-square-one/events/nhl-10-5/overview"
 else
   echo "Argument found"
   url=$1

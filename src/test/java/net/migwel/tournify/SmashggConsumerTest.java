@@ -13,6 +13,6 @@ public class SmashggConsumerTest {
     public void testGetTournament() {
         RestTemplateBuilder templateBuilder = new RestTemplateBuilder();
         SmashggClient consumer = new SmashggClient(templateBuilder.build(), new SmashggUrlService());
-        System.out.println(consumer.fetchTournament("https://api.smash.gg/tournament/the-big-house-6/event/melee-singles"));
+        System.out.println(consumer.fetchTournament("https://api.smash.gg/tournament/nhl18-community-tournament-series-at-square-one/event/nhl-10-5"));
     }
 }

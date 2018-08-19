@@ -23,7 +23,7 @@ public class SmashggUrlService implements UrlService {
             throw new IllegalArgumentException("Invalid url: "+ url);
         }
 
-        return "https://api.smash.gg/tournament/"+ m.group(6);
+        return "https://api.smash.gg/tournament/"+ m.group(6) +"/event/"+ m.group(8);
 
     }
 }

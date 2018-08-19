@@ -22,11 +22,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.CheckForNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @Component("SmashggClient")
@@ -55,6 +58,9 @@ public class SmashggClient implements TournamentClient {
     public Tournament fetchTournament(String eventUrl) {
         log.info("Fetching tournament at url: "+ eventUrl);
         String tournamentWithEventsUrl = buildTournamentUrlFromEventUrl(eventUrl);
+        if(tournamentWithEventsUrl == null) {
+            return null;
+        }
         GetTournamentResponse tournamentResponse = restTemplate.getForObject(tournamentWithEventsUrl, GetTournamentResponse.class);
 
         if(tournamentResponse == null ||
@@ -134,8 +140,17 @@ public class SmashggClient implements TournamentClient {
                 new Date(tournamentResponse.getEntities().getTournament().getStartAt()*1000));
     }
 
+    @CheckForNull
     private String buildTournamentUrlFromEventUrl(String eventUrl) {
-        return urlService.normalizeUrl(eventUrl) + EXPAND_TOURNAMENT;
+        String smashggTournamentURLPattern = "^https:\\/\\/api.smash.gg\\/tournament\\/[A-Za-z0-9-]+";
+        Pattern p = Pattern.compile(smashggTournamentURLPattern);
+        Matcher m = p.matcher(eventUrl);
+
+        if (m.find()) {
+            return m.group(0) + EXPAND_TOURNAMENT;
+        }
+
+        return null;
     }
 
     private Address buildAddress(net.migwel.tournify.smashgg.data.Tournament tournament) {

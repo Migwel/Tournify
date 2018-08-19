@@ -10,23 +10,26 @@ public class TestUrlServiceImpl {
 
     private UrlService urlService = new SmashggUrlService();
 
-    private String[] validSmashggUrls = {"https://api.smash.gg/tournament/genesis-3",
-            "www.smash.gg/tournament/genesis-3",
-            "smash.gg/tournament/genesis-3",
-            "https://www.smash.gg/tournament/abcdeflkjfDDDD1235EEDDS5",
-            "https://www.smash.gg/tournament/ab$%^", // This one is valid but will be formatted to tournament/ab
+    private String[] validSmashggUrls = {"https://api.smash.gg/tournament/genesis-3/event/brawl-1v1-singles",
+            "www.smash.gg/tournament/genesis-3/event/brawl-1v1-singles",
+            "smash.gg/tournament/genesis-3/event/brawl-1v1-singles",
+            "smash.gg/tournament/genesis-3/events/brawl-1v1-singles",
+            "https://www.smash.gg/tournament/test/event/abcdeflkjfDDDD1235EEDDS5",
+            "https://smash.gg/tournament/super-smash-con-2018/event/brawl-1v1-singles/overview", // This one is valid but will be formatted to tournament/ab
     };
 
-    private String[] expectedSmashggUrls = {"https://api.smash.gg/tournament/genesis-3",
-            "https://api.smash.gg/tournament/genesis-3",
-            "https://api.smash.gg/tournament/genesis-3",
-            "https://api.smash.gg/tournament/abcdeflkjfDDDD1235EEDDS5",
-            "https://api.smash.gg/tournament/ab",
+    private String[] expectedSmashggUrls = {"https://api.smash.gg/tournament/genesis-3/event/brawl-1v1-singles",
+            "https://api.smash.gg/tournament/genesis-3/event/brawl-1v1-singles",
+            "https://api.smash.gg/tournament/genesis-3/event/brawl-1v1-singles",
+            "https://api.smash.gg/tournament/genesis-3/event/brawl-1v1-singles",
+            "https://api.smash.gg/tournament/test/event/abcdeflkjfDDDD1235EEDDS5",
+            "https://api.smash.gg/tournament/super-smash-con-2018/event/brawl-1v1-singles",
     };
 
     private String[] invalidUrls = {"www.google.fr",
             "www.smash.gg/tournament/",
             "www.smash.gg/tournament/$",
+            "https://smash.gg/tournament/super-smash-con-2018",
     };
 
     @Test
