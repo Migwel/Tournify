@@ -89,14 +89,14 @@ public abstract class TournamentService {
                 oldPhases.add(newPhase);
                 continue;
             }
-            comparePhases(oldPhase, newPhase, setUpdates);
+            comparePhases(oldPhase, newPhase, setUpdates, oldTournament.getName());
         }
 
         return setUpdates;
     }
 
     //Returns true if phases are the same
-    private void comparePhases(@Nonnull Phase oldPhase, Phase newPhase, List<SetUpdate> setUpdates) {
+    private void comparePhases(@Nonnull Phase oldPhase, Phase newPhase, List<SetUpdate> setUpdates, String tournamentName) {
         if(newPhase == null) {
             return;
         }
@@ -112,12 +112,12 @@ public abstract class TournamentService {
                 continue;
             }
 
-            compareSets(oldSet, newSet, setUpdates);
+            compareSets(oldSet, newSet, setUpdates, tournamentName, oldPhase.getPhaseName());
         }
     }
 
     //Returns true if sets are the same
-    private void compareSets(@Nonnull Set oldSet, Set newSet, List<SetUpdate> setUpdates) {
+    private void compareSets(@Nonnull Set oldSet, Set newSet, List<SetUpdate> setUpdates, String tournamentName, String phaseName) {
         if(newSet == null || newSet.getWinner() == null) {
             return;
         }
@@ -131,14 +131,18 @@ public abstract class TournamentService {
 
         if(!newSet.getWinner().equals(oldSet.getWinner())) {
             oldSet.setWinner(newSet.getWinner());
-            String description = buildSetUpdateDescription(oldSet.getExternalId(), oldSet.getPlayers(), newSet.getWinner());
+            String description = buildSetUpdateDescription(tournamentName, phaseName, oldSet.getRound(), oldSet.getPlayers(), newSet.getWinner());
             setUpdates.add(new SetUpdate(oldSet, description));
         }
     }
 
-    private String buildSetUpdateDescription(String externalId, Collection<Player> players, Player winner) {
-        return "Set [" +
-                externalId +
+    private String buildSetUpdateDescription(String tournamentName, String phaseName, String round, Collection<Player> players, Player winner) {
+        return "Tournament [" +
+                tournamentName +
+                "] - Phase [" +
+                phaseName +
+                "] - Set [" +
+                round +
                 "] - Players [" +
                 players.stream().map(Player::getDisplayUsername).collect(Collectors.joining(" vs ")) +
                 "] - Winner is " +
