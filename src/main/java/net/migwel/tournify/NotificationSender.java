@@ -1,6 +1,9 @@
 package net.migwel.tournify;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.migwel.tournify.data.Notification;
+import net.migwel.tournify.data.SetUpdate;
 import net.migwel.tournify.data.Subscription;
 import net.migwel.tournify.request.NotificationRequest;
 import net.migwel.tournify.response.NotificationResponse;
@@ -15,6 +18,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.CheckForNull;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +40,9 @@ public class NotificationSender {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
 
     @Scheduled(fixedDelay = NOTIFY_WAIT_MS)
@@ -68,7 +75,15 @@ public class NotificationSender {
             return null;
         }
 
-        NotificationRequest request = new NotificationRequest(notification.getContent());
+        List<SetUpdate> setUpdates;
+        try {
+            setUpdates = objectMapper.readValue(notification.getContent(), new TypeReference<List<SetUpdate>>(){});
+        } catch (IOException e) {
+            log.warn("Could not deserialize notification: "+ notification.getContent());
+            return null;
+        }
+
+        NotificationRequest request = new NotificationRequest(setUpdates);
         try {
             return restTemplate.postForObject(callBackUrl, request, NotificationResponse.class);
         }

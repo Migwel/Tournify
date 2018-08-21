@@ -1,5 +1,4 @@
 - Remove test db password from properties file
 - Stop using eager fetching
-- Revise tournament structure
-- Create SQL files for schemas
+- Create SQL files for schemas (Use Flyway?)
 - Write tests

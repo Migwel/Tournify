@@ -35,6 +35,15 @@ public class Player {
         return username;
     }
 
+    public String getDisplayUsername() {
+        StringBuilder displayUsername = new StringBuilder();
+        if(prefix != null && !prefix.isEmpty()) {
+            displayUsername.append(prefix).append(" ");
+        }
+        displayUsername.append(username);
+        return displayUsername.toString();
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }

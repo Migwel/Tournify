@@ -75,7 +75,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
                 }
             }
             else {
-                addNotification(tournament.getUrl(), setUpdates); //This shouldn't be here
+                addNotification(tournament.getUrl(), setUpdates);
                 tracking.setNextDate(new Date());
                 tracking.setNoUpdateRetries(0);
             }

@@ -1,18 +1,22 @@
 package net.migwel.tournify.request;
 
+import net.migwel.tournify.data.SetUpdate;
+
+import java.util.List;
+
 public class NotificationRequest {
 
-    private String content;
+    private List<SetUpdate> setUpdates;
 
-    public NotificationRequest(String content) {
-        this.content = content;
+    public NotificationRequest(List<SetUpdate> setUpdates) {
+        this.setUpdates = setUpdates;
     }
 
-    public String getContent() {
-        return content;
+    public List<SetUpdate> getSetUpdates() {
+        return setUpdates;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setSetUpdates(List<SetUpdate> setUpdates) {
+        this.setUpdates = setUpdates;
     }
 }

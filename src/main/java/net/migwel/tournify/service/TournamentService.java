@@ -15,11 +15,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 //TODO: I'm not sure I'm happy with an abstract class. I'd rather have an interface but not sure how to do that...
 public abstract class TournamentService {
@@ -129,8 +131,18 @@ public abstract class TournamentService {
 
         if(!newSet.getWinner().equals(oldSet.getWinner())) {
             oldSet.setWinner(newSet.getWinner());
-            setUpdates.add(new SetUpdate(oldSet, "Set "+ oldSet.getExternalId() +" has been updated: winner is "+ newSet.getWinner().getUsername()));
+            String description = buildSetUpdateDescription(oldSet.getExternalId(), oldSet.getPlayers(), newSet.getWinner());
+            setUpdates.add(new SetUpdate(oldSet, description));
         }
+    }
+
+    private String buildSetUpdateDescription(String externalId, Collection<Player> players, Player winner) {
+        return "Set [" +
+                externalId +
+                "] - Players [" +
+                players.stream().map(Player::getDisplayUsername).collect(Collectors.joining(" vs ")) +
+                "] - Winner is " +
+                winner.getDisplayUsername();
     }
 
     private Map<String,Set> setsToMap(List<Set> sets) {

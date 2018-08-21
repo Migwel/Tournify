@@ -7,8 +7,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 
 public class SmashggConsumerTest {
 
-    //https://smash.gg/tournament/super-smash-con-2018/events/melee-1v1-singles/overview
-
     @Test
     public void testGetTournament() {
         RestTemplateBuilder templateBuilder = new RestTemplateBuilder();
