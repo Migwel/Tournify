@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface SubscriptionRepository extends CrudRepository<Subscription, Long> {
 
-    Subscription findByTournamentUrlAndCallbackUrl(String url, String callbackUrl);
+    Subscription findByCallbackUrlAndTournamentUrl(String callbackUrl, String tournamentUrl);
+    Subscription findByTournamentUrl(String tournamentUrl);
+    Subscription findByCallbackUrl(String callbackUrl);
 
     List<Subscription> findByTournamentUrlAndActive(String tournamentUrl, boolean active);
 }

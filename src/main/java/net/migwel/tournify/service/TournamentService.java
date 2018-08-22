@@ -37,6 +37,8 @@ public abstract class TournamentService {
     @Autowired
     private NotificationRepository notificationRepository;
 
+    public abstract String normalizeUrl(String tournamentUrl);
+
     protected Tournament getTournament(TournamentClient tournamentClient,
                                        String formattedUrl) {
         Tournament tournament = tournamentRepository.findByUrl(formattedUrl);

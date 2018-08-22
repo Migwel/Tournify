@@ -20,14 +20,19 @@ public class SmashggTournamentService extends TournamentService {
     private TournamentClient tournamentClient;
 
     @Override
+    public String normalizeUrl(String tournamentUrl) {
+        return urlService.normalizeUrl(tournamentUrl);
+    }
+
+    @Override
     public Tournament getTournament(String url) {
-        String formattedUrl = urlService.normalizeUrl(url);
+        String formattedUrl = normalizeUrl(url);
         return getTournament(tournamentClient, formattedUrl);
     }
 
     @Override
     protected Tournament fetchTournament(String url) {
-        String formattedUrl = urlService.normalizeUrl(url);
+        String formattedUrl = normalizeUrl(url);
         return fetchTournament(tournamentClient, formattedUrl);
     }
 }

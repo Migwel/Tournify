@@ -1,8 +1,8 @@
 package net.migwel.tournify.controller;
 
-import net.migwel.tournify.response.SubscriptionResponse;
 import net.migwel.tournify.data.Subscription;
 import net.migwel.tournify.request.SubscriptionRequest;
+import net.migwel.tournify.response.SubscriptionResponse;
 import net.migwel.tournify.service.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +17,7 @@ public class SubscriptionController {
     @Autowired
     private SubscriptionService subscriptionService;
 
-    @RequestMapping(method= RequestMethod.PUT)
+    @RequestMapping(method= RequestMethod.POST)
     public SubscriptionResponse addSubscription(@RequestBody SubscriptionRequest request) throws Exception {
         Subscription subscription = subscriptionService.addSubscription(request.getTournamentUrl(), request.getCallbackUrl());
         SubscriptionResponse subscriptionResponse = new SubscriptionResponse();
@@ -25,6 +25,10 @@ public class SubscriptionController {
         subscriptionResponse.setCallbackUrl(subscription.getCallbackUrl());
 
         return subscriptionResponse;
+    }
 
+    @RequestMapping(method= RequestMethod.DELETE)
+    public void deleteSubscription(@RequestBody SubscriptionRequest request) throws Exception {
+        subscriptionService.deleteSubscription(request.getTournamentUrl(), request.getCallbackUrl());
     }
 }
