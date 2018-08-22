@@ -1,1 +1,11 @@
-curl -H "Content-Type: application/json" -X DELETE -d '{"tournamentUrl":"https://smash.gg/tournament/spectrum-smash-57/events/spectrum-smash-56-singles/overview", "callbackUrl":"http://localhost:8091/notification"}' http://localhost:8090/subscribe
+subscriptionId=""
+
+if [[ $# -eq 0 ]];
+then
+  echo "Please specify id to be deleted"
+  exit 1
+else
+  subscriptionId=$1
+fi
+
+curl -X "DELETE"  http://localhost:8090/subscribe/$subscriptionId

@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class SubscriptionService {
 
@@ -36,12 +38,10 @@ public class SubscriptionService {
         return subscription;
     }
 
-    public void deleteSubscription(String tournamentUrl, String callbackUrl) {
-        TournamentService tournamentService = serviceFactory.getTournamentService(tournamentUrl);
-        String normalizedTournamentUrl = tournamentService.normalizeUrl(tournamentUrl);
-        Subscription subscription = subscriptionRepository.findByCallbackUrlAndTournamentUrl(callbackUrl, normalizedTournamentUrl);
+    public void deleteSubscription(UUID id) {
+        Subscription subscription = subscriptionRepository.findById(id);
         if(subscription == null) {
-            log.info("Subscription doesn't exist for callBackUrl: "+ callbackUrl +" and tournamentUrl: "+ normalizedTournamentUrl);
+            log.info("Subscription with id : "+ id +" doesn't exist");
             return;
         }
 
