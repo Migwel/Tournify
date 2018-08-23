@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,7 +36,10 @@ public class Tournament {
 
     @ManyToOne(cascade=CascadeType.ALL)
     private Address address;
+
+    @Column(unique = true)
     private String url;
+
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date date;
 
