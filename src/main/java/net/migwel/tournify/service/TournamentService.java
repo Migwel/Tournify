@@ -107,6 +107,7 @@ public abstract class TournamentService {
         List<Set> newSets = newPhase.getSets();
 
         Map<String, Set> oldSetsMap = setsToMap(oldSets);
+        boolean phaseDone = true;
         for(Set newSet : newSets) {
             Set oldSet = oldSetsMap.get(newSet.getExternalId());
             if(oldSet == null) {
@@ -115,7 +116,12 @@ public abstract class TournamentService {
             }
 
             compareSets(oldSet, newSet, setUpdates, tournamentName, oldPhase.getPhaseName());
+            if(!oldSet.isDone()) {
+                phaseDone = false;
+            }
         }
+
+        oldPhase.setDone(phaseDone);
     }
 
     //Returns true if sets are the same
@@ -133,6 +139,7 @@ public abstract class TournamentService {
 
         if(!newSet.getWinner().equals(oldSet.getWinner())) {
             oldSet.setWinner(newSet.getWinner());
+            oldSet.setDone(true);
             String description = buildSetUpdateDescription(tournamentName, phaseName, oldSet.getRound(), oldSet.getPlayers(), newSet.getWinner());
             setUpdates.add(new SetUpdate(oldSet, description));
         }

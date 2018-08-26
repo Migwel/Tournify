@@ -17,6 +17,8 @@ public class Phase {
     @GeneratedValue
     private Long id;
 
+    private String externalId;
+
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Set> sets;
 
@@ -27,9 +29,19 @@ public class Phase {
     public Phase() {
     }
 
-    public Phase(List<Set> sets, String phaseName) {
+    public Phase(String externalId, List<Set> sets, String phaseName, boolean done) {
+        this.externalId = externalId;
         this.sets = sets;
         this.phaseName = phaseName;
+        this.done = done;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     @Nonnull

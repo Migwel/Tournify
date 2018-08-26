@@ -32,11 +32,12 @@ public class Set {
     public Set() {
     }
 
-    public Set(String externalId, List<Player> players, Player winner, String round) {
+    public Set(String externalId, List<Player> players, Player winner, String round, boolean done) {
         this.externalId = externalId;
         this.players = players;
         this.winner = winner;
         this.round = round;
+        this.done = done;
     }
 
     public String getExternalId() {

@@ -15,6 +15,7 @@ import net.migwel.tournify.smashgg.data.Group;
 import net.migwel.tournify.smashgg.data.Participant;
 import net.migwel.tournify.smashgg.data.Seed;
 import net.migwel.tournify.smashgg.data.VideoGame;
+import net.migwel.tournify.store.TournamentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.CheckForNull;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +51,9 @@ public class SmashggClient implements TournamentClient {
     @Autowired
     @Qualifier("SmashggUrlService")
     private UrlService urlService;
+
+    @Autowired
+    private TournamentRepository tournamentRepository;
 
     public SmashggClient(RestTemplate restTemplate, UrlService urlService) {
         this.restTemplate = restTemplate;
@@ -83,49 +89,14 @@ public class SmashggClient implements TournamentClient {
             return null;
         }
 
-        Map<Long, List<Group>> groups = new HashMap<>(); //Map PhaseId - PhaseGroup
-        for(Group smashGgGroup : eventResponse.getEntities().getGroups()) {
-            groups.computeIfAbsent(smashGgGroup.getPhaseId(), k -> new ArrayList<>()).add(smashGgGroup);
+        Map<Long, Collection<Group>> groups = getGroups(eventResponse.getEntities().getGroups());
+
+        Tournament tournament = tournamentRepository.findByUrl(eventUrl);
+        Collection<Phase> existingPhases = Collections.emptyList();
+        if(tournament != null) {
+            existingPhases = tournament.getPhases();
         }
-
-        List<Phase> tournamentPhases = new ArrayList<>();
-        for(net.migwel.tournify.smashgg.data.Phase smashGgPhase : eventResponse.getEntities().getPhases()) {
-            List<Set> phaseSets = new ArrayList<>();
-            for(Group smashGgGroup : groups.get(smashGgPhase.getId())) {
-                String phaseGroupUrl = PHASE_GROUP_URL + smashGgGroup.getId() + EXPAND_PHASE_GROUP;
-
-                GetPhaseGroupResponse phaseGroupResponse = restTemplate.getForObject(phaseGroupUrl, GetPhaseGroupResponse.class);
-
-                if(phaseGroupResponse.getEntities() == null ||
-                   phaseGroupResponse.getEntities().getSeeds() == null ||
-                   phaseGroupResponse.getEntities().getSets() == null) {
-                    continue;
-                }
-
-                Map<String, Player> participants = new HashMap<>();
-                for(Seed seed : phaseGroupResponse.getEntities().getSeeds()) {
-                    if(seed.getMutations() == null || seed.getMutations().getParticipants() == null) {
-                        continue;
-                    }
-
-                    Map<String, Participant> participantsMap = seed.getMutations().getParticipants();
-                    for(Participant participant : participantsMap.values()) {
-                        Player player = new Player(participant.getPrefix(), participant.getGamerTag());
-                        participants.put(seed.getEntrantId(), player);
-                    }
-                }
-
-                List<Set> sets = new ArrayList<>();
-                for(net.migwel.tournify.smashgg.data.Set set : phaseGroupResponse.getEntities().getSets()) {
-                    Map<String, Player> participantsMap = getParticipants(set, participants);
-                    List<Player> listParticipants = new ArrayList<>(participantsMap.values());
-                    Player winner = participantsMap.get(set.getWinnerId());
-                    sets.add(new Set(set.getId(), listParticipants, winner, set.getFullRoundText()));
-                }
-                phaseSets.addAll(sets);
-            }
-            tournamentPhases.add(new Phase(phaseSets, smashGgPhase.getName()));
-        }
+        List<Phase> tournamentPhases = getPhases(existingPhases, eventResponse.getEntities().getPhases(), groups);
 
         Address address = buildAddress(tournamentResponse.getEntities().getTournament());
 
@@ -138,6 +109,84 @@ public class SmashggClient implements TournamentClient {
                 address,
                 eventUrl,
                 new Date(tournamentResponse.getEntities().getTournament().getStartAt()*1000));
+    }
+
+    private Map<Long, Collection<Group>> getGroups(Collection<Group> smashggGroups) {
+        Map<Long, Collection<Group>> groups = new HashMap<>(); //Map PhaseId - PhaseGroup
+        for(Group smashGgGroup : smashggGroups) {
+            groups.computeIfAbsent(smashGgGroup.getPhaseId(), k -> new ArrayList<>()).add(smashGgGroup);
+        }
+        return groups;
+    }
+
+    private List<Phase> getPhases(Collection<Phase> existingPhases,
+                                  Collection<net.migwel.tournify.smashgg.data.Phase> smashggPhases,
+                                  Map<Long, Collection<Group>> smashggGroups) {
+        List<Phase> tournamentPhases = new ArrayList<>();
+        for(net.migwel.tournify.smashgg.data.Phase smashGgPhase : smashggPhases) {
+            List<Set> phaseSets = new ArrayList<>();
+            if(phaseIsDone(existingPhases, smashGgPhase)) {
+                continue;
+            }
+            boolean phaseDone = true;
+            for(Group smashGgGroup : smashggGroups.get(smashGgPhase.getId())) {
+                String phaseGroupUrl = PHASE_GROUP_URL + smashGgGroup.getId() + EXPAND_PHASE_GROUP;
+
+                GetPhaseGroupResponse phaseGroupResponse = restTemplate.getForObject(phaseGroupUrl, GetPhaseGroupResponse.class);
+
+                if(phaseGroupResponse.getEntities() == null ||
+                   phaseGroupResponse.getEntities().getSeeds() == null ||
+                   phaseGroupResponse.getEntities().getSets() == null) {
+                    continue;
+                }
+
+                Map<String, Player> participants = getParticipants(phaseGroupResponse.getEntities().getSeeds());
+                Collection<Set> sets = getSets(phaseGroupResponse.getEntities().getSets(), participants);
+                 if(!sets.stream().allMatch(Set::isDone)) {
+                     phaseDone = false;
+                 }
+                phaseSets.addAll(sets);
+            }
+            tournamentPhases.add(new Phase(String.valueOf(smashGgPhase.getId()), phaseSets, smashGgPhase.getName(), phaseDone));
+        }
+        return tournamentPhases;
+    }
+
+    private boolean phaseIsDone(Collection<Phase> existingPhases, net.migwel.tournify.smashgg.data.Phase smashGgPhase) {
+        for(Phase existingPhase : existingPhases) {
+            if(existingPhase.getExternalId() != null && existingPhase.getExternalId().equals(String.valueOf(smashGgPhase.getId()))) {
+                return existingPhase.isDone();
+            }
+        }
+
+        return false;
+    }
+
+    private Collection<Set> getSets(Collection<net.migwel.tournify.smashgg.data.Set> smashggSets, Map<String, Player> participants) {
+        List<Set> sets = new ArrayList<>();
+        for(net.migwel.tournify.smashgg.data.Set smashggSet : smashggSets) {
+            Map<String, Player> participantsMap = getParticipants(smashggSet, participants);
+            List<Player> listParticipants = new ArrayList<>(participantsMap.values());
+            Player winner = participantsMap.get(smashggSet.getWinnerId());
+            sets.add(new Set(smashggSet.getId(), listParticipants, winner, smashggSet.getFullRoundText(), winner != null));
+        }
+        return sets;
+    }
+
+    private Map<String, Player> getParticipants(Collection<Seed> smashGgSeeds) {
+        Map<String, Player> participants = new HashMap<>();
+        for(Seed seed : smashGgSeeds) {
+            if(seed.getMutations() == null || seed.getMutations().getParticipants() == null) {
+                continue;
+            }
+
+            Map<String, Participant> participantsMap = seed.getMutations().getParticipants();
+            for(Participant participant : participantsMap.values()) {
+                Player player = new Player(participant.getPrefix(), participant.getGamerTag());
+                participants.put(seed.getEntrantId(), player);
+            }
+        }
+        return participants;
     }
 
     @CheckForNull
