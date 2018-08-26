@@ -37,14 +37,22 @@ public class SubscriptionService {
             return  subscription;
         }
 
-        Tournament tournament = new Tournament(normalizedTournamentUrl);
-        tournamentRepository.save(tournament);
-        trackingService.trackTournament(tournament);
+        Tournament tournament = tournamentRepository.findByUrl(normalizedTournamentUrl);
+        if(tournament == null) {
+            tournament = createAndTrackTournament(normalizedTournamentUrl);
+        }
 
         subscription = new Subscription(tournament, callbackUrl, true);
         subscriptionRepository.save(subscription);
 
         return subscription;
+    }
+
+    private Tournament createAndTrackTournament(String normalizedTournamentUrl) {
+        Tournament tournament = new Tournament(normalizedTournamentUrl);
+        tournamentRepository.save(tournament);
+        trackingService.trackTournament(tournament);
+        return tournament;
     }
 
     public void deleteSubscription(UUID id) {
