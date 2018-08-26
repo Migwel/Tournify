@@ -3,6 +3,7 @@ package net.migwel.tournify.service;
 import net.migwel.tournify.data.Subscription;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.store.SubscriptionRepository;
+import net.migwel.tournify.store.TournamentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,12 @@ public class SubscriptionService {
     private SubscriptionRepository subscriptionRepository;
 
     @Autowired
+    private TournamentRepository tournamentRepository;
+
+    @Autowired
+    private TrackingService trackingService;
+
+    @Autowired
     private ServiceFactory serviceFactory;
 
     public Subscription addSubscription(String tournamentUrl, String callbackUrl) {
@@ -30,7 +37,9 @@ public class SubscriptionService {
             return  subscription;
         }
 
-        Tournament tournament = tournamentService.getTournament(normalizedTournamentUrl);
+        Tournament tournament = new Tournament(normalizedTournamentUrl);
+        tournamentRepository.save(tournament);
+        trackingService.trackTournament(tournament);
 
         subscription = new Subscription(tournament, callbackUrl, true);
         subscriptionRepository.save(subscription);

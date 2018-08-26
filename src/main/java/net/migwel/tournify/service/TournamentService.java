@@ -6,7 +6,6 @@ import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.SetUpdate;
 import net.migwel.tournify.data.Tournament;
-import net.migwel.tournify.data.TournamentTracking;
 import net.migwel.tournify.store.NotificationRepository;
 import net.migwel.tournify.store.TournamentRepository;
 import net.migwel.tournify.store.TrackingRepository;
@@ -16,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import java.util.Date;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,6 +36,9 @@ public abstract class TournamentService {
     @Autowired
     private NotificationRepository notificationRepository;
 
+    @Autowired
+    private TrackingService trackingService;
+
     public abstract String normalizeUrl(String tournamentUrl);
 
     protected Tournament getTournament(TournamentClient tournamentClient,
@@ -50,7 +52,7 @@ public abstract class TournamentService {
         log.info("No tournament was found, let's fetch it. url = "+ formattedUrl);
         tournament = fetchTournament(tournamentClient, formattedUrl);
         tournamentRepository.save(tournament);
-        trackTournament(tournament);
+        trackingService.trackTournament(tournament);
         return tournament;
     }
 
@@ -59,27 +61,29 @@ public abstract class TournamentService {
         return tournamentClient.fetchTournament(formattedUrl);
     }
 
-    private void trackTournament(Tournament tournament) {
-        TournamentTracking tournamentTracking = new TournamentTracking(tournament, new Date(), new Date());
-        trackingRepository.save(tournamentTracking);
-    }
-
     @Nonnull
     public List<SetUpdate> updateTournament(String url) {
         Tournament oldTournament = tournamentRepository.findByUrl(url);
         Tournament newTournament = fetchTournament(url);
         //We could/should probably use some comparison framework, like JaVers
-        List<SetUpdate> setUpdates = compareTournaments(oldTournament, newTournament);
+        boolean firstFetch = oldTournament.getExternalId() == null;
+        List<SetUpdate> setUpdates = compareTournaments(oldTournament, newTournament, firstFetch);
         if(!setUpdates.isEmpty()) {
             log.info("Tournament has changed: saving modifications");
             tournamentRepository.save(oldTournament);
         }
-        return setUpdates;
+        return firstFetch ? Collections.emptyList() : setUpdates;
     }
 
     //Returns true if tournaments are the same
     @Nonnull
-    private List<SetUpdate> compareTournaments(Tournament oldTournament, Tournament newTournament) {
+    private List<SetUpdate> compareTournaments(Tournament oldTournament, Tournament newTournament, boolean firstFetch) {
+        if(firstFetch) {
+            oldTournament.setExternalId(newTournament.getExternalId());
+            oldTournament.setName(newTournament.getName());
+            oldTournament.setAddress(newTournament.getAddress());
+            oldTournament.setDate(newTournament.getDate());
+        }
         List<SetUpdate> setUpdates = new LinkedList<>();
         List<Phase> oldPhases = oldTournament.getPhases();
         List<Phase> newPhases = newTournament.getPhases();
@@ -89,11 +93,20 @@ public abstract class TournamentService {
             Phase oldPhase = oldPhasesMap.get(newPhase.getPhaseName());
             if(oldPhase == null) {
                 oldPhases.add(newPhase);
+                setUpdates.addAll(getNewSets(newPhase.getSets()));
                 continue;
             }
             comparePhases(oldPhase, newPhase, setUpdates, oldTournament.getName());
         }
 
+        return setUpdates;
+    }
+
+    private Collection<SetUpdate> getNewSets(Collection<Set> sets) {
+        List<SetUpdate> setUpdates = new LinkedList<>();
+        for(Set set : sets) {
+            setUpdates.add(new SetUpdate(set, "New set found")); //TODO: Change description
+        }
         return setUpdates;
     }
 

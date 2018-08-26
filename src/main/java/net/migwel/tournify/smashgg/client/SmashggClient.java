@@ -103,7 +103,8 @@ public class SmashggClient implements TournamentClient {
         log.info("Done with fetching tournament at url: "+ eventUrl);
 
 
-        return new Tournament(tournamentPhases,
+        return new Tournament(String.valueOf(eventResponse.getEntities().getEvent().getId()),
+                tournamentPhases,
                 tournamentResponse.getEntities().getTournament().getName(),
                 videoGames.get(eventResponse.getEntities().getEvent().getVideogameId()),
                 address,
@@ -165,6 +166,9 @@ public class SmashggClient implements TournamentClient {
     private Collection<Set> getSets(Collection<net.migwel.tournify.smashgg.data.Set> smashggSets, Map<String, Player> participants) {
         List<Set> sets = new ArrayList<>();
         for(net.migwel.tournify.smashgg.data.Set smashggSet : smashggSets) {
+            if(smashggSet.isUnreachable() || smashggSet.getDisplayRound() == -1) {
+                continue;
+            }
             Map<String, Player> participantsMap = getParticipants(smashggSet, participants);
             List<Player> listParticipants = new ArrayList<>(participantsMap.values());
             Player winner = participantsMap.get(smashggSet.getWinnerId());

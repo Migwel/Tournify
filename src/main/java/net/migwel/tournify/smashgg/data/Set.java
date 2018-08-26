@@ -9,6 +9,8 @@ public class Set {
     private Long phaseGroupId;
     private Long bestOf;
     private String fullRoundText;
+    private boolean unreachable;
+    private int displayRound;
 
     public String getId() {
         return id;
@@ -36,5 +38,13 @@ public class Set {
 
     public String getFullRoundText() {
         return fullRoundText;
+    }
+
+    public boolean isUnreachable() {
+        return unreachable;
+    }
+
+    public int getDisplayRound() {
+        return displayRound;
     }
 }

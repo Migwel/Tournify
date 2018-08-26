@@ -25,6 +25,8 @@ public class Tournament {
     @GeneratedValue
     private Long id;
 
+    private String externalId;
+
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) //This needs to be changed to fetch in repository
     private List<Phase> phases;
     private String name;
@@ -48,13 +50,26 @@ public class Tournament {
     public Tournament() {
     }
 
-    public Tournament(List<Phase> phases, String name, GameType gameType, Address address, String url, Date date) {
+    public Tournament(String url) {
+        this.url = url;
+    }
+
+    public Tournament(String externalId, List<Phase> phases, String name, GameType gameType, Address address, String url, Date date) {
+        this.externalId = externalId;
         this.phases = phases;
         this.name = name;
         this.gameType = gameType;
         this.address = address;
         this.url = url;
         this.date = new Date(date.getTime());
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     @Nonnull
