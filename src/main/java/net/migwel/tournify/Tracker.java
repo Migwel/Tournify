@@ -33,7 +33,17 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
     private final static long DAY = 24 * HOUR;
     private final static long WEEK = 7 * DAY;
     private final static long TRACKING_WAIT_MS = 5 * SEC;
-    private final static long[] NO_UPDATE_WAIT_MS = {MIN, MIN, MIN, 2 * MIN, 2 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 15 * MIN, 30 * MIN, HOUR, 2 * HOUR, 4 * HOUR, DAY, 2 * DAY, WEEK};
+    private final static long[] NO_UPDATE_WAIT_MS = {
+            MIN, MIN, MIN, MIN, MIN,
+            2 * MIN, 2 * MIN, 2 * MIN, 2 * MIN, 2 * MIN, 2 * MIN,
+            5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN,
+            15 * MIN, 15 * MIN, 15 * MIN, 15 * MIN, 15 * MIN,
+            30 * MIN, 30 * MIN, 30 * MIN, 30 * MIN, 30 * MIN,
+            HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR,
+            HOUR, HOUR, HOUR, HOUR, HOUR, HOUR,
+            DAY, DAY, DAY,
+            WEEK
+    };
 
     @Autowired
     private TrackingRepository trackingRepository;
