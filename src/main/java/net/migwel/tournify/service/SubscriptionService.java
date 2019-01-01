@@ -6,7 +6,6 @@ import net.migwel.tournify.store.SubscriptionRepository;
 import net.migwel.tournify.store.TournamentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -16,17 +15,20 @@ public class SubscriptionService {
 
     private final static Logger log = LoggerFactory.getLogger(SubscriptionService.class);
 
-    @Autowired
-    private SubscriptionRepository subscriptionRepository;
+    private final SubscriptionRepository subscriptionRepository;
 
-    @Autowired
-    private TournamentRepository tournamentRepository;
+    private final TournamentRepository tournamentRepository;
 
-    @Autowired
-    private TrackingService trackingService;
+    private final TrackingService trackingService;
 
-    @Autowired
-    private ServiceFactory serviceFactory;
+    private final ServiceFactory serviceFactory;
+
+    public SubscriptionService(SubscriptionRepository subscriptionRepository, TournamentRepository tournamentRepository, TrackingService trackingService, ServiceFactory serviceFactory) {
+        this.subscriptionRepository = subscriptionRepository;
+        this.tournamentRepository = tournamentRepository;
+        this.trackingService = trackingService;
+        this.serviceFactory = serviceFactory;
+    }
 
     public Subscription addSubscription(String tournamentUrl, String callbackUrl) {
         TournamentService tournamentService = serviceFactory.getTournamentService(tournamentUrl);

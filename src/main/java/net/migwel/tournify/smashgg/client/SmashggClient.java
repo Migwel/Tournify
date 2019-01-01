@@ -7,7 +7,6 @@ import net.migwel.tournify.data.Phase;
 import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.Tournament;
-import net.migwel.tournify.service.UrlService;
 import net.migwel.tournify.smashgg.data.GetEventResponse;
 import net.migwel.tournify.smashgg.data.GetPhaseGroupResponse;
 import net.migwel.tournify.smashgg.data.GetTournamentResponse;
@@ -18,8 +17,6 @@ import net.migwel.tournify.smashgg.data.VideoGame;
 import net.migwel.tournify.store.TournamentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -45,19 +42,13 @@ public class SmashggClient implements TournamentClient {
     private static final String PHASE_GROUP_URL = "https://api.smash.gg/phase_group/";
     private static final String EXPAND_PHASE_GROUP = "?expand[]=sets&expand[]=seeds";
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    @Qualifier("SmashggUrlService")
-    private UrlService urlService;
+    private final TournamentRepository tournamentRepository;
 
-    @Autowired
-    private TournamentRepository tournamentRepository;
-
-    public SmashggClient(RestTemplate restTemplate, UrlService urlService) {
+    public SmashggClient(RestTemplate restTemplate, TournamentRepository tournamentRepository) {
         this.restTemplate = restTemplate;
-        this.urlService = urlService;
+        this.tournamentRepository = tournamentRepository;
     }
 
     @Override

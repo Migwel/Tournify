@@ -6,7 +6,7 @@ import java.util.List;
 
 public class NotificationRequest {
 
-    private List<SetUpdate> setUpdates;
+    private final List<SetUpdate> setUpdates;
 
     public NotificationRequest(List<SetUpdate> setUpdates) {
         this.setUpdates = setUpdates;
@@ -14,9 +14,5 @@ public class NotificationRequest {
 
     public List<SetUpdate> getSetUpdates() {
         return setUpdates;
-    }
-
-    public void setSetUpdates(List<SetUpdate> setUpdates) {
-        this.setUpdates = setUpdates;
     }
 }

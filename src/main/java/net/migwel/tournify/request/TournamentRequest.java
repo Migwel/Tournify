@@ -2,10 +2,7 @@ package net.migwel.tournify.request;
 
 public class TournamentRequest {
 
-    private String url;
-
-    public TournamentRequest() {
-    }
+    private final String url;
 
     public TournamentRequest(String url) {
         this.url = url;
@@ -13,10 +10,6 @@ public class TournamentRequest {
 
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     @Override

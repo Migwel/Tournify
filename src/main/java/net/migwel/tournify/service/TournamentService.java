@@ -6,12 +6,9 @@ import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.SetUpdate;
 import net.migwel.tournify.data.Tournament;
-import net.migwel.tournify.store.NotificationRepository;
 import net.migwel.tournify.store.TournamentRepository;
-import net.migwel.tournify.store.TrackingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -27,17 +24,14 @@ public abstract class TournamentService {
 
     private static final Logger log = LoggerFactory.getLogger(TournamentService.class);
 
-    @Autowired
-    private TournamentRepository tournamentRepository;
+    private final TournamentRepository tournamentRepository;
 
-    @Autowired
-    private TrackingRepository trackingRepository;
+    private final TrackingService trackingService;
 
-    @Autowired
-    private NotificationRepository notificationRepository;
-
-    @Autowired
-    private TrackingService trackingService;
+    public TournamentService(TournamentRepository tournamentRepository, TrackingService trackingService) {
+        this.tournamentRepository = tournamentRepository;
+        this.trackingService = trackingService;
+    }
 
     public abstract String normalizeUrl(String tournamentUrl);
 
