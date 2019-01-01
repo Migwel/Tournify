@@ -2,6 +2,7 @@ package net.migwel.tournify.service;
 
 import net.migwel.tournify.data.Source;
 
+import javax.annotation.Nonnull;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,5 +21,6 @@ public interface UrlService {
         return Source.Unknown;
     }
 
+    @Nonnull
     String normalizeUrl(String url);
 }

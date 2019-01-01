@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -52,6 +53,7 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Override
+    @Nullable
     public Tournament fetchTournament(String eventUrl) {
         log.info("Fetching tournament at url: "+ eventUrl);
         String tournamentWithEventsUrl = buildTournamentUrlFromEventUrl(eventUrl);
