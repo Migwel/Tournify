@@ -11,18 +11,19 @@ import net.migwel.tournify.service.ServiceFactory;
 import net.migwel.tournify.store.NotificationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.concurrent.Immutable;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 @Component
+@Immutable
 public class NotificationSender {
 
     private static final Logger log = LoggerFactory.getLogger(NotificationSender.class);
@@ -32,18 +33,20 @@ public class NotificationSender {
     private final static long NOTIFY_WAIT_MS = 5 * SEC;
     private final static long[] NO_UPDATE_WAIT_MS = {MIN, MIN, 5 * MIN, 5 * MIN};
 
-    @Autowired
-    private NotificationRepository notificationRepository;
+    private final NotificationRepository notificationRepository;
 
-    @Autowired
-    private ServiceFactory serviceFactory;
+    private final ServiceFactory serviceFactory;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
+    public NotificationSender(NotificationRepository notificationRepository, ServiceFactory serviceFactory, RestTemplate restTemplate, ObjectMapper objectMapper) {
+        this.notificationRepository = notificationRepository;
+        this.serviceFactory = serviceFactory;
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+    }
 
     @Scheduled(fixedDelay = NOTIFY_WAIT_MS)
     private void startNotifying() {
@@ -65,7 +68,6 @@ public class NotificationSender {
 
             notificationRepository.save(notification);
         }
-
     }
 
     @CheckForNull

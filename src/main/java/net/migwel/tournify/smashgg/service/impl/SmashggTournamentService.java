@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
 @Service("SmashggTournamentService")
+@Immutable
 public class SmashggTournamentService extends AbstractTournamentService {
 
     private final UrlService urlService;

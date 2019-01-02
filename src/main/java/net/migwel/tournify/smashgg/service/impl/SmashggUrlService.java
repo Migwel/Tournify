@@ -6,10 +6,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service("SmashggUrlService")
+@Immutable
 public class SmashggUrlService implements UrlService {
 
     private static final Logger log = LoggerFactory.getLogger(SmashggUrlService.class);

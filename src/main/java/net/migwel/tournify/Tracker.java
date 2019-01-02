@@ -14,15 +14,16 @@ import net.migwel.tournify.store.SubscriptionRepository;
 import net.migwel.tournify.store.TrackingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.concurrent.Immutable;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Immutable
 public class Tracker { //TODO: Tracking should be more fine-grained (events or sets)
 
     private static final Logger log = LoggerFactory.getLogger(Tracker.class);
@@ -45,21 +46,23 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
             WEEK
     };
 
-    @Autowired
-    private TrackingRepository trackingRepository;
+    private final TrackingRepository trackingRepository;
 
-    @Autowired
-    private SubscriptionRepository subscriptionRepository;
+    private final SubscriptionRepository subscriptionRepository;
 
-    @Autowired
-    private NotificationRepository notificationRepository;
+    private final NotificationRepository notificationRepository;
 
-    @Autowired
-    private ServiceFactory serviceFactory;
+    private final ServiceFactory serviceFactory;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
+    public Tracker(TrackingRepository trackingRepository, SubscriptionRepository subscriptionRepository, NotificationRepository notificationRepository, ServiceFactory serviceFactory, ObjectMapper objectMapper) {
+        this.trackingRepository = trackingRepository;
+        this.subscriptionRepository = subscriptionRepository;
+        this.notificationRepository = notificationRepository;
+        this.serviceFactory = serviceFactory;
+        this.objectMapper = objectMapper;
+    }
 
     @Scheduled(fixedDelay = TRACKING_WAIT_MS)
     private void startTracking() {

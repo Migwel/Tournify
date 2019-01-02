@@ -1,5 +1,6 @@
 package net.migwel.tournify.service;
 
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -7,6 +8,7 @@ import javax.annotation.Nonnull;
 
 
 @Component
+@Immutable
 public class ServiceFactory {
 
     private final TournamentService smashggTournamentService;

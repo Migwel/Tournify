@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -34,6 +35,7 @@ import java.util.regex.Pattern;
 
 
 @Component("SmashggClient")
+@Immutable
 public class SmashggClient implements TournamentClient {
 
     private static final Logger log = LoggerFactory.getLogger(SmashggClient.class);

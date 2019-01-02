@@ -8,9 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.concurrent.Immutable;
 import java.util.UUID;
 
 @Service
+@Immutable
 public class SubscriptionService {
 
     private final static Logger log = LoggerFactory.getLogger(SubscriptionService.class);
