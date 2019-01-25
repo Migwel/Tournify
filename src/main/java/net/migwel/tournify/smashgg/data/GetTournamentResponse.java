@@ -10,4 +10,8 @@ public class GetTournamentResponse {
     public TournamentEntities getEntities() {
         return entities;
     }
+
+    public void setEntities(TournamentEntities entities) {
+        this.entities = entities;
+    }
 }

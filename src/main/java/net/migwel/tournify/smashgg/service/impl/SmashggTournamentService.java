@@ -23,7 +23,7 @@ public class SmashggTournamentService extends AbstractTournamentService {
     public SmashggTournamentService(TournamentRepository tournamentRepository,
                                     TrackingService trackingService,
                                     @Qualifier("SmashggUrlService") UrlService urlService,
-                                    @Qualifier("SmashggClient") TournamentClient tournamentClient) {
+                                    @Qualifier("NewSmashggClient") TournamentClient tournamentClient) {
         super(tournamentRepository, trackingService);
         this.urlService = urlService;
         this.tournamentClient = tournamentClient;

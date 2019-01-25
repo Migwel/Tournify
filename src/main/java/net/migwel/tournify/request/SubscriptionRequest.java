@@ -2,20 +2,23 @@ package net.migwel.tournify.request;
 
 public class SubscriptionRequest {
 
-    private final String tournamentUrl;
-    private final String callbackUrl;
-
-    public SubscriptionRequest(String tournamentUrl, String callbackUrl) {
-        this.tournamentUrl = tournamentUrl;
-        this.callbackUrl = callbackUrl;
-    }
+    private String tournamentUrl;
+    private String callbackUrl;
 
     public String getTournamentUrl() {
         return tournamentUrl;
     }
 
+    public void setTournamentUrl(String tournamentUrl) {
+        this.tournamentUrl = tournamentUrl;
+    }
+
     public String getCallbackUrl() {
         return callbackUrl;
+    }
+
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl;
     }
 
     @Override

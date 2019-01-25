@@ -2,7 +2,10 @@ package net.migwel.tournify.response;
 
 public class NotificationResponse {
 
-    private final String status;
+    private String status;
+
+    public NotificationResponse() {
+    }
 
     public NotificationResponse(String status) {
         this.status = status;

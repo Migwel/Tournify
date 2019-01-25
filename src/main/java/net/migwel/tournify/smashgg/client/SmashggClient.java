@@ -86,10 +86,12 @@ public class SmashggClient implements TournamentClient {
 
         Map<Long, Collection<Group>> groups = getGroups(eventResponse.getEntities().getGroups());
 
-        Tournament tournament = tournamentRepository.findByUrl(eventUrl);
         Collection<Phase> existingPhases = Collections.emptyList();
-        if(tournament != null) {
-            existingPhases = tournament.getPhases();
+        if(tournamentRepository != null) {
+            Tournament tournament = tournamentRepository.findByUrl(eventUrl);
+            if (tournament != null) {
+                existingPhases = tournament.getPhases();
+            }
         }
         List<Phase> tournamentPhases = getPhases(existingPhases, eventResponse.getEntities().getPhases(), groups);
 

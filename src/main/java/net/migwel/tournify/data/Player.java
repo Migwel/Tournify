@@ -16,6 +16,11 @@ public class Player {
     private String username;
 
     public Player() {
+        this(null);
+    }
+
+    public Player(String username) {
+        this(null, username);
     }
 
     public Player(String prefix, String username) {

@@ -7,7 +7,7 @@ Event:
 - consists of several phases
 
 Phase:
-- Represents a set of brackets within an event. For example, Pools of SSBM at EVO
+- Represents a set of brackets within an phaseGroup. For example, Pools of SSBM at EVO
 - consists of several phases groups
 
 PhaseGroup:
