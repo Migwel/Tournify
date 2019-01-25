@@ -34,6 +34,6 @@ public class SubscriptionController {
 
     @RequestMapping(value = "/{id}", method= RequestMethod.DELETE)
     public void deleteSubscription(@PathVariable String id) throws Exception {
-        subscriptionService.deleteSubscription(UUID.fromString(id));
+        subscriptionService.inactivateSubscription(UUID.fromString(id));
     }
 }

@@ -59,13 +59,14 @@ public class SubscriptionService {
         return tournament;
     }
 
-    public void deleteSubscription(UUID id) {
+    public void inactivateSubscription(UUID id) {
         Subscription subscription = subscriptionRepository.findById(id);
         if(subscription == null) {
             log.info("Subscription with id : "+ id +" doesn't exist");
             return;
         }
 
-        subscriptionRepository.delete(subscription);
+        subscription.setActive(false);
+        subscriptionRepository.save(subscription);
     }
 }

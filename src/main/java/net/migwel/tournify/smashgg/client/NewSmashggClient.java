@@ -145,8 +145,9 @@ public class NewSmashggClient implements TournamentClient {
     private List<Set> fetchSets(long phaseGroupId) {
         List<Set> sets = new ArrayList<>();
         PhaseGroup phaseGroup;
-        long page = 1;
+        long page = 0;
         do {
+            page++;
             phaseGroup = fetchPhaseGroup(phaseGroupId, page);
             if(phaseGroup == null ||
                phaseGroup.getPaginatedSets() == null ||
@@ -274,7 +275,11 @@ public class NewSmashggClient implements TournamentClient {
             }
             boolean phaseDone = true;
             for(PhaseGroup smashGgGroup : smashggGroups.get(smashGgPhase.getId())) {
-                phaseSets.addAll(fetchSets(smashGgGroup.getId()));
+                List<Set> sets = fetchSets(smashGgGroup.getId());
+                if(!sets.stream().allMatch(Set::isDone)) {
+                    phaseDone = false;
+                }
+                phaseSets.addAll(sets);
             }
             tournamentPhases.add(new Phase(String.valueOf(smashGgPhase.getId()), phaseSets, smashGgPhase.getName(), phaseDone));
         }
