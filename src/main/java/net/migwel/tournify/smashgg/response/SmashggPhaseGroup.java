@@ -3,12 +3,12 @@ package net.migwel.tournify.smashgg.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PhaseGroup {
+public class SmashggPhaseGroup {
     private long id;
     private long phaseId;
     private String displayIdentifier;
     private int state;
-    private PaginatedSets paginatedSets;
+    private SmashggPaginatedSets paginatedSets;
 
     public long getId() {
         return id;
@@ -42,11 +42,11 @@ public class PhaseGroup {
         this.state = state;
     }
 
-    public PaginatedSets getPaginatedSets() {
+    public SmashggPaginatedSets getPaginatedSets() {
         return paginatedSets;
     }
 
-    public void setPaginatedSets(PaginatedSets paginatedSets) {
+    public void setPaginatedSets(SmashggPaginatedSets paginatedSets) {
         this.paginatedSets = paginatedSets;
     }
 }

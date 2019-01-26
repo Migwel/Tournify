@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Node {
+public class SmashggNode {
 
     private String id;
     private long winnerId;
     private String fullRoundText;
-    private List<Slot> slots;
+    private List<SmashggSlot> slots;
 
     public String getId() {
         return id;
@@ -36,11 +36,11 @@ public class Node {
         this.fullRoundText = fullRoundText;
     }
 
-    public List<Slot> getSlots() {
+    public List<SmashggSlot> getSlots() {
         return slots;
     }
 
-    public void setSlots(List<Slot> slots) {
+    public void setSlots(List<SmashggSlot> slots) {
         this.slots = slots;
     }
 }

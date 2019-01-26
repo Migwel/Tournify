@@ -3,7 +3,7 @@ package net.migwel.tournify.smashgg.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Entrant {
+public class SmashggPhase {
     private long id;
     private String name;
 

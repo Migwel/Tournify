@@ -3,7 +3,7 @@ package net.migwel.tournify.smashgg.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PageInfo {
+public class SmashggPageInfo {
     private long totalPages;
     private long page;
     private long perPage;

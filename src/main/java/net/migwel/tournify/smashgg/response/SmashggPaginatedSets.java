@@ -5,23 +5,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PaginatedSets {
-    private PageInfo pageInfo;
-    private List<Node> nodes;
+public class SmashggPaginatedSets {
+    private SmashggPageInfo pageInfo;
+    private List<SmashggNode> nodes;
 
-    public PageInfo getPageInfo() {
+    public SmashggPageInfo getPageInfo() {
         return pageInfo;
     }
 
-    public void setPageInfo(PageInfo pageInfo) {
+    public void setPageInfo(SmashggPageInfo pageInfo) {
         this.pageInfo = pageInfo;
     }
 
-    public List<Node> getNodes() {
+    public List<SmashggNode> getNodes() {
         return nodes;
     }
 
-    public void setNodes(List<Node> nodes) {
+    public void setNodes(List<SmashggNode> nodes) {
         this.nodes = nodes;
     }
 }

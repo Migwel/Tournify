@@ -3,14 +3,14 @@ package net.migwel.tournify.smashgg.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Slot {
-    private Entrant entrant;
+public class SmashggSlot {
+    private SmashggEntrant entrant;
 
-    public Entrant getEntrant() {
+    public SmashggEntrant getEntrant() {
         return entrant;
     }
 
-    public void setEntrant(Entrant entrant) {
+    public void setEntrant(SmashggEntrant entrant) {
         this.entrant = entrant;
     }
 }

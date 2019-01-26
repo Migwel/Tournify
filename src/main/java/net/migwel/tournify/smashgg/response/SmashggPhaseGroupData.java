@@ -3,19 +3,19 @@ package net.migwel.tournify.smashgg.response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SmashggPhaseGroupData implements SmashggData<PhaseGroup> {
-    private PhaseGroup phaseGroup;
+public class SmashggPhaseGroupData implements SmashggData<SmashggPhaseGroup> {
+    private SmashggPhaseGroup phaseGroup;
 
-    public PhaseGroup getPhaseGroup() {
+    public SmashggPhaseGroup getPhaseGroup() {
         return phaseGroup;
     }
 
-    public void setPhaseGroup(PhaseGroup phaseGroup) {
+    public void setPhaseGroup(SmashggPhaseGroup phaseGroup) {
         this.phaseGroup = phaseGroup;
     }
 
     @Override
-    public PhaseGroup getObject() {
+    public SmashggPhaseGroup getObject() {
         return phaseGroup;
     }
 }

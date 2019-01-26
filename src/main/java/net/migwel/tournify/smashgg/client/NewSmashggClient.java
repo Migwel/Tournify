@@ -8,14 +8,15 @@ import net.migwel.tournify.data.Phase;
 import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.Tournament;
-import net.migwel.tournify.smashgg.response.Entrant;
-import net.migwel.tournify.smashgg.response.Node;
-import net.migwel.tournify.smashgg.response.PhaseGroup;
-import net.migwel.tournify.smashgg.response.Slot;
+import net.migwel.tournify.smashgg.response.SmashggEntrant;
 import net.migwel.tournify.smashgg.response.SmashggEvent;
 import net.migwel.tournify.smashgg.response.SmashggEventResponse;
+import net.migwel.tournify.smashgg.response.SmashggNode;
+import net.migwel.tournify.smashgg.response.SmashggPhase;
+import net.migwel.tournify.smashgg.response.SmashggPhaseGroup;
 import net.migwel.tournify.smashgg.response.SmashggPhaseGroupResponse;
 import net.migwel.tournify.smashgg.response.SmashggResponse;
+import net.migwel.tournify.smashgg.response.SmashggSlot;
 import net.migwel.tournify.smashgg.response.SmashggTournament;
 import net.migwel.tournify.store.TournamentRepository;
 import org.apache.http.HttpEntity;
@@ -83,7 +84,7 @@ public class NewSmashggClient implements TournamentClient {
         if(tournament != null) {
             existingPhases = tournament.getPhases();
         }
-        Map<Long, Collection<PhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
+        Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
         List<Phase> tournamentPhases = getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase);
 
         Address address = buildAddress(smashggEvent.getTournament());
@@ -136,7 +137,7 @@ public class NewSmashggClient implements TournamentClient {
     }
 
     @CheckForNull
-    private PhaseGroup fetchPhaseGroup(long phaseGroupId, long page) {
+    private SmashggPhaseGroup fetchPhaseGroup(long phaseGroupId, long page) {
         String request = buildPhaseGroupRequest(phaseGroupId, page, SETS_PER_PAGE);
         return fetch(request, SmashggPhaseGroupResponse.class);
     }
@@ -144,7 +145,7 @@ public class NewSmashggClient implements TournamentClient {
     @Nonnull
     private List<Set> fetchSets(long phaseGroupId) {
         List<Set> sets = new ArrayList<>();
-        PhaseGroup phaseGroup;
+        SmashggPhaseGroup phaseGroup;
         long page = 0;
         do {
             page++;
@@ -164,20 +165,20 @@ public class NewSmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private List<Set> getSets(Collection<Node> nodes) {
+    private List<Set> getSets(Collection<SmashggNode> nodes) {
         List<Set> sets = new ArrayList<>();
-        for(Node node : nodes) {
+        for(SmashggNode node : nodes) {
             if(node == null) {
                 continue;
             }
             long winnerId = node.getWinnerId();
             Player winner = null;
             List<Player> players = new ArrayList<>();
-            for(Slot slot : node.getSlots()) {
+            for(SmashggSlot slot : node.getSlots()) {
                 if(slot == null) {
                     continue;
                 }
-                Entrant entrant = slot.getEntrant();
+                SmashggEntrant entrant = slot.getEntrant();
                 if(entrant == null) {
                     continue;
                 }
@@ -256,25 +257,25 @@ public class NewSmashggClient implements TournamentClient {
         return null;
     }
 
-    private Map<Long, Collection<PhaseGroup>> getPhaseGroupsPerPhase(Collection<PhaseGroup> smashggGroups) {
-        Map<Long, Collection<PhaseGroup>> phaseGroupsPerPhase = new HashMap<>();
-        for(PhaseGroup smashGgGroup : smashggGroups) {
+    private Map<Long, Collection<SmashggPhaseGroup>> getPhaseGroupsPerPhase(Collection<SmashggPhaseGroup> smashggGroups) {
+        Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = new HashMap<>();
+        for(SmashggPhaseGroup smashGgGroup : smashggGroups) {
             phaseGroupsPerPhase.computeIfAbsent(smashGgGroup.getPhaseId(), k -> new ArrayList<>()).add(smashGgGroup);
         }
         return phaseGroupsPerPhase;
     }
 
     private List<Phase> getPhases(Collection<Phase> existingPhases,
-                                  Collection<net.migwel.tournify.smashgg.response.Phase> smashggPhases,
-                                  Map<Long, Collection<PhaseGroup>> smashggGroups) {
+                                  Collection<SmashggPhase> smashggPhases,
+                                  Map<Long, Collection<SmashggPhaseGroup>> smashggGroups) {
         List<Phase> tournamentPhases = new ArrayList<>();
-        for(net.migwel.tournify.smashgg.response.Phase smashGgPhase : smashggPhases) {
+        for(SmashggPhase smashGgPhase : smashggPhases) {
             List<Set> phaseSets = new ArrayList<>();
             if(phaseIsDone(existingPhases, smashGgPhase)) {
                 continue;
             }
             boolean phaseDone = true;
-            for(PhaseGroup smashGgGroup : smashggGroups.get(smashGgPhase.getId())) {
+            for(SmashggPhaseGroup smashGgGroup : smashggGroups.get(smashGgPhase.getId())) {
                 List<Set> sets = fetchSets(smashGgGroup.getId());
                 if(!sets.stream().allMatch(Set::isDone)) {
                     phaseDone = false;
@@ -286,7 +287,7 @@ public class NewSmashggClient implements TournamentClient {
         return tournamentPhases;
     }
 
-    private boolean phaseIsDone(Collection<Phase> existingPhases, net.migwel.tournify.smashgg.response.Phase smashGgPhase) {
+    private boolean phaseIsDone(Collection<Phase> existingPhases, SmashggPhase smashGgPhase) {
         for(Phase existingPhase : existingPhases) {
             if(existingPhase.getExternalId() != null && existingPhase.getExternalId().equals(String.valueOf(smashGgPhase.getId()))) {
                 return existingPhase.isDone();

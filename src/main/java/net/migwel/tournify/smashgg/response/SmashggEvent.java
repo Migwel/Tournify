@@ -11,9 +11,9 @@ public class SmashggEvent {
     private long id;
     private long startAt;
     private SmashggTournament tournament;
-    private List<PhaseGroup> phaseGroups;
-    private List<Phase> phases;
-    private VideoGame videogame;
+    private List<SmashggPhaseGroup> phaseGroups;
+    private List<SmashggPhase> phases;
+    private SmashggVideoGame videogame;
 
     public String getSlug() {
         return slug;
@@ -47,27 +47,27 @@ public class SmashggEvent {
         this.tournament = tournament;
     }
 
-    public VideoGame getVideogame() {
+    public SmashggVideoGame getVideogame() {
         return videogame;
     }
 
-    public void setVideogame(VideoGame videogame) {
+    public void setVideogame(SmashggVideoGame videogame) {
         this.videogame = videogame;
     }
 
-    public List<PhaseGroup> getPhaseGroups() {
+    public List<SmashggPhaseGroup> getPhaseGroups() {
         return phaseGroups;
     }
 
-    public void setPhaseGroups(List<PhaseGroup> phaseGroups) {
+    public void setPhaseGroups(List<SmashggPhaseGroup> phaseGroups) {
         this.phaseGroups = phaseGroups;
     }
 
-    public List<Phase> getPhases() {
+    public List<SmashggPhase> getPhases() {
         return phases;
     }
 
-    public void setPhases(List<Phase> phases) {
+    public void setPhases(List<SmashggPhase> phases) {
         this.phases = phases;
     }
 }
