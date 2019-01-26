@@ -1,11 +1,10 @@
 package net.migwel.tournify.service;
 
-import net.migwel.tournify.data.SetUpdate;
+import net.migwel.tournify.Updates;
 import net.migwel.tournify.data.Tournament;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
 
 public interface TournamentService {
 
@@ -13,7 +12,7 @@ public interface TournamentService {
     String normalizeUrl(String tournamentUrl);
 
     @Nonnull
-    List<SetUpdate> updateTournament(String url);
+    Updates updateTournament(String url);
 
     @Nullable
     Tournament getTournament(String url);

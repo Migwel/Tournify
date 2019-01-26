@@ -44,8 +44,8 @@ public class SmashggTournamentService extends AbstractTournamentService {
 
     @Override
     @Nullable
-    protected Tournament fetchTournament(String url) {
+    protected Tournament fetchTournament(Tournament oldTournament, String url) {
         String formattedUrl = normalizeUrl(url);
-        return fetchTournament(tournamentClient, formattedUrl);
+        return fetchTournament(oldTournament, tournamentClient, formattedUrl);
     }
 }

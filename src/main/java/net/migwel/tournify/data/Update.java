@@ -1,15 +1,15 @@
 package net.migwel.tournify.data;
 
-public class SetUpdate {
+public class Update {
 
     private Set set;
 
     private String description;
 
-    public SetUpdate() {
+    public Update() {
     }
 
-    public SetUpdate(Set set, String description) {
+    public Update(Set set, String description) {
         this.set = set;
         this.description = description;
     }
@@ -32,7 +32,7 @@ public class SetUpdate {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("SetUpdate{");
+        final StringBuilder sb = new StringBuilder("Update{");
         sb.append(", set=").append(set);
         sb.append(", description='").append(description).append('\'');
         sb.append('}');

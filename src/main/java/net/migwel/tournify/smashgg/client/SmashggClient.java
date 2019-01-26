@@ -19,7 +19,6 @@ import net.migwel.tournify.smashgg.response.SmashggPhaseGroupResponse;
 import net.migwel.tournify.smashgg.response.SmashggResponse;
 import net.migwel.tournify.smashgg.response.SmashggSlot;
 import net.migwel.tournify.smashgg.response.SmashggTournament;
-import net.migwel.tournify.store.TournamentRepository;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -55,18 +54,16 @@ public class SmashggClient implements TournamentClient {
     private static final Logger log = LoggerFactory.getLogger(SmashggClient.class);
 
     private final SmashggConfiguration configuration;
-    private final TournamentRepository tournamentRepository;
     private final ObjectMapper objectMapper;
 
-    public SmashggClient(SmashggConfiguration configuration, TournamentRepository tournamentRepository, ObjectMapper objectMapper) {
+    public SmashggClient(SmashggConfiguration configuration, ObjectMapper objectMapper) {
         this.configuration = configuration;
-        this.tournamentRepository = tournamentRepository;
         this.objectMapper = objectMapper;
     }
 
     @Override
     @Nullable
-    public Tournament fetchTournament(String eventUrl) {
+    public Tournament fetchTournament(@Nullable Tournament oldTournament, String eventUrl) {
         log.info("Fetching tournament at url: " + eventUrl);
 
         String eventSlug = findEventSlug(eventUrl);
@@ -77,16 +74,16 @@ public class SmashggClient implements TournamentClient {
             return null;
         }
 
-        Tournament tournament = null;
-        if(tournamentRepository != null) {
-            tournament = tournamentRepository.findByUrl(eventUrl);
-        }
         Collection<Phase> existingPhases = Collections.emptyList();
-        if(tournament != null) {
-            existingPhases = tournament.getPhases();
+        if(oldTournament != null) {
+            existingPhases = oldTournament.getPhases();
         }
         Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
         List<Phase> tournamentPhases = getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase);
+        boolean tournamentDone = true;
+        if(!tournamentPhases.stream().allMatch(Phase::isDone)) {
+            tournamentDone = false;
+        }
 
         Address address = buildAddress(smashggEvent.getTournament());
 
@@ -99,7 +96,8 @@ public class SmashggClient implements TournamentClient {
                 new GameType(smashggEvent.getVideogame().getDisplayName()),
                 address,
                 eventUrl,
-                new Date(smashggEvent.getStartAt()*1000));
+                new Date(smashggEvent.getStartAt()*1000),
+                tournamentDone);
     }
 
     @SuppressWarnings("unchecked")

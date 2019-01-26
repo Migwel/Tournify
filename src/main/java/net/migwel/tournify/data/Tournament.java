@@ -54,7 +54,7 @@ public class Tournament {
         this.url = url;
     }
 
-    public Tournament(String externalId, List<Phase> phases, String name, GameType gameType, Address address, String url, Date date) {
+    public Tournament(String externalId, List<Phase> phases, String name, GameType gameType, Address address, String url, Date date, boolean done) {
         this.externalId = externalId;
         this.phases = phases;
         this.name = name;
@@ -62,6 +62,7 @@ public class Tournament {
         this.address = address;
         this.url = url;
         this.date = new Date(date.getTime());
+        this.done = done;
     }
 
     public String getExternalId() {

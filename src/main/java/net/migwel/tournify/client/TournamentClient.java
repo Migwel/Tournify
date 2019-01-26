@@ -7,5 +7,5 @@ import javax.annotation.Nullable;
 public interface TournamentClient {
 
     @Nullable
-    Tournament fetchTournament(String url);
+    Tournament fetchTournament(Tournament oldTournament, String url);
 }

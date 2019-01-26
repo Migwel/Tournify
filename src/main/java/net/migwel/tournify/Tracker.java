@@ -3,7 +3,6 @@ package net.migwel.tournify;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.migwel.tournify.data.Notification;
-import net.migwel.tournify.data.SetUpdate;
 import net.migwel.tournify.data.Subscription;
 import net.migwel.tournify.data.Tournament;
 import net.migwel.tournify.data.TournamentTracking;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.concurrent.Immutable;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @Immutable
@@ -78,9 +76,9 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
                 continue;
             }
 
-            List<SetUpdate> setUpdates = tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
+            Updates updates = tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
 
-            if(setUpdates.isEmpty()) {
+            if(updates.getUpdateList().isEmpty()) {
                 tracking.setNextDate(computeNextDate(tracking.getNoUpdateRetries()));
                 tracking.setNoUpdateRetries(tracking.getNoUpdateRetries() + 1);
                 if(tracking.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) { //TODO: add other ways of setting tracking to done (e.g. tournament is finished)
@@ -88,23 +86,27 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
                 }
             }
             else {
-                addNotification(tournament.getUrl(), setUpdates);
-                tracking.setNextDate(new Date());
-                tracking.setNoUpdateRetries(0);
+                addNotification(tournament.getUrl(), updates);
+                if(updates.isTournamentDone()) {
+                    tracking.setDone(true);
+                }
+                else {
+                    tracking.setNextDate(new Date());
+                    tracking.setNoUpdateRetries(0);
+                }
             }
 
             trackingRepository.save(tracking);
         }
     }
 
-    private void addNotification(String tournamentUrl, List<SetUpdate> setUpdates) {
+    private void addNotification(String tournamentUrl, Updates updates) {
         List<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrlAndActive(tournamentUrl, true);
         String setUpdatesStr;
         try {
-            setUpdatesStr = objectMapper.writeValueAsString(setUpdates);
+            setUpdatesStr = objectMapper.writeValueAsString(updates);
         } catch (JsonProcessingException e) {
-            setUpdatesStr = setUpdates.stream().map(el -> el.toString()).collect(Collectors.joining(","));
-            log.warn("Could not serialize setUpdates "+ setUpdatesStr +": "+ e.getMessage());
+            log.warn("Could not serialize updates "+ updates +": "+ e.getMessage());
             return;
         }
         for(Subscription subscription : subscriptionList) {
