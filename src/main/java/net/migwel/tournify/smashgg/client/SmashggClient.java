@@ -8,6 +8,7 @@ import net.migwel.tournify.data.Phase;
 import net.migwel.tournify.data.Player;
 import net.migwel.tournify.data.Set;
 import net.migwel.tournify.data.Tournament;
+import net.migwel.tournify.smashgg.config.SmashggConfiguration;
 import net.migwel.tournify.smashgg.response.SmashggEntrant;
 import net.migwel.tournify.smashgg.response.SmashggEvent;
 import net.migwel.tournify.smashgg.response.SmashggEventResponse;
@@ -52,14 +53,13 @@ import java.util.regex.Pattern;
 public class SmashggClient implements TournamentClient {
 
     private static final Logger log = LoggerFactory.getLogger(SmashggClient.class);
-    private static final String SMASHGG_URL = "https://api.smash.gg/gql/alpha";
-    private static final String SMASHGG_TOKEN = "***REMOVED***";
-    private static final long SETS_PER_PAGE = 100;
 
+    private final SmashggConfiguration configuration;
     private final TournamentRepository tournamentRepository;
     private final ObjectMapper objectMapper;
 
-    public SmashggClient(TournamentRepository tournamentRepository, ObjectMapper objectMapper) {
+    public SmashggClient(SmashggConfiguration configuration, TournamentRepository tournamentRepository, ObjectMapper objectMapper) {
+        this.configuration = configuration;
         this.tournamentRepository = tournamentRepository;
         this.objectMapper = objectMapper;
     }
@@ -68,6 +68,7 @@ public class SmashggClient implements TournamentClient {
     @Nullable
     public Tournament fetchTournament(String eventUrl) {
         log.info("Fetching tournament at url: " + eventUrl);
+
         String eventSlug = findEventSlug(eventUrl);
         SmashggEvent smashggEvent = fetchEvent(eventSlug);
 
@@ -138,7 +139,7 @@ public class SmashggClient implements TournamentClient {
 
     @CheckForNull
     private SmashggPhaseGroup fetchPhaseGroup(long phaseGroupId, long page) {
-        String request = buildPhaseGroupRequest(phaseGroupId, page, SETS_PER_PAGE);
+        String request = buildPhaseGroupRequest(phaseGroupId, page, configuration.getSetsPerPage());
         return fetch(request, SmashggPhaseGroupResponse.class);
     }
 
@@ -210,7 +211,7 @@ public class SmashggClient implements TournamentClient {
     @CheckForNull
     private String postRequest(String request) {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(SMASHGG_URL);
+        HttpPost httpPost = new HttpPost(configuration.getApiUrl());
 
         StringEntity requestEntity = null;
         try {
@@ -221,7 +222,7 @@ public class SmashggClient implements TournamentClient {
         }
         httpPost.setEntity(requestEntity);
         httpPost.setHeader("Content-type", "application/json");
-        httpPost.setHeader("Authorization", "Bearer " + SMASHGG_TOKEN);
+        httpPost.setHeader("Authorization", "Bearer " + configuration.getApiToken());
         CloseableHttpResponse response;
         try {
             response = client.execute(httpPost);
