@@ -68,36 +68,37 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
         log.info("Tracking list size: "+ trackingList.size());
         for(TournamentTracking tracking : trackingList) {
             Tournament tournament = tracking.getTournament();
-            TournamentService tournamentService;
-            try {
-                tournamentService = serviceFactory.getTournamentService(tournament.getUrl());
-            }
-            catch(IllegalArgumentException e) {
-                continue;
-            }
-
-            Updates updates = tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
-
-            if(updates.getUpdateList().isEmpty()) {
-                tracking.setNextDate(computeNextDate(tracking.getNoUpdateRetries()));
-                tracking.setNoUpdateRetries(tracking.getNoUpdateRetries() + 1);
-                if(tracking.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) { //TODO: add other ways of setting tracking to done (e.g. tournament is finished)
-                    tracking.setDone(true);
-                }
-            }
-            else {
-                addNotification(tournament.getUrl(), updates);
-                if(updates.isTournamentDone()) {
-                    tracking.setDone(true);
-                }
-                else {
-                    tracking.setNextDate(new Date());
-                    tracking.setNoUpdateRetries(0);
-                }
-            }
-
+            trackTournament(tracking, tournament);
             trackingRepository.save(tracking);
         }
+    }
+
+    private void trackTournament(TournamentTracking tracking, Tournament tournament) {
+        if(tournament.getDate() != null && tournament.getDate().after(new Date())) {
+            tracking.setNextDate(tournament.getDate());
+            return;
+        }
+
+        TournamentService tournamentService = serviceFactory.getTournamentService(tournament.getUrl());
+        Updates updates = tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
+
+        if(updates.getUpdateList().isEmpty()) {
+            tracking.setNextDate(computeNextDate(tracking.getNoUpdateRetries()));
+            tracking.setNoUpdateRetries(tracking.getNoUpdateRetries() + 1);
+            if(tracking.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) {
+                tracking.setDone(true);
+            }
+            return;
+        }
+
+        addNotification(tournament.getUrl(), updates);
+        if(updates.isTournamentDone()) {
+            tracking.setDone(true);
+            return;
+        }
+
+        tracking.setNextDate(computeNextDate(0));
+        tracking.setNoUpdateRetries(0);
     }
 
     private void addNotification(String tournamentUrl, Updates updates) {
