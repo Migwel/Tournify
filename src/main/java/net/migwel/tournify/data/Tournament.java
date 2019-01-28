@@ -99,7 +99,7 @@ public class Tournament {
     }
 
     public Date getDate() {
-        return new Date(date.getTime());
+        return date == null ? null : new Date(date.getTime());
     }
 
     public void setDate(Date date) {
