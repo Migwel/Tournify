@@ -79,7 +79,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         //We could/should probably use some comparison framework, like JaVers
         boolean firstFetch = oldTournament.getExternalId() == null;
         Updates updates = compareTournaments(oldTournament, newTournament, firstFetch);
-        if(!updates.getUpdateList().isEmpty()) {
+        if(firstFetch || !updates.getUpdateList().isEmpty()) {
             log.info("Tournament has changed: saving modifications");
             tournamentRepository.save(oldTournament);
         }
@@ -101,7 +101,7 @@ public abstract class AbstractTournamentService implements TournamentService {
 
         Map<String, Phase> oldPhasesMap = phasesToMap(oldPhases);
         for(Phase newPhase : newPhases) {
-            Phase oldPhase = oldPhasesMap.get(newPhase.getPhaseName());
+            Phase oldPhase = oldPhasesMap.get(newPhase.getExternalId());
             if(oldPhase == null) {
                 oldPhases.add(newPhase);
                 updates.addAll(getNewSets(newPhase.getSets()));
@@ -114,7 +114,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         if(newTournament.isDone()) {
             tournamentDone = true;
             oldTournament.setDone(true);
-            updates.add(new Update(null, "Tournament is over"));
+            updates.add(new Update(null, "["+ oldTournament.getName() +"] Tournament is over"));
         }
 
         return new Updates(updates, tournamentDone);
@@ -134,6 +134,10 @@ public abstract class AbstractTournamentService implements TournamentService {
             return;
         }
 
+        if(!oldPhase.getPhaseName().equals(newPhase.getPhaseName())) {
+            oldPhase.setPhaseName(newPhase.getPhaseName());
+        }
+
         List<Set> oldSets = oldPhase.getSets();
         List<Set> newSets = newPhase.getSets();
 
@@ -143,6 +147,10 @@ public abstract class AbstractTournamentService implements TournamentService {
             Set oldSet = oldSetsMap.get(newSet.getExternalId());
             if(oldSet == null) {
                 oldSets.add(newSet);
+                if(newSet.isDone()) {
+                    String description = buildSetUpdateDescription(tournamentName, oldPhase.getPhaseName(), newSet.getRound(), newSet.getPlayers(), newSet.getWinner());
+                    updates.add(new Update(newSet, description));
+                }
                 continue;
             }
 
@@ -183,9 +191,9 @@ public abstract class AbstractTournamentService implements TournamentService {
                 phaseName +
                 "] - Set [" +
                 round +
-                "] - Players [" +
+                "] - " +
                 players.stream().map(Player::getDisplayUsername).collect(Collectors.joining(" vs ")) +
-                "] - Winner is " +
+                " - Winner is " +
                 winner.getDisplayUsername();
     }
 
@@ -200,7 +208,7 @@ public abstract class AbstractTournamentService implements TournamentService {
     private Map<String,Phase> phasesToMap(List<Phase> phases) {
         Map<String, Phase> phasesMap = new HashMap<>();
         for(Phase phase : phases) {
-            phasesMap.put(phase.getPhaseName(), phase); //TODO: Probably smarter to use hashcode
+            phasesMap.put(phase.getExternalId(), phase); //TODO: Probably smarter to use hashcode
         }
 
         return phasesMap;

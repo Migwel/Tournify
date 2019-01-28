@@ -167,7 +167,7 @@ public class SmashggClient implements TournamentClient {
     private List<Set> getSets(Collection<SmashggNode> nodes) {
         List<Set> sets = new ArrayList<>();
         for(SmashggNode node : nodes) {
-            if(node == null) {
+            if(node == null || node.getId().startsWith("preview")) {
                 continue;
             }
             long winnerId = node.getWinnerId();
@@ -276,7 +276,7 @@ public class SmashggClient implements TournamentClient {
             boolean phaseDone = true;
             for(SmashggPhaseGroup smashGgGroup : smashggGroups.get(smashGgPhase.getId())) {
                 List<Set> sets = fetchSets(smashGgGroup.getId());
-                if(!sets.stream().allMatch(Set::isDone)) {
+                if(sets.isEmpty() || !sets.stream().allMatch(Set::isDone)) {
                     phaseDone = false;
                 }
                 phaseSets.addAll(sets);
