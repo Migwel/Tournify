@@ -1,13 +1,13 @@
 package net.migwel.tournify.smashgg.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.migwel.tournify.client.TournamentClient;
-import net.migwel.tournify.data.Address;
-import net.migwel.tournify.data.GameType;
-import net.migwel.tournify.data.Phase;
-import net.migwel.tournify.data.Player;
-import net.migwel.tournify.data.Set;
-import net.migwel.tournify.data.Tournament;
+import net.migwel.tournify.core.client.TournamentClient;
+import net.migwel.tournify.core.data.Address;
+import net.migwel.tournify.core.data.GameType;
+import net.migwel.tournify.core.data.Phase;
+import net.migwel.tournify.core.data.Player;
+import net.migwel.tournify.core.data.Set;
+import net.migwel.tournify.core.data.Tournament;
 import net.migwel.tournify.smashgg.config.SmashggConfiguration;
 import net.migwel.tournify.smashgg.response.SmashggEntrant;
 import net.migwel.tournify.smashgg.response.SmashggEvent;
@@ -92,7 +92,7 @@ public class SmashggClient implements TournamentClient {
 
         return new Tournament(String.valueOf(smashggEvent.getId()),
                 tournamentPhases,
-                smashggEvent.getTournament().getName(),
+                smashggEvent.getTournament().getName() + " - "+ smashggEvent.getName(),
                 new GameType(smashggEvent.getVideogame().getDisplayName()),
                 address,
                 eventUrl,
@@ -126,7 +126,7 @@ public class SmashggClient implements TournamentClient {
 
     private String buildEventRequest(String eventSlug) {
         return String.format("{\"query\":\"query event($slug: String!){  event(slug: $slug) { " +
-                "id slug startAt " +
+                "id slug startAt name" +
                 " tournament {id name city addrState venueAddress countryCode} " +
                 " phaseGroups {id state phaseId displayIdentifier} "+
                 " phases {id name} "+
@@ -156,7 +156,7 @@ public class SmashggClient implements TournamentClient {
                 break;
             }
 
-            sets.addAll(getSets(phaseGroup.getPaginatedSets().getNodes()));
+            sets.addAll(getSets(phaseGroup.getDisplayIdentifier(), phaseGroup.getPaginatedSets().getNodes()));
 
         } while (phaseGroup.getPaginatedSets().getPageInfo().getTotalPages() != page);
 
@@ -164,7 +164,7 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private List<Set> getSets(Collection<SmashggNode> nodes) {
+    private List<Set> getSets(String phaseGroupName, Collection<SmashggNode> nodes) {
         List<Set> sets = new ArrayList<>();
         for(SmashggNode node : nodes) {
             if(node == null || node.getId().startsWith("preview")) {
@@ -188,7 +188,7 @@ public class SmashggClient implements TournamentClient {
                     winner = player;
                 }
             }
-            sets.add(new Set(node.getId(), players, winner, node.getFullRoundText(), winner != null));
+            sets.add(new Set(node.getId(), players, winner, phaseGroupName+ " - "+ node.getFullRoundText(), winner != null));
         }
 
         return sets;

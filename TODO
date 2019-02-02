@@ -1,4 +1,4 @@
-- Remove test db password from properties file
 - Stop using eager fetching
 - Create SQL files for schemas (Use Flyway?)
 - Write tests
+- Filter on player

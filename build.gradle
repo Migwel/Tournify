@@ -11,10 +11,12 @@ buildscript {
     }
 }
 
+allprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'application'
+    apply plugin: 'java'
+}
 
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'application'
 apply plugin: 'findbugs'
 findbugs {
     ignoreFailures = true

@@ -10,6 +10,7 @@ public class SmashggEvent {
     private String slug;
     private long id;
     private long startAt;
+    private String name;
     private SmashggTournament tournament;
     private List<SmashggPhaseGroup> phaseGroups;
     private List<SmashggPhase> phases;
@@ -37,6 +38,14 @@ public class SmashggEvent {
 
     public void setStartAt(long startAt) {
         this.startAt = startAt;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public SmashggTournament getTournament() {

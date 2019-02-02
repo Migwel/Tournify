@@ -1,6 +1,6 @@
 package net.migwel.tournify.smashgg.service.impl;
 
-import net.migwel.tournify.service.UrlService;
+import net.migwel.tournify.core.service.UrlService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

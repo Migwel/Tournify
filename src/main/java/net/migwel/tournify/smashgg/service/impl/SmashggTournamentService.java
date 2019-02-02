@@ -1,11 +1,11 @@
 package net.migwel.tournify.smashgg.service.impl;
 
-import net.migwel.tournify.client.TournamentClient;
-import net.migwel.tournify.data.Tournament;
-import net.migwel.tournify.service.AbstractTournamentService;
-import net.migwel.tournify.service.TrackingService;
-import net.migwel.tournify.service.UrlService;
-import net.migwel.tournify.store.TournamentRepository;
+import net.migwel.tournify.core.client.TournamentClient;
+import net.migwel.tournify.core.data.Tournament;
+import net.migwel.tournify.core.service.AbstractTournamentService;
+import net.migwel.tournify.core.service.TrackingService;
+import net.migwel.tournify.core.service.UrlService;
+import net.migwel.tournify.core.store.TournamentRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
