@@ -6,12 +6,14 @@ import net.migwel.tournify.core.service.AbstractTournamentService;
 import net.migwel.tournify.core.service.TrackingService;
 import net.migwel.tournify.core.service.UrlService;
 import net.migwel.tournify.core.store.TournamentRepository;
+import net.migwel.tournify.smashgg.data.Participant;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import java.util.List;
 
 @Service("SmashggTournamentService")
 @Immutable
@@ -40,6 +42,13 @@ public class SmashggTournamentService extends AbstractTournamentService {
     public Tournament getTournament(String url) {
         String formattedUrl = normalizeUrl(url);
         return getTournament(tournamentClient, formattedUrl);
+    }
+
+    @Nonnull
+    @Override
+    public List<Participant> getParticipants(String url) {
+        String formattedUrl = normalizeUrl(url);
+        return tournamentClient.getParticipants(url);
     }
 
     @Override

@@ -10,6 +10,7 @@ import net.migwel.tournify.core.data.Set;
 import net.migwel.tournify.core.data.Tournament;
 import net.migwel.tournify.core.exception.TimeoutException;
 import net.migwel.tournify.smashgg.config.SmashggConfiguration;
+import net.migwel.tournify.smashgg.data.Participant;
 import net.migwel.tournify.smashgg.response.SmashggEntrant;
 import net.migwel.tournify.smashgg.response.SmashggEvent;
 import net.migwel.tournify.smashgg.response.SmashggEventResponse;
@@ -99,6 +100,13 @@ public class SmashggClient implements TournamentClient {
                 eventUrl,
                 new Date(smashggEvent.getStartAt()*1000),
                 tournamentDone);
+    }
+
+    @Nonnull
+    @Override
+    public List<Participant> getParticipants(String url) {
+        return Collections.emptyList(); //This is not implemented by smashgg yet (see https://trello.com/b/Vdxnwz43/api-alpha-feedback)
+
     }
 
     @SuppressWarnings("unchecked")
