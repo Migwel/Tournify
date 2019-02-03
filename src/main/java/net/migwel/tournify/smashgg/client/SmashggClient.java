@@ -8,6 +8,7 @@ import net.migwel.tournify.core.data.Phase;
 import net.migwel.tournify.core.data.Player;
 import net.migwel.tournify.core.data.Set;
 import net.migwel.tournify.core.data.Tournament;
+import net.migwel.tournify.core.exception.TimeoutException;
 import net.migwel.tournify.smashgg.config.SmashggConfiguration;
 import net.migwel.tournify.smashgg.response.SmashggEntrant;
 import net.migwel.tournify.smashgg.response.SmashggEvent;
@@ -52,6 +53,7 @@ import java.util.regex.Pattern;
 public class SmashggClient implements TournamentClient {
 
     private static final Logger log = LoggerFactory.getLogger(SmashggClient.class);
+    private static final int FETCH_RETRIES = 5;
 
     private final SmashggConfiguration configuration;
     private final ObjectMapper objectMapper;
@@ -101,18 +103,18 @@ public class SmashggClient implements TournamentClient {
     }
 
     @SuppressWarnings("unchecked")
-    private <T> T fetch(String request, Class<? extends SmashggResponse> responseClass) {
-        String eventJsonStr = postRequest(request);
+    private <T> T fetch(String request, Class<? extends SmashggResponse> responseClass) throws TimeoutException {
+        String responseStr = postRequest(request);
         SmashggResponse<T> response;
         try {
-            response = responseClass.cast(objectMapper.readValue(eventJsonStr, responseClass));
+            response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
         } catch (IOException e) {
-            log.warn("Could not convert JSON response to SmashggEventResponse");
+            log.warn("Could not convert JSON response "+ responseStr +" to SmashggEventResponse", e);
             return null;
         }
 
         if(response == null || response.getData() == null) {
-            return null;
+            throw new TimeoutException();
         }
 
         return response.getData().getObject();
@@ -121,7 +123,19 @@ public class SmashggClient implements TournamentClient {
     @CheckForNull
     private SmashggEvent fetchEvent(String eventSlug) {
         String request = buildEventRequest(eventSlug);
-        return fetch(request, SmashggEventResponse.class);
+        for(int i = 0; i < FETCH_RETRIES; i++) {
+            try {
+                return fetch(request, SmashggEventResponse.class);
+            } catch (TimeoutException e) {
+                log.info("Could not fetch event "+ eventSlug +", let's try again in a bit");
+                try {
+                    Thread.sleep(500L);
+                } catch (InterruptedException e1) {
+                    //
+                }
+            }
+        }
+        return null;
     }
 
     private String buildEventRequest(String eventSlug) {
@@ -138,7 +152,20 @@ public class SmashggClient implements TournamentClient {
     @CheckForNull
     private SmashggPhaseGroup fetchPhaseGroup(long phaseGroupId, long page) {
         String request = buildPhaseGroupRequest(phaseGroupId, page, configuration.getSetsPerPage());
-        return fetch(request, SmashggPhaseGroupResponse.class);
+        for (int i = 0; i < FETCH_RETRIES; i++) {
+            try {
+                return fetch(request, SmashggPhaseGroupResponse.class);
+            } catch (TimeoutException e) {
+                log.info("Could not fetch phaseGroup "+ phaseGroupId+", let's try again in a bit");
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e1) {
+                    //
+                }
+            }
+        }
+        log.warn("Could not fetch phaseGroup "+ phaseGroupId+", no retries left");
+        return null;
     }
 
     @Nonnull
