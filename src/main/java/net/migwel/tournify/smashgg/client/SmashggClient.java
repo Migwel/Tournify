@@ -322,39 +322,8 @@ public class SmashggClient implements TournamentClient {
         return false;
     }
 
-//
-//    private Map<String, Player> getParticipants(Collection<Seed> smashGgSeeds) {
-//        Map<String, Player> participants = new HashMap<>();
-//        for(Seed seed : smashGgSeeds) {
-//            if(seed.getMutations() == null || seed.getMutations().getParticipants() == null) {
-//                continue;
-//            }
-//
-//            Map<String, Participant> participantsMap = seed.getMutations().getParticipants();
-//            for(Participant participant : participantsMap.values()) {
-//                Player player = new Player(participant.getPrefix(), participant.getGamerTag());
-//                participants.put(seed.getEntrantId(), player);
-//            }
-//        }
-//        return participants;
-//    }
-//
     private Address buildAddress(SmashggTournament tournament) {
         return new Address(tournament.getCity(), tournament.getAddrState(), tournament.getVenueAddress(), null, tournament.getCountryCode());
     }
-//
-//    private Map<String, Player> getParticipants(net.migwel.tournify.smashgg.data.Set set, Map<String, Player> participants) {
-//        Map<String, Player> listParticipants = new HashMap<>();
-//        String entrant1Id = set.getEntrant1Id();
-//        if(entrant1Id != null) {
-//            listParticipants.put(entrant1Id, participants.get(entrant1Id));
-//        }
-//        String entrant2Id = set.getEntrant2Id();
-//        if(entrant2Id != null) {
-//            listParticipants.put(entrant2Id, participants.get(entrant2Id));
-//        }
-//        return listParticipants;
-//    }
-
 
 }
