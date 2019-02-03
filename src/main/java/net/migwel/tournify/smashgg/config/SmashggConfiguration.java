@@ -17,6 +17,9 @@ public class SmashggConfiguration {
     @Value("${smashgg.setsPerPage}")
     private int setsPerPage;
 
+    @Value("${smashgg.retryNumber}")
+    private int retryNumber;
+
     public String getApiToken() {
         return apiToken;
     }
@@ -39,5 +42,13 @@ public class SmashggConfiguration {
 
     public void setSetsPerPage(int setsPerPage) {
         this.setsPerPage = setsPerPage;
+    }
+
+    public int getRetryNumber() {
+        return retryNumber;
+    }
+
+    public void setRetryNumber(int retryNumber) {
+        this.retryNumber = retryNumber;
     }
 }

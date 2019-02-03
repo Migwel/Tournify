@@ -53,7 +53,6 @@ import java.util.regex.Pattern;
 public class SmashggClient implements TournamentClient {
 
     private static final Logger log = LoggerFactory.getLogger(SmashggClient.class);
-    private static final int FETCH_RETRIES = 5;
 
     private final SmashggConfiguration configuration;
     private final ObjectMapper objectMapper;
@@ -123,7 +122,7 @@ public class SmashggClient implements TournamentClient {
     @CheckForNull
     private SmashggEvent fetchEvent(String eventSlug) {
         String request = buildEventRequest(eventSlug);
-        for(int i = 0; i < FETCH_RETRIES; i++) {
+        for(int i = 0; i < configuration.getRetryNumber(); i++) {
             try {
                 return fetch(request, SmashggEventResponse.class);
             } catch (TimeoutException e) {
@@ -152,7 +151,7 @@ public class SmashggClient implements TournamentClient {
     @CheckForNull
     private SmashggPhaseGroup fetchPhaseGroup(long phaseGroupId, long page) {
         String request = buildPhaseGroupRequest(phaseGroupId, page, configuration.getSetsPerPage());
-        for (int i = 0; i < FETCH_RETRIES; i++) {
+        for (int i = 0; i < configuration.getRetryNumber(); i++) {
             try {
                 return fetch(request, SmashggPhaseGroupResponse.class);
             } catch (TimeoutException e) {
