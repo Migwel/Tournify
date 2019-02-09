@@ -1,8 +1,8 @@
 package net.migwel.tournify.core.service;
 
 import net.migwel.tournify.communication.commons.Updates;
+import net.migwel.tournify.core.data.Player;
 import net.migwel.tournify.core.data.Tournament;
-import net.migwel.tournify.smashgg.data.Participant;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,5 +20,5 @@ public interface TournamentService {
     Tournament getTournament(String url);
 
     @Nonnull
-    List<Participant> getParticipants(String url);
+    List<Player> getParticipants(String url);
 }

@@ -1,12 +1,12 @@
 package net.migwel.tournify.smashgg.service.impl;
 
 import net.migwel.tournify.core.client.TournamentClient;
+import net.migwel.tournify.core.data.Player;
 import net.migwel.tournify.core.data.Tournament;
 import net.migwel.tournify.core.service.AbstractTournamentService;
 import net.migwel.tournify.core.service.TrackingService;
 import net.migwel.tournify.core.service.UrlService;
 import net.migwel.tournify.core.store.TournamentRepository;
-import net.migwel.tournify.smashgg.data.Participant;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +46,9 @@ public class SmashggTournamentService extends AbstractTournamentService {
 
     @Nonnull
     @Override
-    public List<Participant> getParticipants(String url) {
+    public List<Player> getParticipants(String url) {
         String formattedUrl = normalizeUrl(url);
-        return tournamentClient.getParticipants(url);
+        return tournamentClient.getParticipants(formattedUrl);
     }
 
     @Override

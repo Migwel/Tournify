@@ -10,11 +10,11 @@ import net.migwel.tournify.core.data.Set;
 import net.migwel.tournify.core.data.Tournament;
 import net.migwel.tournify.core.exception.TimeoutException;
 import net.migwel.tournify.smashgg.config.SmashggConfiguration;
-import net.migwel.tournify.smashgg.data.Participant;
 import net.migwel.tournify.smashgg.response.SmashggEntrant;
 import net.migwel.tournify.smashgg.response.SmashggEvent;
 import net.migwel.tournify.smashgg.response.SmashggEventResponse;
 import net.migwel.tournify.smashgg.response.SmashggNode;
+import net.migwel.tournify.smashgg.response.SmashggParticipant;
 import net.migwel.tournify.smashgg.response.SmashggPhase;
 import net.migwel.tournify.smashgg.response.SmashggPhaseGroup;
 import net.migwel.tournify.smashgg.response.SmashggPhaseGroupResponse;
@@ -104,9 +104,10 @@ public class SmashggClient implements TournamentClient {
 
     @Nonnull
     @Override
-    public List<Participant> getParticipants(String url) {
-        return Collections.emptyList(); //This is not implemented by smashgg yet (see https://trello.com/b/Vdxnwz43/api-alpha-feedback)
-
+    public List<Player> getParticipants(String eventUrl) {
+        log.info("Fetching tournament at url: " + eventUrl);
+        String eventSlug = findEventSlug(eventUrl);
+        return fetchParticipants(eventSlug);
     }
 
     @SuppressWarnings("unchecked")
@@ -175,6 +176,74 @@ public class SmashggClient implements TournamentClient {
         return null;
     }
 
+    private String buildPhaseGroupRequest(long phaseGroupId, long page, long perPage) {
+        return String.format("{\"query\":\"query phaseGroup($id: Int!, $page:Int!, $perPage:Int!) {"+
+                " phaseGroup(id: $id) {id displayIdentifier "+
+                " paginatedSets(page:$page, perPage:$perPage) { " +
+                " pageInfo {total totalPages} "+
+                " nodes {id fullRoundText winnerId "+
+                " slots(includeByes: false) { "+
+                " entrant{id name}}" +
+                " }}}}\", " +
+                "\"variables\":{\"id\":\"%d\", \"page\":\"%d\", \"perPage\":\"%d\"}}", phaseGroupId, page, perPage);
+    }
+
+    @Nonnull
+    private List<Player> fetchParticipants(String eventSlug) {
+        List<Player> participants = new ArrayList<>();
+        SmashggEvent event;
+        long page = 0;
+        do {
+            page++;
+            event = fetchParticipants(eventSlug, page);
+            if(event == null ||
+                    event.getEntrants() == null ||
+                    event.getEntrants().getPageInfo() == null ||
+                    event.getEntrants().getPageInfo().getTotalPages() == 0) {
+                break;
+            }
+
+            for(SmashggNode node : event.getEntrants().getNodes()) {
+                for(SmashggParticipant entrant : node.getParticipants()) {
+                    participants.add(new Player(entrant.getGamerTag()));
+                }
+            }
+
+        } while (event.getEntrants().getPageInfo().getTotalPages() != page);
+
+        return participants;
+    }
+
+    @CheckForNull
+    private SmashggEvent fetchParticipants(String eventSlug, long page) {
+        String request = buildParticipantsRequest(eventSlug, page, configuration.getSetsPerPage());
+        for (int i = 0; i < configuration.getRetryNumber(); i++) {
+            try {
+                return fetch(request, SmashggEventResponse.class);
+            } catch (TimeoutException e) {
+                log.info("Could not fetch participants "+ eventSlug +", let's try again in a bit");
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException e1) {
+                    //
+                }
+            }
+        }
+        log.warn("Could not fetch phaseGroup "+ eventSlug +", no retries left");
+        return null;
+    }
+
+    private String buildParticipantsRequest(String eventSlug, long page, long perPage) {
+        return String.format("{\"query\":\"query event($slug: String!, $page:Int!, $perPage:Int!){"+
+                " event(slug: $slug) {"+
+                " entrants(query:{page:$page, perPage:$perPage}){ " +
+                " pageInfo {total totalPages} "+
+                " nodes { "+
+                " participants{gamerTag} "+
+                " }}}}\", " +
+                "\"variables\":{\"slug\":\"%s\", \"page\":\"%d\", \"perPage\":\"%d\"}}", eventSlug, page, perPage);
+    }
+
     @Nonnull
     private List<Set> fetchSets(long phaseGroupId) {
         List<Set> sets = new ArrayList<>();
@@ -226,18 +295,6 @@ public class SmashggClient implements TournamentClient {
         }
 
         return sets;
-    }
-
-    private String buildPhaseGroupRequest(long phaseGroupId, long page, long perPage) {
-        return String.format("{\"query\":\"query phaseGroup($id: Int!, $page:Int!, $perPage:Int!) {"+
-                " phaseGroup(id: $id) {id displayIdentifier "+
-                " paginatedSets(page:$page, perPage:$perPage) { " +
-                " pageInfo {total totalPages page perPage} "+
-                " nodes {id fullRoundText winnerId "+
-                " slots(includeByes: false) { "+
-                " entrant{id name}}" +
-                " }}}}\", " +
-                "\"variables\":{\"id\":\"%d\", \"page\":\"%d\", \"perPage\":\"%d\"}}", phaseGroupId, page, perPage);
     }
 
     @CheckForNull

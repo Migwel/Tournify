@@ -11,6 +11,7 @@ public class SmashggNode {
     private long winnerId;
     private String fullRoundText;
     private List<SmashggSlot> slots;
+    private List<SmashggParticipant> participants;
 
     public String getId() {
         return id;
@@ -42,5 +43,13 @@ public class SmashggNode {
 
     public void setSlots(List<SmashggSlot> slots) {
         this.slots = slots;
+    }
+
+    public List<SmashggParticipant> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<SmashggParticipant> participants) {
+        this.participants = participants;
     }
 }

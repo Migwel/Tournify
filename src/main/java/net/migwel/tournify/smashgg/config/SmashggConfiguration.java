@@ -17,6 +17,9 @@ public class SmashggConfiguration {
     @Value("${smashgg.setsPerPage}")
     private int setsPerPage;
 
+    @Value("${smashgg.participantsPerPage}")
+    private int participantsPerPage;
+
     @Value("${smashgg.retryNumber}")
     private int retryNumber;
 
@@ -42,6 +45,14 @@ public class SmashggConfiguration {
 
     public void setSetsPerPage(int setsPerPage) {
         this.setsPerPage = setsPerPage;
+    }
+
+    public int getParticipantsPerPage() {
+        return participantsPerPage;
+    }
+
+    public void setParticipantsPerPage(int participantsPerPage) {
+        this.participantsPerPage = participantsPerPage;
     }
 
     public int getRetryNumber() {

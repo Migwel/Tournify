@@ -2,10 +2,10 @@ package net.migwel.tournify.core.controller;
 
 import jdk.nashorn.internal.ir.annotations.Immutable;
 import net.migwel.tournify.communication.request.TournamentRequest;
+import net.migwel.tournify.core.data.Player;
 import net.migwel.tournify.core.data.Tournament;
 import net.migwel.tournify.core.service.ServiceFactory;
 import net.migwel.tournify.core.service.TournamentService;
-import net.migwel.tournify.smashgg.data.Participant;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,8 +30,8 @@ public class TournamentController {
         return tournamentService.getTournament(request.getUrl());
     }
 
-    @RequestMapping(path="/participants", method= RequestMethod.GET)
-    public List<Participant> getParticipants(@RequestBody TournamentRequest request) {
+    @RequestMapping(path="/participants", method= RequestMethod.POST)
+    public List<Player> getParticipants(@RequestBody TournamentRequest request) {
         TournamentService tournamentService = serviceFactory.getTournamentService(request.getUrl());
         return tournamentService.getParticipants(request.getUrl());
     }

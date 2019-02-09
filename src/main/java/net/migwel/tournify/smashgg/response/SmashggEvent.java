@@ -15,6 +15,7 @@ public class SmashggEvent {
     private List<SmashggPhaseGroup> phaseGroups;
     private List<SmashggPhase> phases;
     private SmashggVideoGame videogame;
+    private SmashggEntrants entrants;
 
     public String getSlug() {
         return slug;
@@ -78,5 +79,13 @@ public class SmashggEvent {
 
     public void setPhases(List<SmashggPhase> phases) {
         this.phases = phases;
+    }
+
+    public SmashggEntrants getEntrants() {
+        return entrants;
+    }
+
+    public void setEntrants(SmashggEntrants entrants) {
+        this.entrants = entrants;
     }
 }
