@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -79,7 +78,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         Tournament newTournament = fetchTournament(oldTournament, url);
         //We could/should probably use some comparison framework, like JaVers
         boolean firstFetch = oldTournament.getExternalId() == null;
-        List<Update> updateList = new ArrayList<>();
+        Collection<Update> updateList = new ArrayList<>();
         if(!compareTournaments(oldTournament, newTournament, firstFetch, updateList)) {
             log.info("Tournament has changed: saving modifications");
             tournamentRepository.save(oldTournament);
@@ -89,7 +88,7 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     //Returns true if tournaments are the same
-    private boolean compareTournaments(Tournament oldTournament, Tournament newTournament, boolean firstFetch, List<Update> updates) {
+    private boolean compareTournaments(Tournament oldTournament, Tournament newTournament, boolean firstFetch, Collection<Update> updates) {
         boolean areSame = true;
         if(firstFetch) {
             oldTournament.setExternalId(newTournament.getExternalId());
@@ -98,8 +97,8 @@ public abstract class AbstractTournamentService implements TournamentService {
             oldTournament.setDate(newTournament.getDate());
             areSame = false;
         }
-        List<Phase> oldPhases = oldTournament.getPhases();
-        List<Phase> newPhases = newTournament.getPhases();
+        Collection<Phase> oldPhases = oldTournament.getPhases();
+        Collection<Phase> newPhases = newTournament.getPhases();
 
         Map<String, Phase> oldPhasesMap = phasesToMap(oldPhases);
         for(Phase newPhase : newPhases) {
@@ -121,7 +120,7 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     private Collection<Update> getNewSets(Collection<Set> sets) {
-        List<Update> updates = new LinkedList<>();
+        Collection<Update> updates = new LinkedList<>();
         for(Set set : sets) {
             updates.add(new Update(set, "New set found")); //TODO: Change description
         }
@@ -129,7 +128,7 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     //Returns true if phases are the same
-    private boolean comparePhases(@Nonnull Phase oldPhase, Phase newPhase, List<Update> updates, String tournamentName) {
+    private boolean comparePhases(@Nonnull Phase oldPhase, Phase newPhase, Collection<Update> updates, String tournamentName) {
         if(newPhase == null) {
             return true; //Is this correct?
         }
@@ -140,8 +139,8 @@ public abstract class AbstractTournamentService implements TournamentService {
             areSame = false;
         }
 
-        List<Set> oldSets = oldPhase.getSets();
-        List<Set> newSets = newPhase.getSets();
+        Collection<Set> oldSets = oldPhase.getSets();
+        Collection<Set> newSets = newPhase.getSets();
 
         Map<String, Set> oldSetsMap = setsToMap(oldSets);
         for(Set newSet : newSets) {
@@ -167,12 +166,12 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     //Returns true if sets are the same
-    private boolean compareSets(@Nonnull Set oldSet, Set newSet, List<Update> updates, String tournamentName, String phaseName) {
+    private boolean compareSets(@Nonnull Set oldSet, Set newSet, Collection<Update> updates, String tournamentName, String phaseName) {
         if(newSet == null || newSet.getWinner() == null) {
             return true;
         }
 
-        List<Player> oldPlayers = oldSet.getPlayers();
+        Collection<Player> oldPlayers = oldSet.getPlayers();
         for (Player player : newSet.getPlayers()) {
             if(!oldPlayers.contains(player)) {
                 oldPlayers.add(player);
@@ -203,7 +202,7 @@ public abstract class AbstractTournamentService implements TournamentService {
                 winner.getDisplayUsername();
     }
 
-    private Map<String,Set> setsToMap(List<Set> sets) {
+    private Map<String,Set> setsToMap(Collection<Set> sets) {
         Map<String, Set> setsMap = new HashMap<>();
         for(Set set : sets) {
             setsMap.put(set.getExternalId(), set);
@@ -211,7 +210,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         return setsMap;
     }
 
-    private Map<String,Phase> phasesToMap(List<Phase> phases) {
+    private Map<String,Phase> phasesToMap(Collection<Phase> phases) {
         Map<String, Phase> phasesMap = new HashMap<>();
         for(Phase phase : phases) {
             phasesMap.put(phase.getExternalId(), phase); //TODO: Probably smarter to use hashcode

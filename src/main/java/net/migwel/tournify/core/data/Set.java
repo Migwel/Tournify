@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 public class Set {
@@ -21,7 +21,7 @@ public class Set {
     private String externalId;
 
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private List<Player> players;
+    private Collection<Player> players;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Player winner;
@@ -32,7 +32,7 @@ public class Set {
     public Set() {
     }
 
-    public Set(String externalId, List<Player> players, Player winner, String round, boolean done) {
+    public Set(String externalId, Collection<Player> players, Player winner, String round, boolean done) {
         this.externalId = externalId;
         this.players = players;
         this.winner = winner;
@@ -49,11 +49,11 @@ public class Set {
     }
 
     @Nonnull
-    public List<Player> getPlayers() {
+    public Collection<Player> getPlayers() {
         return players != null ? players : new ArrayList<>();
     }
 
-    public void setPlayers(List<Player> players) {
+    public void setPlayers(Collection<Player> players) {
         this.players = players;
     }
 

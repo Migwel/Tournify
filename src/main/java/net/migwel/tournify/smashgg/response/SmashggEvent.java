@@ -2,7 +2,7 @@ package net.migwel.tournify.smashgg.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
+import java.util.Collection;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SmashggEvent {
@@ -12,8 +12,8 @@ public class SmashggEvent {
     private long startAt;
     private String name;
     private SmashggTournament tournament;
-    private List<SmashggPhaseGroup> phaseGroups;
-    private List<SmashggPhase> phases;
+    private Collection<SmashggPhaseGroup> phaseGroups;
+    private Collection<SmashggPhase> phases;
     private SmashggVideoGame videogame;
     private SmashggEntrants entrants;
 
@@ -65,19 +65,19 @@ public class SmashggEvent {
         this.videogame = videogame;
     }
 
-    public List<SmashggPhaseGroup> getPhaseGroups() {
+    public Collection<SmashggPhaseGroup> getPhaseGroups() {
         return phaseGroups;
     }
 
-    public void setPhaseGroups(List<SmashggPhaseGroup> phaseGroups) {
+    public void setPhaseGroups(Collection<SmashggPhaseGroup> phaseGroups) {
         this.phaseGroups = phaseGroups;
     }
 
-    public List<SmashggPhase> getPhases() {
+    public Collection<SmashggPhase> getPhases() {
         return phases;
     }
 
-    public void setPhases(List<SmashggPhase> phases) {
+    public void setPhases(Collection<SmashggPhase> phases) {
         this.phases = phases;
     }
 

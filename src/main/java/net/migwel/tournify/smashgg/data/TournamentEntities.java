@@ -2,43 +2,43 @@ package net.migwel.tournify.smashgg.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
+import java.util.Collection;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TournamentEntities {
     private Tournament tournament;
 
-    private List<Event> event;
+    private Collection<Event> event;
 
-    private List<VideoGame> videogame;
+    private Collection<VideoGame> videogame;
 
-    private List<Phase> phase;
+    private Collection<Phase> phase;
 
-    private List<Group> groups;
+    private Collection<Group> groups;
 
-    private List<Set> sets;
+    private Collection<Set> sets;
 
     public Tournament getTournament() {
         return tournament;
     }
 
-    public List<Event> getEvent() {
+    public Collection<Event> getEvent() {
         return event;
     }
 
-    public List<VideoGame> getVideogame() {
+    public Collection<VideoGame> getVideogame() {
         return videogame;
     }
 
-    public List<Phase> getPhase() {
+    public Collection<Phase> getPhase() {
         return phase;
     }
 
-    public List<Group> getGroups() {
+    public Collection<Group> getGroups() {
         return groups;
     }
 
-    public List<Set> getSets() {
+    public Collection<Set> getSets() {
         return sets;
     }
 }

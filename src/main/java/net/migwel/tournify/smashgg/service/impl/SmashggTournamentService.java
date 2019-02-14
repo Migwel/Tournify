@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-import java.util.List;
+import java.util.Collection;
 
 @Service("SmashggTournamentService")
 @Immutable
@@ -46,7 +46,7 @@ public class SmashggTournamentService extends AbstractTournamentService {
 
     @Nonnull
     @Override
-    public List<Player> getParticipants(String url) {
+    public Collection<Player> getParticipants(String url) {
         String formattedUrl = normalizeUrl(url);
         return tournamentClient.getParticipants(formattedUrl);
     }

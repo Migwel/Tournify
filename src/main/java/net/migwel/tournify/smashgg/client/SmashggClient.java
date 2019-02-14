@@ -43,7 +43,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,7 +80,7 @@ public class SmashggClient implements TournamentClient {
             existingPhases = oldTournament.getPhases();
         }
         Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
-        List<Phase> tournamentPhases = getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase);
+        Collection<Phase> tournamentPhases = getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase);
         boolean tournamentDone = true;
         if(!tournamentPhases.stream().allMatch(Phase::isDone)) {
             tournamentDone = false;
@@ -104,7 +103,7 @@ public class SmashggClient implements TournamentClient {
 
     @Nonnull
     @Override
-    public List<Player> getParticipants(String eventUrl) {
+    public Collection<Player> getParticipants(String eventUrl) {
         log.info("Fetching tournament at url: " + eventUrl);
         String eventSlug = findEventSlug(eventUrl);
         return fetchParticipants(eventSlug);
@@ -189,8 +188,8 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private List<Player> fetchParticipants(String eventSlug) {
-        List<Player> participants = new ArrayList<>();
+    private Collection<Player> fetchParticipants(String eventSlug) {
+        Collection<Player> participants = new ArrayList<>();
         SmashggEvent event;
         long page = 0;
         do {
@@ -245,8 +244,8 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private List<Set> fetchSets(long phaseGroupId) {
-        List<Set> sets = new ArrayList<>();
+    private Collection<Set> fetchSets(long phaseGroupId) {
+        Collection<Set> sets = new ArrayList<>();
         SmashggPhaseGroup phaseGroup;
         long page = 0;
         do {
@@ -267,15 +266,15 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private List<Set> getSets(String phaseGroupName, Collection<SmashggNode> nodes) {
-        List<Set> sets = new ArrayList<>();
+    private Collection<Set> getSets(String phaseGroupName, Collection<SmashggNode> nodes) {
+        Collection<Set> sets = new ArrayList<>();
         for(SmashggNode node : nodes) {
             if(node == null || node.getId().startsWith("preview")) {
                 continue;
             }
             long winnerId = node.getWinnerId();
             Player winner = null;
-            List<Player> players = new ArrayList<>();
+            Collection<Player> players = new ArrayList<>();
             for(SmashggSlot slot : node.getSlots()) {
                 if(slot == null) {
                     continue;
@@ -355,18 +354,18 @@ public class SmashggClient implements TournamentClient {
         return phaseGroupsPerPhase;
     }
 
-    private List<Phase> getPhases(Collection<Phase> existingPhases,
+    private Collection<Phase> getPhases(Collection<Phase> existingPhases,
                                   Collection<SmashggPhase> smashggPhases,
                                   Map<Long, Collection<SmashggPhaseGroup>> smashggGroups) {
-        List<Phase> tournamentPhases = new ArrayList<>();
+        Collection<Phase> tournamentPhases = new ArrayList<>();
         for(SmashggPhase smashGgPhase : smashggPhases) {
-            List<Set> phaseSets = new ArrayList<>();
+            Collection<Set> phaseSets = new ArrayList<>();
             if(phaseIsDone(existingPhases, smashGgPhase)) {
                 continue;
             }
             boolean phaseDone = true;
             for(SmashggPhaseGroup smashGgGroup : smashggGroups.get(smashGgPhase.getId())) {
-                List<Set> sets = fetchSets(smashGgGroup.getId());
+                Collection<Set> sets = fetchSets(smashGgGroup.getId());
                 if(sets.isEmpty() || !sets.stream().allMatch(Set::isDone)) {
                     phaseDone = false;
                 }

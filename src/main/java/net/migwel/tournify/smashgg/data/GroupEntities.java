@@ -1,22 +1,22 @@
 package net.migwel.tournify.smashgg.data;
 
-import java.util.List;
+import java.util.Collection;
 
 public class GroupEntities {
 
     private Group groups;
-    private List<Set> sets;
-    private List<Seed> seeds;
+    private Collection<Set> sets;
+    private Collection<Seed> seeds;
 
     public Group getGroups() {
         return groups;
     }
 
-    public List<Set> getSets() {
+    public Collection<Set> getSets() {
         return sets;
     }
 
-    public List<Seed> getSeeds() {
+    public Collection<Seed> getSeeds() {
         return seeds;
     }
 
@@ -24,11 +24,11 @@ public class GroupEntities {
         this.groups = groups;
     }
 
-    public void setSets(List<Set> sets) {
+    public void setSets(Collection<Set> sets) {
         this.sets = sets;
     }
 
-    public void setSeeds(List<Seed> seeds) {
+    public void setSeeds(Collection<Seed> seeds) {
         this.seeds = seeds;
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,9 +32,9 @@ public class TournamentController {
     }
 
     @RequestMapping(path="/participants", method= RequestMethod.POST)
-    public List<String> getParticipants(@RequestBody TournamentRequest request) {
+    public Collection<String> getParticipants(@RequestBody TournamentRequest request) {
         TournamentService tournamentService = serviceFactory.getTournamentService(request.getUrl());
-        List<Player> participants = tournamentService.getParticipants(request.getUrl());
+        Collection <Player> participants = tournamentService.getParticipants(request.getUrl());
         return participants.stream().map(Player::getDisplayUsername).collect(Collectors.toList());
     }
 }

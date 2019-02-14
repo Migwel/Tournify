@@ -1,18 +1,18 @@
 package net.migwel.tournify.communication.commons;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class Updates {
 
-    private List<Update> updateList;
+    private Collection<Update> updateList;
     private boolean tournamentDone;
 
     public Updates() {
     }
 
-    public Updates(List<Update> updateList, boolean tournamentDone) {
-        this.updateList = Collections.unmodifiableList(updateList);
+    public Updates(Collection<Update> updateList, boolean tournamentDone) {
+        this.updateList = Collections.unmodifiableCollection(updateList);
         this.tournamentDone = tournamentDone;
     }
 
@@ -20,11 +20,11 @@ public class Updates {
         return new Updates(Collections.emptyList(), false);
     }
 
-    public List<Update> getUpdateList() {
+    public Collection<Update> getUpdateList() {
         return updateList;
     }
 
-    public void setUpdateList(List<Update> updateList) {
+    public void setUpdateList(Collection<Update> updateList) {
         this.updateList = updateList;
     }
 

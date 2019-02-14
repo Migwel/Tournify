@@ -14,8 +14,8 @@ import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
@@ -27,22 +27,22 @@ public class Tournament {
 
     private String externalId;
 
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER) //This needs to be changed to fetch in repository
-    private List<Phase> phases;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //This needs to be changed to fetch in repository
+    private Collection<Phase> phases;
     private String name;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private GameType gameType;
 
     private String description;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
     @Column(unique = true)
     private String url;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private boolean done;
@@ -54,7 +54,7 @@ public class Tournament {
         this.url = url;
     }
 
-    public Tournament(String externalId, List<Phase> phases, String name, GameType gameType, Address address, String url, Date date, boolean done) {
+    public Tournament(String externalId, Collection<Phase> phases, String name, GameType gameType, Address address, String url, Date date, boolean done) {
         this.externalId = externalId;
         this.phases = phases;
         this.name = name;
@@ -74,11 +74,11 @@ public class Tournament {
     }
 
     @Nonnull
-    public List<Phase> getPhases() {
+    public Collection<Phase> getPhases() {
         return phases != null ? phases : new ArrayList<>();
     }
 
-    public void setPhases(List<Phase> phases) {
+    public void setPhases(Collection<Phase> phases) {
         this.phases = phases;
     }
 

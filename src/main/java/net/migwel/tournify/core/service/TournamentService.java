@@ -6,7 +6,7 @@ import net.migwel.tournify.core.data.Tournament;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.Collection;
 
 public interface TournamentService {
 
@@ -20,5 +20,5 @@ public interface TournamentService {
     Tournament getTournament(String url);
 
     @Nonnull
-    List<Player> getParticipants(String url);
+    Collection<Player> getParticipants(String url);
 }

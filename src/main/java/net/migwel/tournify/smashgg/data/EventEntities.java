@@ -3,26 +3,26 @@ package net.migwel.tournify.smashgg.data;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.List;
+import java.util.Collection;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EventEntities {
     private Event event;
 
     @JsonProperty("phase")
-    private List<Phase> phases;
+    private Collection<Phase> phases;
 
-    private List<Group> groups;
+    private Collection<Group> groups;
 
     public Event getEvent() {
         return event;
     }
 
-    public List<Phase> getPhases() {
+    public Collection<Phase> getPhases() {
         return phases;
     }
 
-    public List<Group> getGroups() {
+    public Collection<Group> getGroups() {
         return groups;
     }
 }

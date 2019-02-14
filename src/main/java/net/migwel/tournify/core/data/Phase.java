@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 public class Phase {
@@ -20,7 +20,7 @@ public class Phase {
     private String externalId;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Set> sets;
+    private Collection<Set> sets;
 
     private String phaseName;
 
@@ -29,7 +29,7 @@ public class Phase {
     public Phase() {
     }
 
-    public Phase(String externalId, List<Set> sets, String phaseName, boolean done) {
+    public Phase(String externalId, Collection<Set> sets, String phaseName, boolean done) {
         this.externalId = externalId;
         this.sets = sets;
         this.phaseName = phaseName;
@@ -45,11 +45,11 @@ public class Phase {
     }
 
     @Nonnull
-    public List<Set> getSets() {
+    public Collection<Set> getSets() {
         return sets != null ? sets : new ArrayList<>();
     }
 
-    public void setSets(List<Set> sets) {
+    public void setSets(Collection<Set> sets) {
         this.sets = sets;
     }
 

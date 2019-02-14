@@ -19,8 +19,8 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.Immutable;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Component
 @Immutable
@@ -50,7 +50,7 @@ public class NotificationSender {
 
     @Scheduled(fixedDelay = NOTIFY_WAIT_MS)
     private void startNotifying() {
-        List<Notification> notificationList = notificationRepository.findByNextDateBeforeAndDone(new Date(), false);
+        Collection<Notification> notificationList = notificationRepository.findByNextDateBeforeAndDone(new Date(), false);
         log.info("Notification list size: "+ notificationList.size());
         for(Notification notification : notificationList) {
             if(notification.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) {

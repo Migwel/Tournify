@@ -18,8 +18,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Component
 @Immutable
@@ -65,7 +65,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
 
     @Scheduled(fixedDelay = TRACKING_WAIT_MS)
     private void startTracking() {
-        List<TournamentTracking> trackingList = trackingRepository.findByNextDateBeforeAndDone(new Date(), false);
+        Collection<TournamentTracking> trackingList = trackingRepository.findByNextDateBeforeAndDone(new Date(), false);
         log.info("Tracking list size: "+ trackingList.size());
         for(TournamentTracking tracking : trackingList) {
             Tournament tournament = tracking.getTournament();
@@ -103,7 +103,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
     }
 
     private void addNotification(String tournamentUrl, Updates updates) {
-        List<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrlAndActive(tournamentUrl, true);
+        Collection<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrlAndActive(tournamentUrl, true);
         String setUpdatesStr;
         try {
             setUpdatesStr = objectMapper.writeValueAsString(updates);

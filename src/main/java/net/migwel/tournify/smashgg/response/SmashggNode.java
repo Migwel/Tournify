@@ -2,7 +2,7 @@ package net.migwel.tournify.smashgg.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.util.List;
+import java.util.Collection;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SmashggNode {
@@ -10,8 +10,8 @@ public class SmashggNode {
     private String id;
     private long winnerId;
     private String fullRoundText;
-    private List<SmashggSlot> slots;
-    private List<SmashggParticipant> participants;
+    private Collection<SmashggSlot> slots;
+    private Collection<SmashggParticipant> participants;
 
     public String getId() {
         return id;
@@ -37,19 +37,19 @@ public class SmashggNode {
         this.fullRoundText = fullRoundText;
     }
 
-    public List<SmashggSlot> getSlots() {
+    public Collection<SmashggSlot> getSlots() {
         return slots;
     }
 
-    public void setSlots(List<SmashggSlot> slots) {
+    public void setSlots(Collection<SmashggSlot> slots) {
         this.slots = slots;
     }
 
-    public List<SmashggParticipant> getParticipants() {
+    public Collection<SmashggParticipant> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<SmashggParticipant> participants) {
+    public void setParticipants(Collection<SmashggParticipant> participants) {
         this.participants = participants;
     }
 }
