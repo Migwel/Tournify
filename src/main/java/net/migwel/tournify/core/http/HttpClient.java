@@ -1,6 +1,5 @@
 package net.migwel.tournify.core.http;
 
-import net.migwel.tournify.smashgg.config.SmashggConfiguration;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -10,26 +9,26 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.CheckForNull;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 
 @Component
 public class HttpClient {
 
     private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
-    private final SmashggConfiguration configuration;
 
-    public HttpClient(SmashggConfiguration configuration) {
-        this.configuration = configuration;
+    public HttpClient() {
+        //
     }
 
     @CheckForNull
-    public String postRequest(String request) {
+    public String postRequest(String request, String url, Collection<Pair<String, String>> headers) {
         CloseableHttpClient client = HttpClients.createDefault();
-        HttpPost httpPost = new HttpPost(configuration.getApiUrl());
 
         StringEntity requestEntity;
         try {
@@ -38,9 +37,12 @@ public class HttpClient {
             log.warn("An error occurred while creating StringEntity", e);
             return null;
         }
+        HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(requestEntity);
         httpPost.setHeader("Content-type", "application/json");
-        httpPost.setHeader("Authorization", "Bearer " + configuration.getApiToken());
+        for(Pair<String, String> header : headers) {
+            httpPost.setHeader(header.getFirst(), header.getSecond());
+        }
         CloseableHttpResponse response;
         try {
             response = client.execute(httpPost);

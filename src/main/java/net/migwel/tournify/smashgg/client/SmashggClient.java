@@ -24,6 +24,7 @@ import net.migwel.tournify.smashgg.response.SmashggSlot;
 import net.migwel.tournify.smashgg.response.SmashggTournament;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.CheckForNull;
@@ -106,7 +107,8 @@ public class SmashggClient implements TournamentClient {
 
     @Nullable
     private <T> T fetch(String request, Class<? extends SmashggResponse> responseClass) throws TimeoutException {
-        String responseStr = httpClient.postRequest(request);
+        Collection<Pair<String, String>> headers = Collections.singleton(Pair.of("Authorization", "Bearer " + configuration.getApiToken()));
+        String responseStr = httpClient.postRequest(request, configuration.getApiUrl(), headers);
         try {
             @SuppressWarnings("unchecked")
             SmashggResponse<T> response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
