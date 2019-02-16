@@ -276,7 +276,7 @@ public class SmashggClient implements TournamentClient {
     }
 
     private String findEventSlug(String eventUrl) {
-        String smashggTournamentURLPattern = "^https://api.smash.gg/(tournament/[A-Za-z0-9-]+/event/[A-Za-z0-9-]+)";
+        String smashggTournamentURLPattern = "^https:\\/\\/api.smash.gg\\/(tournament\\/[A-Za-z0-9-]+\\/event\\/[A-Za-z0-9-]+)";
         Pattern p = Pattern.compile(smashggTournamentURLPattern);
         Matcher m = p.matcher(eventUrl);
 
