@@ -1,5 +1,2 @@
 rootProject.name = 'Tournify'
 
-include(":communication")
-include(":core")
-include(":smashgg")
