@@ -1,0 +1,16 @@
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-rest'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'com.h2database:h2'
+    compile 'org.postgresql:postgresql'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.0'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
+    compile 'org.apache.httpcomponents:httpclient:4.5.6'
+    compile group: 'org.json', name: 'json', version: '20180813'
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    compile project(':communication')
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'application'

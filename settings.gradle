@@ -1,2 +1,6 @@
 rootProject.name = 'Tournify'
 
+include 'app'
+include 'core'
+include 'smashgg'
+include 'communication'

@@ -12,9 +12,13 @@ buildscript {
 }
 
 allprojects {
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'application'
     apply plugin: 'java'
+
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
 }
 
 apply plugin: 'findbugs'
@@ -26,32 +30,3 @@ findbugs {
     reportsDir = file("$project.buildDir/reports/findbugs")
     effort = "max"
 }
-
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-data-rest'
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'com.h2database:h2'
-    compile 'org.postgresql:postgresql'
-    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.0'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.0'
-    compile 'org.apache.httpcomponents:httpclient:4.5.6'
-    compile group: 'org.json', name: 'json', version: '20180813'
-}
-
-springBoot {
-    mainClass = 'net.migwel.tournify.Application'
-}
-
-applicationDefaultJvmArgs = [
-
-        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" ]
