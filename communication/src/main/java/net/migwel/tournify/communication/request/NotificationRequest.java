@@ -4,7 +4,10 @@ import net.migwel.tournify.communication.commons.Updates;
 
 public class NotificationRequest {
 
-    private final Updates updates;
+    private Updates updates;
+
+    public NotificationRequest() {
+    }
 
     public NotificationRequest(Updates updates) {
         this.updates = updates;

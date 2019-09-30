@@ -15,8 +15,11 @@ allprojects {
     apply plugin: 'java'
 
     sourceCompatibility = 1.8
+    group 'net.migwel.tournify'
+    version '1.0-SNAPSHOT'
 
     repositories {
+        mavenLocal()
         mavenCentral()
     }
 }

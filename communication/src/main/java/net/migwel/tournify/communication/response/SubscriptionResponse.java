@@ -1,9 +1,12 @@
 package net.migwel.tournify.communication.response;
 
 public class SubscriptionResponse {
-    private final String id;
-    private final String tournamentUrl;
-    private final String callbackUrl;
+    private String id;
+    private String tournamentUrl;
+    private String callbackUrl;
+
+    public SubscriptionResponse() {
+    }
 
     public SubscriptionResponse(String id, String tournamentUrl, String callbackUrl) {
         this.id = id;

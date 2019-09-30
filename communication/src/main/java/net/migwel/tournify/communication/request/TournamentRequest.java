@@ -7,6 +7,10 @@ public class TournamentRequest {
     public TournamentRequest() {
     }
 
+    public TournamentRequest(String url) {
+        this.url = url;
+    }
+
     public String getUrl() {
         return url;
     }

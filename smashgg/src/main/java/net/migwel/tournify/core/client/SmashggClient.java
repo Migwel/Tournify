@@ -149,7 +149,7 @@ public class SmashggClient implements TournamentClient {
     }
 
     private String buildPhaseGroupRequest(long phaseGroupId, long page, long perPage) {
-        return String.format("{\"query\":\"query phaseGroup($id: Int!, $page:Int!, $perPage:Int!) {"+
+        return String.format("{\"query\":\"query phaseGroup($id: ID!, $page:Int!, $perPage:Int!) {"+
                 " phaseGroup(id: $id) {id displayIdentifier "+
                 " paginatedSets(page:$page, perPage:$perPage) { " +
                 " pageInfo {total totalPages} "+
@@ -177,7 +177,7 @@ public class SmashggClient implements TournamentClient {
 
             for(SmashggNode node : event.getEntrants().getNodes()) {
                 for(SmashggParticipant entrant : node.getParticipants()) {
-                    participants.add(new Player(entrant.getGamerTag()));
+                    participants.add(new Player(entrant.getPrefix(), entrant.getGamerTag()));
                 }
             }
 
@@ -216,7 +216,7 @@ public class SmashggClient implements TournamentClient {
                 " entrants(query:{page:$page, perPage:$perPage}){ " +
                 " pageInfo {total totalPages} "+
                 " nodes { "+
-                " participants{gamerTag} "+
+                " participants{gamerTag prefix} "+
                 " }}}}\", " +
                 "\"variables\":{\"slug\":\"%s\", \"page\":\"%d\", \"perPage\":\"%d\"}}", eventSlug, page, perPage);
     }

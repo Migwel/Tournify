@@ -9,6 +9,14 @@ public class SubscriptionRequest {
         return tournamentUrl;
     }
 
+    public SubscriptionRequest() {
+    }
+
+    public SubscriptionRequest(String tournamentUrl, String callbackUrl) {
+        this.tournamentUrl = tournamentUrl;
+        this.callbackUrl = callbackUrl;
+    }
+
     public void setTournamentUrl(String tournamentUrl) {
         this.tournamentUrl = tournamentUrl;
     }
