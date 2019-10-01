@@ -18,6 +18,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
 
@@ -112,7 +113,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
             return;
         }
         for(Subscription subscription : subscriptionList) {
-            Notification notification = new Notification(subscription, setUpdatesStr, new Date(), new Date());
+            Notification notification = new Notification(subscription, Base64.getEncoder().encodeToString(setUpdatesStr.getBytes()), new Date(), new Date());
             notificationRepository.save(notification);
         }
     }
