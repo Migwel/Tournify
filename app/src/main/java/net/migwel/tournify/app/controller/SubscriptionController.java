@@ -24,12 +24,10 @@ public class SubscriptionController {
 
     @RequestMapping(method= RequestMethod.POST)
     public SubscriptionResponse addSubscription(@RequestBody SubscriptionRequest request) throws Exception {
-        Subscription subscription = subscriptionService.addSubscription(request.getTournamentUrl(), request.getCallbackUrl());
-        SubscriptionResponse subscriptionResponse = new SubscriptionResponse(subscription.getId().toString(),
-                                                                             subscription.getTournament().getUrl(),
-                                                                             subscription.getCallbackUrl());
-
-        return subscriptionResponse;
+        Subscription subscription = subscriptionService.addSubscription(request.getTournamentUrl(), request.getCallbackUrl(), request.getPlayers());
+        return new SubscriptionResponse(subscription.getId().toString(),
+                                        subscription.getTournament().getUrl(),
+                                        subscription.getCallbackUrl());
     }
 
     @RequestMapping(value = "/{id}", method= RequestMethod.DELETE)

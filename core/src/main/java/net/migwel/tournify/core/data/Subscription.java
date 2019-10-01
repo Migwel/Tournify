@@ -2,12 +2,15 @@ package net.migwel.tournify.core.data;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.annotation.Nonnull;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.HashSet;
 import java.util.UUID;
 
 @Entity
@@ -26,14 +29,18 @@ public class Subscription {
 
     private String callbackUrl;
 
+    @ElementCollection
+    private java.util.Set<String> players;
+
     private boolean active;
 
     public Subscription() {
     }
 
-    public Subscription(Tournament tournament, String callbackUrl, boolean active) {
+    public Subscription(Tournament tournament, String callbackUrl, java.util.Set<String> players, boolean active) {
         this.tournament = tournament;
         this.callbackUrl = callbackUrl;
+        this.players = players;
         this.active = active;
     }
 
@@ -57,6 +64,18 @@ public class Subscription {
         this.callbackUrl = callbackUrl;
     }
 
+    @Nonnull
+    public java.util.Set<String> getPlayers() {
+        if(players == null) {
+            return new HashSet<>();
+        }
+        return players;
+    }
+
+    public void setPlayers(java.util.Set<String> players) {
+        this.players = players;
+    }
+
     public boolean isActive() {
         return active;
     }
@@ -71,6 +90,7 @@ public class Subscription {
         sb.append("id=").append(id);
         sb.append(", tournament=").append(tournament);
         sb.append(", callbackUrl=").append(callbackUrl);
+        sb.append(", players=").append(players);
         sb.append(", active=").append(active);
         sb.append('}');
         return sb.toString();

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -34,13 +35,12 @@ public class SubscriptionService {
         this.serviceFactory = serviceFactory;
     }
 
-    public Subscription addSubscription(String tournamentUrl, String callbackUrl) {
+    public Subscription addSubscription(String tournamentUrl, String callbackUrl, Set<String> players) {
         TournamentService tournamentService = serviceFactory.getTournamentService(tournamentUrl);
         String normalizedTournamentUrl = tournamentService.normalizeUrl(tournamentUrl);
         Subscription subscription = subscriptionRepository.findByCallbackUrlAndTournamentUrl(callbackUrl, normalizedTournamentUrl);
         if(subscription != null) {
-            log.info("Subscription already exists for callBackUrl: "+ callbackUrl +" and tournamentUrl: "+ normalizedTournamentUrl);
-            return  subscription;
+            return updateSubscription(subscription, players);
         }
 
         Tournament tournament = tournamentRepository.findByUrl(normalizedTournamentUrl);
@@ -48,9 +48,20 @@ public class SubscriptionService {
             tournament = createAndTrackTournament(normalizedTournamentUrl);
         }
 
-        subscription = new Subscription(tournament, callbackUrl, true);
+        subscription = new Subscription(tournament, callbackUrl, players, true);
         subscriptionRepository.save(subscription);
 
+        return subscription;
+    }
+
+    private Subscription updateSubscription(Subscription subscription, Set<String> players) {
+        Set<String> followedPlayers = subscription.getPlayers();
+        if(followedPlayers.isEmpty()) {
+            return subscription;
+        }
+
+        followedPlayers.addAll(players);
+        subscriptionRepository.save(subscription);
         return subscription;
     }
 
