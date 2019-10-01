@@ -80,7 +80,8 @@ public class NotificationSender {
 
         Updates updates;
         try {
-            updates = objectMapper.readValue(new String(Base64.getDecoder().decode(notification.getContent())), new TypeReference<Updates>(){});
+            byte[] contentByte = Base64.getDecoder().decode(notification.getContent());
+            updates = objectMapper.readValue(new String(contentByte), new TypeReference<Updates>(){});
         } catch (IOException e) {
             log.warn("Could not deserialize notification: "+ notification.getContent(), e);
             return null;
