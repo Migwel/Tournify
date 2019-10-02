@@ -3,7 +3,7 @@ package net.migwel.tournify.app;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.migwel.tournify.app.service.ServiceFactory;
-import net.migwel.tournify.communication.commons.Updates;
+import net.migwel.tournify.communication.commons.Update;
 import net.migwel.tournify.communication.request.NotificationRequest;
 import net.migwel.tournify.communication.response.NotificationResponse;
 import net.migwel.tournify.core.data.Notification;
@@ -78,16 +78,16 @@ public class NotificationSender {
             return null;
         }
 
-        Updates updates;
+        Update update;
         try {
             byte[] contentByte = Base64.getDecoder().decode(notification.getContent());
-            updates = objectMapper.readValue(new String(contentByte), new TypeReference<Updates>(){});
+            update = objectMapper.readValue(new String(contentByte), new TypeReference<Update>(){});
         } catch (IOException e) {
             log.warn("Could not deserialize notification: "+ notification.getContent(), e);
             return null;
         }
 
-        NotificationRequest request = new NotificationRequest(updates);
+        NotificationRequest request = new NotificationRequest(update);
         try {
             return restTemplate.postForObject(callBackUrl, request, NotificationResponse.class);
         }

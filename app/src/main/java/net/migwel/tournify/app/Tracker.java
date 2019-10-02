@@ -3,6 +3,8 @@ package net.migwel.tournify.app;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.migwel.tournify.app.service.ServiceFactory;
+import net.migwel.tournify.communication.commons.Player;
+import net.migwel.tournify.communication.commons.Update;
 import net.migwel.tournify.communication.commons.Updates;
 import net.migwel.tournify.core.data.Notification;
 import net.migwel.tournify.core.data.Subscription;
@@ -17,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.Immutable;
 import java.util.Base64;
 import java.util.Collection;
@@ -105,17 +108,54 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
 
     private void addNotification(String tournamentUrl, Updates updates) {
         Collection<Subscription> subscriptionList = subscriptionRepository.findByTournamentUrlAndActive(tournamentUrl, true);
-        String setUpdatesStr;
-        try {
-            setUpdatesStr = objectMapper.writeValueAsString(updates);
-        } catch (JsonProcessingException e) {
-            log.warn("Could not serialize updates "+ updates +": "+ e.getMessage());
+        if(updates == null) {
             return;
         }
-        for(Subscription subscription : subscriptionList) {
-            Notification notification = new Notification(subscription, Base64.getEncoder().encodeToString(setUpdatesStr.getBytes()), new Date(), new Date());
-            notificationRepository.save(notification);
+
+
+        for(Update update : updates.getUpdateList()) {
+            for (Subscription subscription : subscriptionList) {
+                if(!relevantUpdate(update, subscription)) {
+                    continue;
+                }
+
+                String updateStr = updateToString(update);
+                if(updateStr == null) {
+                    continue;
+                }
+                Notification notification = new Notification(subscription, Base64.getEncoder().encodeToString(updateStr.getBytes()), new Date(), new Date());
+                notificationRepository.save(notification);
+            }
         }
+    }
+
+    private boolean relevantUpdate(Update update, Subscription subscription) {
+        if(update.getSet() == null || update.getSet().getPlayers().isEmpty()) {
+            return true;
+        }
+        if(subscription.getPlayers().isEmpty()) {
+            return true;
+        }
+
+        Collection<String> followedPlayers = subscription.getPlayers();
+        for(Player setPlayer : update.getSet().getPlayers()) {
+            if(followedPlayers.contains(setPlayer.getDisplayUsername())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @CheckForNull
+    private String updateToString(Update update) {
+        String updateStr = null;
+        try {
+            updateStr = objectMapper.writeValueAsString(update);
+        } catch (JsonProcessingException e) {
+            log.warn("Could not serialize update "+ update +": "+ e.getMessage());
+        }
+        return updateStr;
     }
 
     private Date computeNextDate(int noUpdateRetries) {

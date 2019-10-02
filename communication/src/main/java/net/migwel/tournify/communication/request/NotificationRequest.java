@@ -1,19 +1,19 @@
 package net.migwel.tournify.communication.request;
 
-import net.migwel.tournify.communication.commons.Updates;
+import net.migwel.tournify.communication.commons.Update;
 
 public class NotificationRequest {
 
-    private Updates updates;
+    private Update update;
 
     public NotificationRequest() {
     }
 
-    public NotificationRequest(Updates updates) {
-        this.updates = updates;
+    public NotificationRequest(Update update) {
+        this.update = update;
     }
 
-    public Updates getUpdates() {
-        return updates;
+    public Update getUpdate() {
+        return update;
     }
 }
