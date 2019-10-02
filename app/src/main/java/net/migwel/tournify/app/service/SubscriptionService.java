@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.concurrent.Immutable;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,14 +28,17 @@ public class SubscriptionService {
 
     private final ServiceFactory serviceFactory;
 
-    public SubscriptionService(SubscriptionRepository subscriptionRepository, TournamentRepository tournamentRepository, TrackingService trackingService, ServiceFactory serviceFactory) {
+    public SubscriptionService(SubscriptionRepository subscriptionRepository,
+                               TournamentRepository tournamentRepository,
+                               TrackingService trackingService,
+                               ServiceFactory serviceFactory) {
         this.subscriptionRepository = subscriptionRepository;
         this.tournamentRepository = tournamentRepository;
         this.trackingService = trackingService;
         this.serviceFactory = serviceFactory;
     }
 
-    public Subscription addSubscription(String tournamentUrl, String callbackUrl, Set<String> players) {
+    public Subscription addSubscription(String tournamentUrl, String callbackUrl, List<String> players) {
         TournamentService tournamentService = serviceFactory.getTournamentService(tournamentUrl);
         String normalizedTournamentUrl = tournamentService.normalizeUrl(tournamentUrl);
         Subscription subscription = subscriptionRepository.findByCallbackUrlAndTournamentUrl(callbackUrl, normalizedTournamentUrl);
@@ -54,13 +57,21 @@ public class SubscriptionService {
         return subscription;
     }
 
-    private Subscription updateSubscription(Subscription subscription, Set<String> players) {
-        Set<String> followedPlayers = subscription.getPlayers();
+    private Subscription updateSubscription(Subscription subscription, List<String> players) {
+        List<String> followedPlayers = subscription.getPlayers();
         if(followedPlayers.isEmpty()) {
             return subscription;
         }
 
-        followedPlayers.addAll(players);
+        if(players.isEmpty()) {
+            subscription.setPlayers(null);
+            subscriptionRepository.save(subscription);
+            return subscription;
+        }
+        else {
+            followedPlayers.addAll(players);
+        }
+        subscription.setPlayers(followedPlayers);
         subscriptionRepository.save(subscription);
         return subscription;
     }

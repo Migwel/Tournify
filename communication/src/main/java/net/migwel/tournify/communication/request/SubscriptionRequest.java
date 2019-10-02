@@ -1,12 +1,12 @@
 package net.migwel.tournify.communication.request;
 
-import java.util.Set;
+import java.util.List;
 
 public class SubscriptionRequest {
 
     private String tournamentUrl;
     private String callbackUrl;
-    private Set<String> players;
+    private List<String> players;
 
     public String getTournamentUrl() {
         return tournamentUrl;
@@ -15,7 +15,7 @@ public class SubscriptionRequest {
     public SubscriptionRequest() {
     }
 
-    public SubscriptionRequest(String tournamentUrl, String callbackUrl, Set<String> players) {
+    public SubscriptionRequest(String tournamentUrl, String callbackUrl, List<String> players) {
         this.tournamentUrl = tournamentUrl;
         this.callbackUrl = callbackUrl;
         this.players = players;
@@ -33,11 +33,11 @@ public class SubscriptionRequest {
         this.callbackUrl = callbackUrl;
     }
 
-    public Set<String> getPlayers() {
+    public List<String> getPlayers() {
         return players;
     }
 
-    public void setPlayers(Set<String> players) {
+    public void setPlayers(List<String> players) {
         this.players = players;
     }
 

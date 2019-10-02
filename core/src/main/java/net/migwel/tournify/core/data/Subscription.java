@@ -3,14 +3,19 @@ package net.migwel.tournify.core.data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.annotation.Nonnull;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,14 +35,17 @@ public class Subscription {
     private String callbackUrl;
 
     @ElementCollection
-    private java.util.Set<String> players;
+    @CollectionTable(name = "subscription_players", joinColumns = @JoinColumn(name = "subscription_id"))
+    @Column(name = "player")
+    @OrderColumn //Needed for delete to work
+    private java.util.List<String> players;
 
     private boolean active;
 
     public Subscription() {
     }
 
-    public Subscription(Tournament tournament, String callbackUrl, java.util.Set<String> players, boolean active) {
+    public Subscription(Tournament tournament, String callbackUrl, List<String> players, boolean active) {
         this.tournament = tournament;
         this.callbackUrl = callbackUrl;
         this.players = players;
@@ -65,14 +73,14 @@ public class Subscription {
     }
 
     @Nonnull
-    public java.util.Set<String> getPlayers() {
+    public List<String> getPlayers() {
         if(players == null) {
-            return new HashSet<>();
+            return new ArrayList<>();
         }
         return players;
     }
 
-    public void setPlayers(java.util.Set<String> players) {
+    public void setPlayers(List<String> players) {
         this.players = players;
     }
 
