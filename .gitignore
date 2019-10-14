@@ -1,3 +1,4 @@
 .idea/
 .git/
-src/main/resources/smashgg.properties
+smashgg/src/main/resources/smashgg.properties
+core/src/main/resources/application.properties
