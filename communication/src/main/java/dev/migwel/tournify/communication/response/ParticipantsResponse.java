@@ -6,6 +6,9 @@ public class ParticipantsResponse {
 
     List<String> participants;
 
+    public ParticipantsResponse() {
+    }
+
     public ParticipantsResponse(List<String> participants) {
         this.participants = participants;
     }
