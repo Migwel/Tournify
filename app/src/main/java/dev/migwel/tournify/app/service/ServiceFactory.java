@@ -1,5 +1,6 @@
 package dev.migwel.tournify.app.service;
 
+import dev.migwel.tournify.core.data.Source;
 import dev.migwel.tournify.core.service.TournamentService;
 import dev.migwel.tournify.core.service.UrlService;
 import jdk.nashorn.internal.ir.annotations.Immutable;
@@ -17,17 +18,14 @@ public class ServiceFactory {
 
     private final UrlService smashggUrlService;
 
-    private final UrlService urlService;
-
-    public ServiceFactory(@Qualifier("SmashggTournamentService") TournamentService smashggTournamentService, @Qualifier("SmashggUrlService") UrlService smashggUrlService, UrlService urlService) {
+    public ServiceFactory(@Qualifier("SmashggTournamentService") TournamentService smashggTournamentService, @Qualifier("SmashggUrlService") UrlService smashggUrlService) {
         this.smashggTournamentService = smashggTournamentService;
         this.smashggUrlService = smashggUrlService;
-        this.urlService = urlService;
     }
 
     @Nonnull
     public TournamentService getTournamentService(String url) {
-        switch(urlService.parseUrl(url)) {
+        switch(Source.getSource(url)) {
             case Smashgg:
                 return smashggTournamentService;
             default:
@@ -37,7 +35,7 @@ public class ServiceFactory {
 
     @Nonnull
     public UrlService getUrlService(String url) {
-        switch(urlService.parseUrl(url)) {
+        switch(Source.getSource(url)) {
             case Smashgg:
                 return smashggUrlService;
             default:

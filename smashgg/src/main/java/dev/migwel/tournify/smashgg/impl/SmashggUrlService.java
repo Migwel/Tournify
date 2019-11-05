@@ -1,5 +1,6 @@
 package dev.migwel.tournify.smashgg.impl;
 
+import dev.migwel.tournify.core.data.Source;
 import dev.migwel.tournify.core.service.UrlService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ public class SmashggUrlService implements UrlService {
     @Nonnull
     public String normalizeUrl(String url) {
         log.info("Normalizing url: "+ url);
-        Pattern p = Pattern.compile(smashggURLPattern);
+        Pattern p = Pattern.compile(Source.Smashgg.getUrlPattern());
         Matcher m = p.matcher(url);
 
         if (!m.find()) {
