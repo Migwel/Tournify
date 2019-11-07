@@ -74,24 +74,23 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     @Nullable
-    protected Tournament fetchTournament(Tournament oldTournament, String url) {
-        String formattedUrl = normalizeUrl(url);
+    protected Tournament fetchTournament(Tournament oldTournament, String formattedUrl) {
         if(oldTournament != null && oldTournament.isDone()) {
             return oldTournament;
         }
 
-        return tournamentClient.fetchTournament(oldTournament, formattedUrl);
+        return tournamentClient.fetchTournament(formattedUrl);
     }
 
     @Override
     @Nonnull
-    public Updates updateTournament(String url) {
-        Tournament oldTournament = tournamentRepository.findByUrl(url);
+    public Updates updateTournament(String formattedUrl) {
+        Tournament oldTournament = tournamentRepository.findByUrl(formattedUrl);
         if(oldTournament.isDone()) {
             return Updates.nothingNew();
         }
 
-        Tournament newTournament = fetchTournament(oldTournament, url);
+        Tournament newTournament = fetchTournament(oldTournament, formattedUrl);
         //We could/should probably use some comparison framework, like JaVers
         boolean firstFetch = oldTournament.getExternalId() == null;
         Collection<Update> updateList = new ArrayList<>();

@@ -10,7 +10,7 @@ import java.util.Collection;
 public interface TournamentClient {
 
     @Nullable
-    Tournament fetchTournament(Tournament oldTournament, String url);
+    Tournament fetchTournament(String url);
 
     @Nonnull
     Collection<Player> getParticipants(String url);

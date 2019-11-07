@@ -10,6 +10,7 @@ import dev.migwel.tournify.core.data.Set;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.TimeoutException;
 import dev.migwel.tournify.core.http.HttpClient;
+import dev.migwel.tournify.core.store.TournamentRepository;
 import dev.migwel.tournify.smashgg.config.SmashggConfiguration;
 import dev.migwel.tournify.smashgg.response.SmashggEntrant;
 import dev.migwel.tournify.smashgg.response.SmashggEvent;
@@ -51,30 +52,29 @@ public class SmashggClient implements TournamentClient {
     private final SmashggConfiguration configuration;
     private final ObjectMapper objectMapper;
     private final HttpClient httpClient;
+    private final TournamentRepository tournamentRepository;
 
-    public SmashggClient(SmashggConfiguration configuration, ObjectMapper objectMapper, HttpClient httpClient) {
+    public SmashggClient(SmashggConfiguration configuration, ObjectMapper objectMapper, HttpClient httpClient, TournamentRepository tournamentRepository) {
         this.configuration = configuration;
         this.objectMapper = objectMapper;
         this.httpClient = httpClient;
+        this.tournamentRepository = tournamentRepository;
     }
 
     @Override
-    @Nullable
-    public Tournament fetchTournament(@Nullable Tournament oldTournament, @Nonnull String eventUrl) {
-        log.info("Fetching tournament at url: " + eventUrl);
+    @CheckForNull
+    public Tournament fetchTournament(@Nonnull String formattedUrl) {
+        log.info("Fetching tournament at url: " + formattedUrl);
 
-        String eventSlug = findEventSlug(eventUrl);
+        String eventSlug = findEventSlug(formattedUrl);
         SmashggEvent smashggEvent = fetchEvent(eventSlug);
 
         if (smashggEvent == null) {
-            log.info("Could not retrieve tournament for url: "+ eventUrl);
+            log.info("Could not retrieve tournament for url: "+ formattedUrl);
             return null;
         }
 
-        Collection<Phase> existingPhases = Collections.emptyList();
-        if(oldTournament != null) {
-            existingPhases = oldTournament.getPhases();
-        }
+        Collection<Phase> existingPhases = getExistingPhases(formattedUrl);
         Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
         Collection<Phase> tournamentPhases = getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase);
         boolean tournamentDone = true;
@@ -84,7 +84,7 @@ public class SmashggClient implements TournamentClient {
 
         Address address = buildAddress(smashggEvent.getTournament());
 
-        log.info("Done with fetching tournament at url: "+ eventUrl);
+        log.info("Done with fetching tournament at url: "+ formattedUrl);
 
 
         return new Tournament(String.valueOf(smashggEvent.getId()),
@@ -92,16 +92,24 @@ public class SmashggClient implements TournamentClient {
                 smashggEvent.getTournament().getName() + " - "+ smashggEvent.getName(),
                 new GameType(smashggEvent.getVideogame().getDisplayName()),
                 address,
-                eventUrl,
+                formattedUrl,
                 new Date(smashggEvent.getStartAt()*1000),
                 tournamentDone);
     }
 
+    private Collection<Phase> getExistingPhases(String formattedUrl) {
+        Tournament oldTournament = tournamentRepository.findByUrl(formattedUrl);
+        if (oldTournament == null) {
+            return Collections.emptyList();
+        }
+        return oldTournament.getPhases();
+    }
+
     @Nonnull
     @Override
-    public Collection<Player> getParticipants(@Nonnull String eventUrl) {
-        log.info("Fetching tournament at url: " + eventUrl);
-        String eventSlug = findEventSlug(eventUrl);
+    public Collection<Player> getParticipants(@Nonnull String formattedUrl) {
+        log.info("Fetching tournament at url: " + formattedUrl);
+        String eventSlug = findEventSlug(formattedUrl);
         return fetchParticipants(eventSlug);
     }
 
