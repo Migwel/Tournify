@@ -7,19 +7,23 @@ import java.util.Collection;
 public class Set {
 
     private String externalId;
+    private String tournamentName;
+    private String phaseName;
+    private String round;
 
     private Collection<Player> players;
 
     private Player winner;
-    private String round;
 
     private boolean done;
 
     public Set() {
     }
 
-    public Set(String externalId, Collection<Player> players, Player winner, String round, boolean done) {
+    public Set(String externalId, String tournamentName, String phaseName, Collection<Player> players, Player winner, String round, boolean done) {
         this.externalId = externalId;
+        this.tournamentName = tournamentName;
+        this.phaseName = phaseName;
         this.players = players;
         this.winner = winner;
         this.round = round;
@@ -65,6 +69,22 @@ public class Set {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public String getTournamentName() {
+        return tournamentName;
+    }
+
+    public void setTournamentName(String tournamentName) {
+        this.tournamentName = tournamentName;
+    }
+
+    public String getPhaseName() {
+        return phaseName;
+    }
+
+    public void setPhaseName(String phaseName) {
+        this.phaseName = phaseName;
     }
 
     @Override

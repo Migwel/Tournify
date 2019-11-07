@@ -24,6 +24,7 @@ import javax.annotation.concurrent.Immutable;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Component
 @Immutable
@@ -40,7 +41,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
     private final static long[] NO_UPDATE_WAIT_MS = {
             MIN, MIN, MIN, MIN, MIN,
             2 * MIN, 2 * MIN, 2 * MIN, 2 * MIN, 2 * MIN, 2 * MIN,
-            5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN,
+            5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN, 5 * MIN,
             15 * MIN, 15 * MIN, 15 * MIN, 15 * MIN, 15 * MIN,
             30 * MIN, 30 * MIN, 30 * MIN, 30 * MIN, 30 * MIN,
             HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR, HOUR,
@@ -79,7 +80,8 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
     }
 
     private void trackTournament(TournamentTracking tracking, Tournament tournament) {
-        if(tournament.getDate() != null && tournament.getDate().after(new Date())) {
+        boolean tournamentNotStarted = tournament.getDate() != null && tournament.getDate().after(new Date());
+        if(tournamentNotStarted) {
             tracking.setNextDate(tournament.getDate());
             return;
         }
@@ -88,22 +90,29 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
         Updates updates = tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
 
         if(updates.getUpdateList().isEmpty()) {
-            tracking.setNextDate(computeNextDate(tracking.getNoUpdateRetries()));
-            tracking.setNoUpdateRetries(tracking.getNoUpdateRetries() + 1);
-            if(tracking.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) {
-                tracking.setDone(true);
-            }
+            updateTrackingNoUpdates(tracking);
             return;
         }
-
+        updateTrackingUpdates(tracking, updates.isTournamentDone());
         addNotification(tournament.getUrl(), updates);
-        if(updates.isTournamentDone()) {
+    }
+
+    private void updateTrackingUpdates(TournamentTracking tracking, boolean tournamentDone) {
+        if(tournamentDone) {
             tracking.setDone(true);
             return;
         }
 
         tracking.setNextDate(computeNextDate(0));
         tracking.setNoUpdateRetries(0);
+    }
+
+    private void updateTrackingNoUpdates(TournamentTracking tracking) {
+        tracking.setNextDate(computeNextDate(tracking.getNoUpdateRetries()));
+        tracking.setNoUpdateRetries(tracking.getNoUpdateRetries() + 1);
+        if(tracking.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) {
+            tracking.setDone(true);
+        }
     }
 
     private void addNotification(String tournamentUrl, Updates updates) {
@@ -115,7 +124,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
 
         for(Update update : updates.getUpdateList()) {
             for (Subscription subscription : subscriptionList) {
-                if(!relevantUpdate(update, subscription)) {
+                if(!relevantUpdate(update, subscription.getPlayers())) {
                     continue;
                 }
 
@@ -129,17 +138,16 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
         }
     }
 
-    private boolean relevantUpdate(Update update, Subscription subscription) {
-        if(update.getSet() == null || update.getSet().getPlayers().isEmpty()) {
-            return true;
-        }
-        if(subscription.getPlayers().isEmpty()) {
+    private boolean relevantUpdate(Update update, List<String> followedPlayers) {
+        boolean noPlayersInvolved = update.getSet() == null || update.getSet().getPlayers().isEmpty();
+        boolean noPlayersFollowed = followedPlayers.isEmpty();
+        if(noPlayersInvolved || noPlayersFollowed) {
             return true;
         }
 
-        Collection<String> followedPlayers = subscription.getPlayers();
         for(Player setPlayer : update.getSet().getPlayers()) {
-            if(followedPlayers.contains(setPlayer.getDisplayUsername())) {
+            boolean updatedPlayerIsFollowed = followedPlayers.contains(setPlayer.getDisplayUsername());
+            if(updatedPlayerIsFollowed) {
                 return true;
             }
         }
@@ -153,7 +161,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
         try {
             updateStr = objectMapper.writeValueAsString(update);
         } catch (JsonProcessingException e) {
-            log.warn("Could not serialize update "+ update +": "+ e.getMessage());
+            log.warn("Could not serialize update "+ update, e);
         }
         return updateStr;
     }
