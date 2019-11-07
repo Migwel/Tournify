@@ -11,7 +11,7 @@ import javax.annotation.concurrent.Immutable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Service("SmashggUrlService")
+@Service
 @Immutable
 public class SmashggUrlService implements UrlService {
 

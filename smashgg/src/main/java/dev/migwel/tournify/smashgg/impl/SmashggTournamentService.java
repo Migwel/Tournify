@@ -7,7 +7,7 @@ import dev.migwel.tournify.core.service.AbstractTournamentService;
 import dev.migwel.tournify.core.service.TrackingService;
 import dev.migwel.tournify.core.service.UrlService;
 import dev.migwel.tournify.core.store.TournamentRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
+import dev.migwel.tournify.smashgg.client.SmashggClient;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import java.util.Collection;
 
-@Service("SmashggTournamentService")
+@Service
 @Immutable
 public class SmashggTournamentService extends AbstractTournamentService {
 
@@ -24,8 +24,8 @@ public class SmashggTournamentService extends AbstractTournamentService {
 
     public SmashggTournamentService(TournamentRepository tournamentRepository,
                                     TrackingService trackingService,
-                                    @Qualifier("SmashggUrlService") UrlService urlService,
-                                    @Qualifier("SmashggClient") TournamentClient tournamentClient) {
+                                    SmashggUrlService urlService,
+                                    SmashggClient tournamentClient) {
         super(tournamentRepository, trackingService);
         this.urlService = urlService;
         this.tournamentClient = tournamentClient;

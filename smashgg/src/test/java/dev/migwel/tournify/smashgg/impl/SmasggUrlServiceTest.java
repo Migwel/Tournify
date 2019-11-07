@@ -1,7 +1,8 @@
 package dev.migwel.tournify.smashgg.impl;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SmasggUrlServiceTest {
 
@@ -25,7 +26,7 @@ public class SmasggUrlServiceTest {
     @Test
     public void formatUrl_smashggUrls() {
         for(int i = 0; i < validSmashggUrls.length; i++) {
-            Assert.assertEquals("Format Smashgg URL "+ validSmashggUrls[i],
+            assertEquals("Format Smashgg URL "+ validSmashggUrls[i],
                                 expectedSmashggUrls[i],
                                 smashggUrlService.normalizeUrl(validSmashggUrls[i]));
         }

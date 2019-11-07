@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 public enum Source {
     Smashgg("^((http(s)?:\\/\\/)?((www|api)\\.)?)?smash\\.gg\\/tournament\\/([0-9a-zA-Z-]+)\\/event(s)?\\/([0-9a-zA-Z-]+)"),
-    Unknown(null),
     ;
 
     private String urlPattern;
@@ -34,6 +33,6 @@ public enum Source {
                 return source;
             }
         }
-        return Source.Unknown;
+        throw new IllegalArgumentException("The provided url is not supported: "+ url);
     }
 }

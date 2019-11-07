@@ -1,7 +1,9 @@
 package dev.migwel.tournify.core.data;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SourceTest {
 
@@ -22,14 +24,14 @@ public class SourceTest {
     @Test
     public void parseUrlTest_validSmashggUrls() {
         for(String validSmashggUrl : validSmashggUrls) {
-            Assert.assertEquals("Parse valid Smashgg URL "+ validSmashggUrl, Source.Smashgg, Source.getSource(validSmashggUrl));
+            assertEquals(Source.Smashgg, Source.getSource(validSmashggUrl), "Parse valid Smashgg URL "+ validSmashggUrl);
         }
     }
 
     @Test
     public void parseUrlTest_invalidUrls() {
         for(String invalidUrl : invalidUrls) {
-            Assert.assertEquals("Parse invalid URL "+ invalidUrl, Source.Unknown, Source.getSource(invalidUrl));
+            assertThrows(IllegalArgumentException.class, () -> Source.getSource(invalidUrl), "Parse invalid URL "+ invalidUrl);
         }
     }
 }
