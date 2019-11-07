@@ -29,14 +29,33 @@ public abstract class AbstractTournamentService implements TournamentService {
 
     private final TrackingService trackingService;
 
-    public AbstractTournamentService(TournamentRepository tournamentRepository, TrackingService trackingService) {
+    private final UrlService urlService;
+
+    private final TournamentClient tournamentClient;
+
+    public AbstractTournamentService(TournamentRepository tournamentRepository, TrackingService trackingService, UrlService urlService, TournamentClient tournamentClient) {
         this.tournamentRepository = tournamentRepository;
         this.trackingService = trackingService;
+        this.urlService = urlService;
+        this.tournamentClient = tournamentClient;
+    }
+
+    @Override
+    @Nonnull
+    public String normalizeUrl(String tournamentUrl) {
+        return urlService.normalizeUrl(tournamentUrl);
+    }
+
+    @Nonnull
+    @Override
+    public Collection<Player> getParticipants(String url) {
+        String formattedUrl = normalizeUrl(url);
+        return tournamentClient.getParticipants(formattedUrl);
     }
 
     @Nullable
-    protected Tournament getTournament(TournamentClient tournamentClient,
-                                       String formattedUrl) {
+    public Tournament getTournament(String url) {
+        String formattedUrl = urlService.normalizeUrl(url);
         Tournament tournament = tournamentRepository.findByUrl(formattedUrl);
         if (tournament != null) {
             log.info("Tournament was found in database for url: "+ formattedUrl);
@@ -44,7 +63,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         }
 
         log.info("No tournament was found, let's fetch it. url = "+ formattedUrl);
-        tournament = fetchTournament(null, tournamentClient, formattedUrl);
+        tournament = fetchTournament(null, formattedUrl);
         if(tournament == null) {
             log.info("Could not fetch tournament at url = "+ formattedUrl);
             return null;
@@ -55,12 +74,8 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     @Nullable
-    protected abstract Tournament fetchTournament(Tournament oldTournament, String url);
-
-    @Nullable
-    protected Tournament fetchTournament(Tournament oldTournament,
-                                         TournamentClient tournamentClient,
-                                         String formattedUrl) {
+    protected Tournament fetchTournament(Tournament oldTournament, String url) {
+        String formattedUrl = normalizeUrl(url);
         if(oldTournament != null && oldTournament.isDone()) {
             return oldTournament;
         }

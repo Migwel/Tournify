@@ -23,7 +23,7 @@ public class SubscriptionController {
     }
 
     @RequestMapping(method= RequestMethod.POST)
-    public SubscriptionResponse addSubscription(@RequestBody SubscriptionRequest request) throws Exception {
+    public SubscriptionResponse addSubscription(@RequestBody SubscriptionRequest request) {
         Subscription subscription = subscriptionService.addSubscription(request.getTournamentUrl(), request.getCallbackUrl(), request.getPlayers());
         return new SubscriptionResponse(subscription.getId().toString(),
                                         subscription.getTournament().getUrl(),
@@ -31,7 +31,7 @@ public class SubscriptionController {
     }
 
     @RequestMapping(value = "/{id}", method= RequestMethod.DELETE)
-    public void deleteSubscription(@PathVariable String id) throws Exception {
+    public void deleteSubscription(@PathVariable String id) {
         subscriptionService.inactivateSubscription(UUID.fromString(id));
     }
 }
