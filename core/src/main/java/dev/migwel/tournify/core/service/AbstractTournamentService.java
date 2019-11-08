@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -87,31 +88,50 @@ public abstract class AbstractTournamentService implements TournamentService {
     public Updates updateTournament(String formattedUrl) {
         Tournament oldTournament = tournamentRepository.findByUrl(formattedUrl);
         if(oldTournament.isDone()) {
-            return Updates.nothingNew();
+            return Updates.nothingNew(true);
         }
 
         Tournament newTournament = fetchTournament(oldTournament, formattedUrl);
+        if(newTournament == null) {
+            return Updates.nothingNew();
+        }
+
         //We could/should probably use some comparison framework, like JaVers
-        boolean firstFetch = oldTournament.getExternalId() == null;
-        Collection<Update> updateList = new ArrayList<>();
-        if(!compareTournaments(oldTournament, newTournament, firstFetch, updateList)) {
+        TournamentChanges tournamentChanges = getTournamentChanges(oldTournament, newTournament);
+        if(tournamentChanges.hasChanged) {
             log.info("Tournament has changed: saving modifications");
             tournamentRepository.save(oldTournament);
         }
-        Updates updates = new Updates(updateList, oldTournament.isDone());
-        return firstFetch ? Updates.nothingNew() : updates;
+
+        return new Updates(tournamentChanges.updates, newTournament.isDone());
+    }
+
+    private TournamentChanges getTournamentChanges(Tournament oldTournament, Tournament newTournament) {
+        boolean firstFetch = oldTournament.getExternalId() == null;
+        if(firstFetch) {
+            compareTournamentsFirstTime(oldTournament, newTournament);
+            return TournamentChanges.firstUpdate();
+        }
+        return compareTournaments(oldTournament, newTournament);
+    }
+
+    private TournamentChanges compareTournamentsFirstTime(Tournament oldTournament, Tournament newTournament) {
+        fillGeneralTournamentInfo(oldTournament, newTournament);
+        return compareTournaments(oldTournament, newTournament);
+    }
+
+    private void fillGeneralTournamentInfo(Tournament oldTournament, Tournament newTournament) {
+        oldTournament.setExternalId(newTournament.getExternalId());
+        oldTournament.setName(newTournament.getName());
+        oldTournament.setAddress(newTournament.getAddress());
+        oldTournament.setDate(newTournament.getDate());
     }
 
     //Returns true if tournaments are the same
-    private boolean compareTournaments(Tournament oldTournament, Tournament newTournament, boolean firstFetch, Collection<Update> updates) {
+    private TournamentChanges compareTournaments(Tournament oldTournament, Tournament newTournament) {
         boolean areSame = true;
-        if(firstFetch) {
-            oldTournament.setExternalId(newTournament.getExternalId());
-            oldTournament.setName(newTournament.getName());
-            oldTournament.setAddress(newTournament.getAddress());
-            oldTournament.setDate(newTournament.getDate());
-            areSame = false;
-        }
+        List<Update> updates = new ArrayList<>();
+
         Collection<Phase> oldPhases = oldTournament.getPhases();
         Collection<Phase> newPhases = newTournament.getPhases();
 
@@ -131,7 +151,7 @@ public abstract class AbstractTournamentService implements TournamentService {
             updates.add(new Update(null, "["+ oldTournament.getName() +"] Tournament is over"));
         }
 
-        return areSame;
+        return new TournamentChanges(!areSame, updates);
     }
 
     private Collection<Update> getNewSets(Collection<Set> sets, String tournamentName, String phaseName) {
@@ -260,6 +280,20 @@ public abstract class AbstractTournamentService implements TournamentService {
         }
 
         return phasesMap;
+    }
+
+    static class TournamentChanges {
+        private boolean hasChanged;
+        private List<Update> updates;
+
+        public TournamentChanges(boolean hasChanged, List<Update> updates) {
+            this.hasChanged = hasChanged;
+            this.updates = updates;
+        }
+
+        public static TournamentChanges firstUpdate() {
+            return new TournamentChanges(true, Collections.emptyList());
+        }
     }
 
 }

@@ -90,7 +90,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
         Updates updates = tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
 
         if(updates.getUpdateList().isEmpty()) {
-            updateTrackingNoUpdates(tracking);
+            updateTrackingNoUpdates(tracking, updates.isTournamentDone());
             return;
         }
         updateTrackingUpdates(tracking, updates.isTournamentDone());
@@ -107,7 +107,11 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
         tracking.setNoUpdateRetries(0);
     }
 
-    private void updateTrackingNoUpdates(TournamentTracking tracking) {
+    private void updateTrackingNoUpdates(TournamentTracking tracking, boolean isTournamentDone) {
+        if(isTournamentDone) {
+            tracking.setDone(true);
+            return;
+        }
         tracking.setNextDate(computeNextDate(tracking.getNoUpdateRetries()));
         tracking.setNoUpdateRetries(tracking.getNoUpdateRetries() + 1);
         if(tracking.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) {

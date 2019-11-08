@@ -17,7 +17,11 @@ public class Updates {
     }
 
     public static Updates nothingNew() {
-        return new Updates(Collections.emptyList(), false);
+        return nothingNew(false);
+    }
+
+    public static Updates nothingNew(boolean tournamentDone) {
+        return new Updates(Collections.emptyList(), tournamentDone);
     }
 
     public Collection<Update> getUpdateList() {

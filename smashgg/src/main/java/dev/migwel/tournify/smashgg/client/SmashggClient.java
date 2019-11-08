@@ -66,8 +66,7 @@ public class SmashggClient implements TournamentClient {
     public Tournament fetchTournament(@Nonnull String formattedUrl) {
         log.info("Fetching tournament at url: " + formattedUrl);
 
-        String eventSlug = findEventSlug(formattedUrl);
-        SmashggEvent smashggEvent = fetchEvent(eventSlug);
+        SmashggEvent smashggEvent = fetchEvent(formattedUrl);
 
         if (smashggEvent == null) {
             log.info("Could not retrieve tournament for url: "+ formattedUrl);
@@ -95,6 +94,13 @@ public class SmashggClient implements TournamentClient {
                 formattedUrl,
                 new Date(smashggEvent.getStartAt()*1000),
                 tournamentDone);
+    }
+
+    private SmashggEvent fetchEvent(@Nonnull String formattedUrl) {
+        String eventSlug = findEventSlug(formattedUrl);
+        String request = buildEventRequest(eventSlug);
+        log.info("Fetching event at "+ eventSlug);
+        return fetchWithRetries(request, SmashggEventResponse.class);
     }
 
     private Collection<Phase> getExistingPhases(String formattedUrl) {
@@ -130,13 +136,6 @@ public class SmashggClient implements TournamentClient {
             log.warn("Could not convert JSON response "+ responseStr +" to "+ responseClass, e);
             return null;
         }
-    }
-
-    @CheckForNull
-    private SmashggEvent fetchEvent(String eventSlug) {
-        String request = buildEventRequest(eventSlug);
-        log.info("Fetching event at "+ eventSlug);
-        return fetchWithRetries(request, SmashggEventResponse.class);
     }
 
     private String buildEventRequest(String eventSlug) {
