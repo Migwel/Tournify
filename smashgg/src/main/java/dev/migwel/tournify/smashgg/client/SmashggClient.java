@@ -8,7 +8,7 @@ import dev.migwel.tournify.core.data.Phase;
 import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Set;
 import dev.migwel.tournify.core.data.Tournament;
-import dev.migwel.tournify.core.exception.TimeoutException;
+import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.http.HttpClient;
 import dev.migwel.tournify.core.store.TournamentRepository;
 import dev.migwel.tournify.smashgg.config.SmashggConfiguration;
@@ -120,18 +120,17 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nullable
-    private <T> T fetch(String request, Class<? extends SmashggResponse> responseClass) throws TimeoutException {
+    private <T> T fetch(String request, Class<? extends SmashggResponse> responseClass) throws FetchException {
         Collection<Pair<String, String>> headers = Collections.singleton(Pair.of("Authorization", "Bearer " + configuration.getApiToken()));
         String responseStr = httpClient.postRequest(request, configuration.getApiUrl(), headers);
         if(responseStr == null || responseStr.isEmpty()) {
-            throw new TimeoutException();
+            throw new FetchException();
         }
         try {
             @SuppressWarnings("unchecked")
             SmashggResponse<T> response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
-
             if(response == null || response.getData() == null) {
-                throw new TimeoutException();
+                throw new FetchException();
             }
 
             return response.getData().getObject();
@@ -208,7 +207,7 @@ public class SmashggClient implements TournamentClient {
         for (int i = 0; i < configuration.getRetryNumber(); i++) {
             try {
                 return fetch(request, responseClass);
-            } catch (TimeoutException e) {
+            } catch (FetchException e) {
                 log.info("A timeout happened", e);
                 try {
                     Thread.sleep(1000L);
