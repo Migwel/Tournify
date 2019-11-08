@@ -7,6 +7,7 @@ import dev.migwel.tournify.core.data.Phase;
 import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Set;
 import dev.migwel.tournify.core.data.Tournament;
+import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.store.TournamentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +52,12 @@ public abstract class AbstractTournamentService implements TournamentService {
     @Override
     public Collection<Player> getParticipants(String url) {
         String formattedUrl = normalizeUrl(url);
-        return tournamentClient.getParticipants(formattedUrl);
+        try {
+            return tournamentClient.getParticipants(formattedUrl);
+        } catch (FetchException e) {
+            log.warn("Could not get participants from url: "+ formattedUrl, e);
+            return Collections.emptyList();
+        }
     }
 
     @Nullable
@@ -64,9 +70,10 @@ public abstract class AbstractTournamentService implements TournamentService {
         }
 
         log.info("No tournament was found, let's fetch it. url = "+ formattedUrl);
-        tournament = fetchTournament(null, formattedUrl);
-        if(tournament == null) {
-            log.info("Could not fetch tournament at url = "+ formattedUrl);
+        try {
+            tournament = fetchTournament(null, formattedUrl);
+        } catch (FetchException e) {
+            log.info("Could not fetch tournament at url = "+ formattedUrl, e);
             return null;
         }
         tournamentRepository.save(tournament);
@@ -74,8 +81,8 @@ public abstract class AbstractTournamentService implements TournamentService {
         return tournament;
     }
 
-    @Nullable
-    protected Tournament fetchTournament(Tournament oldTournament, String formattedUrl) {
+    @Nonnull
+    protected Tournament fetchTournament(Tournament oldTournament, String formattedUrl) throws FetchException {
         if(oldTournament != null && oldTournament.isDone()) {
             return oldTournament;
         }
@@ -91,8 +98,11 @@ public abstract class AbstractTournamentService implements TournamentService {
             return Updates.nothingNew(true);
         }
 
-        Tournament newTournament = fetchTournament(oldTournament, formattedUrl);
-        if(newTournament == null) {
+        Tournament newTournament;
+        try {
+            newTournament = fetchTournament(oldTournament, formattedUrl);
+        } catch (FetchException e) {
+            log.warn("Could not fetch tournament at url: "+ formattedUrl, e);
             return Updates.nothingNew();
         }
 

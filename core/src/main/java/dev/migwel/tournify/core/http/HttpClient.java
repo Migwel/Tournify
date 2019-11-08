@@ -1,6 +1,7 @@
 package dev.migwel.tournify.core.http;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -12,9 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.UnknownHostException;
 import java.util.Collection;
 
 @Component
@@ -26,7 +29,7 @@ public class HttpClient {
         //
     }
 
-    @CheckForNull
+    @Nonnull
     public String postRequest(String request, String url, Collection<Pair<String, String>> headers) {
         CloseableHttpClient client = HttpClients.createDefault();
 
@@ -35,7 +38,7 @@ public class HttpClient {
             requestEntity = new StringEntity(request);
         } catch (UnsupportedEncodingException e) {
             log.warn("An error occurred while creating StringEntity", e);
-            return null;
+            throw new HTTPException(HttpStatus.SC_BAD_REQUEST);
         }
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(requestEntity);
@@ -46,22 +49,25 @@ public class HttpClient {
         CloseableHttpResponse response;
         try {
             response = client.execute(httpPost);
+        } catch (UnknownHostException e) {
+            log.warn("An UnknownHostException occurred while executing the POST request", e);
+            throw new HTTPException(HttpStatus.SC_SERVICE_UNAVAILABLE);
         } catch (IOException e) {
-            log.warn("An error occurred while executing the POST request", e);
-            return null;
+            log.warn("An IOException occurred while executing the POST request", e);
+            throw new HTTPException(HttpStatus.SC_INTERNAL_SERVER_ERROR);
         }
 
         HttpEntity responseEntity = response.getEntity();
         if (responseEntity == null) {
             log.warn("Response entity was null");
-            return null;
+            throw new HTTPException(HttpStatus.SC_INTERNAL_SERVER_ERROR);
         }
 
         try {
             return EntityUtils.toString(responseEntity);
         } catch (IOException e) {
             log.warn("Could not get content from response entity", e);
-            return null;
+            throw new HTTPException(HttpStatus.SC_INTERNAL_SERVER_ERROR);
         }
     }
 }

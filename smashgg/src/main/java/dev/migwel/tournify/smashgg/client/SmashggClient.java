@@ -30,8 +30,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,16 +62,11 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Override
-    @CheckForNull
-    public Tournament fetchTournament(@Nonnull String formattedUrl) {
+    @Nonnull
+    public Tournament fetchTournament(@Nonnull String formattedUrl) throws FetchException {
         log.info("Fetching tournament at url: " + formattedUrl);
 
         SmashggEvent smashggEvent = fetchEvent(formattedUrl);
-
-        if (smashggEvent == null) {
-            log.info("Could not retrieve tournament for url: "+ formattedUrl);
-            return null;
-        }
 
         Collection<Phase> existingPhases = getExistingPhases(formattedUrl);
         Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
@@ -96,7 +91,7 @@ public class SmashggClient implements TournamentClient {
                 tournamentDone);
     }
 
-    private SmashggEvent fetchEvent(@Nonnull String formattedUrl) {
+    private SmashggEvent fetchEvent(@Nonnull String formattedUrl) throws FetchException {
         String eventSlug = findEventSlug(formattedUrl);
         String request = buildEventRequest(eventSlug);
         log.info("Fetching event at "+ eventSlug);
@@ -113,30 +108,40 @@ public class SmashggClient implements TournamentClient {
 
     @Nonnull
     @Override
-    public Collection<Player> getParticipants(@Nonnull String formattedUrl) {
+    public Collection<Player> getParticipants(@Nonnull String formattedUrl) throws FetchException {
         log.info("Fetching tournament at url: " + formattedUrl);
         String eventSlug = findEventSlug(formattedUrl);
         return fetchParticipants(eventSlug);
     }
 
-    @Nullable
+    @Nonnull
     private <T> T fetch(String request, Class<? extends SmashggResponse> responseClass) throws FetchException {
-        Collection<Pair<String, String>> headers = Collections.singleton(Pair.of("Authorization", "Bearer " + configuration.getApiToken()));
-        String responseStr = httpClient.postRequest(request, configuration.getApiUrl(), headers);
-        if(responseStr == null || responseStr.isEmpty()) {
-            throw new FetchException();
-        }
+        String responseStr = postRequest(request);
+        return parseResponse(responseClass, responseStr);
+    }
+
+    private <T> T parseResponse(Class<? extends SmashggResponse> responseClass, String responseStr) throws FetchException {
         try {
             @SuppressWarnings("unchecked")
             SmashggResponse<T> response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
             if(response == null || response.getData() == null) {
                 throw new FetchException();
             }
-
             return response.getData().getObject();
         } catch (IOException e) {
             log.warn("Could not convert JSON response "+ responseStr +" to "+ responseClass, e);
-            return null;
+            throw new FetchException(e);
+        }
+    }
+
+    private String postRequest(String request) throws FetchException {
+        Collection<Pair<String, String>> headers = Collections.singleton(Pair.of("Authorization", "Bearer " + configuration.getApiToken()));
+        try {
+            return httpClient.postRequest(request, configuration.getApiUrl(), headers);
+        }
+        catch (HTTPException e) {
+            log.warn("HttpException while posting request", e);
+            throw new FetchException(e);
         }
     }
 
@@ -152,7 +157,7 @@ public class SmashggClient implements TournamentClient {
     }
 
     @CheckForNull
-    private SmashggPhaseGroup fetchPhaseGroup(long phaseGroupId, long page) {
+    private SmashggPhaseGroup fetchPhaseGroup(long phaseGroupId, long page) throws FetchException {
         String request = buildPhaseGroupRequest(phaseGroupId, page, configuration.getSetsPerPage());
         log.info("Fetching phaseGroup "+ phaseGroupId);
         return fetchWithRetries(request, SmashggPhaseGroupResponse.class);
@@ -171,15 +176,14 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private Collection<Player> fetchParticipants(String eventSlug) {
+    private Collection<Player> fetchParticipants(String eventSlug) throws FetchException {
         Collection<Player> participants = new ArrayList<>();
         SmashggEvent event;
         long page = 0;
         do {
             page++;
             event = fetchParticipants(eventSlug, page);
-            if(event == null ||
-               event.getEntrants() == null ||
+            if(event.getEntrants() == null ||
                event.getEntrants().getPageInfo() == null ||
                event.getEntrants().getPageInfo().getTotalPages() == 0) {
                 break;
@@ -196,19 +200,19 @@ public class SmashggClient implements TournamentClient {
         return participants;
     }
 
-    @CheckForNull
-    private SmashggEvent fetchParticipants(String eventSlug, long page) {
+    @Nonnull
+    private SmashggEvent fetchParticipants(String eventSlug, long page) throws FetchException {
         String request = buildParticipantsRequest(eventSlug, page, configuration.getSetsPerPage());
         log.info("Fetching participants at "+ eventSlug);
         return fetchWithRetries(request, SmashggEventResponse.class);
     }
 
-    private <T> T fetchWithRetries(String request, Class<? extends SmashggResponse> responseClass) {
+    private <T> T fetchWithRetries(String request, Class<? extends SmashggResponse> responseClass) throws FetchException {
         for (int i = 0; i < configuration.getRetryNumber(); i++) {
             try {
                 return fetch(request, responseClass);
             } catch (FetchException e) {
-                log.info("A timeout happened", e);
+                log.info("An error occurred while fetching the data", e);
                 try {
                     Thread.sleep(1000L);
                 } catch (InterruptedException e1) {
@@ -217,7 +221,7 @@ public class SmashggClient implements TournamentClient {
             }
         }
         log.warn("Could not execute the fetch, no retries left");
-        return null;
+        throw new FetchException("Could not execute request after "+ configuration.getRetryNumber() +" retries");
     }
 
     private String buildParticipantsRequest(String eventSlug, long page, long perPage) {
@@ -232,7 +236,7 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private Collection<Set> fetchSets(long phaseGroupId) {
+    private Collection<Set> fetchSets(long phaseGroupId) throws FetchException {
         Collection<Set> sets = new ArrayList<>();
         SmashggPhaseGroup phaseGroup;
         long page = 0;
@@ -306,7 +310,7 @@ public class SmashggClient implements TournamentClient {
 
     private Collection<Phase> getPhases(Collection<Phase> existingPhases,
                                   Collection<SmashggPhase> smashggPhases,
-                                  Map<Long, Collection<SmashggPhaseGroup>> smashggGroups) {
+                                  Map<Long, Collection<SmashggPhaseGroup>> smashggGroups) throws FetchException {
         Collection<Phase> tournamentPhases = new ArrayList<>();
         for(SmashggPhase smashGgPhase : smashggPhases) {
             Collection<Set> phaseSets = new ArrayList<>();
