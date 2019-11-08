@@ -1,4 +1,9 @@
 - Stop using eager fetching
 - Create SQL files for schemas (Use Flyway?)
 - Write tests
-- Filter on player
+- Create docker image for easy use
+- Create an Open API for easier integration
+- Create example requests
+- Deletion of subscription should be more secure
+- Give option to use certificate for notifications
+- Add some kind of domain penalty-box for notifications otherwise Tournify can be used to DOS a domain
