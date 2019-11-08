@@ -1,6 +1,3 @@
-# Tournify
-Github mirror of Tournify
-
 # Disclaimer
 Tournify is still under heavy development and is currently in an alpha phase. I'd be very happy if you give a try and provide feedback about what you like, don't like, features you'd like to see and bugs that you find. But keep in mind that the API may and will change in the future. I plan on eventually release a stable version but it is currently too early to do so.
 
