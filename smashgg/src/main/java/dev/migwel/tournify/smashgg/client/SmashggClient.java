@@ -123,6 +123,9 @@ public class SmashggClient implements TournamentClient {
     private <T> T fetch(String request, Class<? extends SmashggResponse> responseClass) throws TimeoutException {
         Collection<Pair<String, String>> headers = Collections.singleton(Pair.of("Authorization", "Bearer " + configuration.getApiToken()));
         String responseStr = httpClient.postRequest(request, configuration.getApiUrl(), headers);
+        if(responseStr == null || responseStr.isEmpty()) {
+            throw new TimeoutException();
+        }
         try {
             @SuppressWarnings("unchecked")
             SmashggResponse<T> response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
