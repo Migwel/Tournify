@@ -1,1 +1,1 @@
-curl -H "Content-Type: application/json" -X POST -d '{"tournamentUrl":"https://smash.gg/tournament/shine-2018/events/melee-singles/", "callbackUrl":"http://localhost:8091/notification"}' http://localhost:8090/subscribe | json_pp
+curl -H "Content-Type: application/json" -X POST -d '{"tournamentUrl":"https://smash.gg/tournament/shine-2018/events/melee-singles/", "callbackUrl":"http://localhost:8091/notification"}' http://migwel.dev:8090/subscribe | json_pp
