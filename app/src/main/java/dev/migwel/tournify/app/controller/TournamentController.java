@@ -33,7 +33,7 @@ public class TournamentController {
         return tournamentService.getTournament(request.getUrl());
     }
 
-    @RequestMapping(path="/participants", method= RequestMethod.POST)
+    @RequestMapping(path="/tournament/participants", method= RequestMethod.POST)
     public ParticipantsResponse getParticipants(@RequestBody TournamentRequest request) {
         TournamentService tournamentService = serviceFactory.getTournamentService(request.getUrl());
         Collection <Player> participants = tournamentService.getParticipants(request.getUrl());
