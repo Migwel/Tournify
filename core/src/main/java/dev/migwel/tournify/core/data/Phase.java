@@ -22,17 +22,17 @@ public class Phase {
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Set> sets;
 
-    private String phaseName;
+    private String name;
 
     private boolean done;
 
     public Phase() {
     }
 
-    public Phase(String externalId, Collection<Set> sets, String phaseName, boolean done) {
+    public Phase(String externalId, Collection<Set> sets, String name, boolean done) {
         this.externalId = externalId;
         this.sets = sets;
-        this.phaseName = phaseName;
+        this.name = name;
         this.done = done;
     }
 
@@ -53,12 +53,12 @@ public class Phase {
         this.sets = sets;
     }
 
-    public String getPhaseName() {
-        return phaseName;
+    public String getName() {
+        return name;
     }
 
-    public void setPhaseName(String phaseName) {
-        this.phaseName = phaseName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isDone() {
@@ -73,7 +73,7 @@ public class Phase {
     public String toString() {
         return "Phase{" +
                 "sets=" + sets +
-                ", phaseName='" + phaseName + '\'' +
+                ", phaseName='" + name + '\'' +
                 '}';
     }
 }

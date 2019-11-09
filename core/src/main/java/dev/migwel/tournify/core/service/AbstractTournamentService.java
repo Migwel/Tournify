@@ -150,7 +150,7 @@ public abstract class AbstractTournamentService implements TournamentService {
             Phase oldPhase = oldPhasesMap.get(newPhase.getExternalId());
             if(oldPhase == null) {
                 oldPhases.add(newPhase);
-                updates.addAll(getNewSets(newPhase.getSets(), newTournament.getName(), newPhase.getPhaseName()));
+                updates.addAll(getNewSets(newPhase.getSets(), newTournament.getName(), newPhase.getName()));
                 continue;
             }
             areSame = comparePhases(oldPhase, newPhase, updates, oldTournament.getName()) && areSame;
@@ -180,7 +180,7 @@ public abstract class AbstractTournamentService implements TournamentService {
                 phaseName,
                 buildPlayersSO(set.getPlayers()),
                 buildPlayerSO(set.getWinner()),
-                set.getRound(),
+                set.getName(),
                 set.isDone()
         );
     }
@@ -207,8 +207,8 @@ public abstract class AbstractTournamentService implements TournamentService {
         }
 
         boolean areSame = true;
-        if(!oldPhase.getPhaseName().equals(newPhase.getPhaseName())) {
-            oldPhase.setPhaseName(newPhase.getPhaseName());
+        if(!oldPhase.getName().equals(newPhase.getName())) {
+            oldPhase.setName(newPhase.getName());
             areSame = false;
         }
 
@@ -221,19 +221,19 @@ public abstract class AbstractTournamentService implements TournamentService {
             if(oldSet == null) {
                 oldSets.add(newSet);
                 if(newSet.isDone()) {
-                    String description = buildSetUpdateDescription(tournamentName, oldPhase.getPhaseName(), newSet.getRound(), newSet.getPlayers(), newSet.getWinner());
-                    updates.add(new Update(buildSetSO(tournamentName, oldPhase.getPhaseName(), newSet), description));
+                    String description = buildSetUpdateDescription(tournamentName, oldPhase.getName(), newSet.getName(), newSet.getPlayers(), newSet.getWinner());
+                    updates.add(new Update(buildSetSO(tournamentName, oldPhase.getName(), newSet), description));
                 }
                 areSame = false;
                 continue;
             }
 
-            areSame = compareSets(oldSet, newSet, updates, tournamentName, oldPhase.getPhaseName()) && areSame;
+            areSame = compareSets(oldSet, newSet, updates, tournamentName, oldPhase.getName()) && areSame;
         }
 
         if(newPhase.isDone()) {
             oldPhase.setDone(true);
-            updates.add(new Update(null, "["+ newPhase.getPhaseName() +"] Phase is over"));
+            updates.add(new Update(null, "["+ newPhase.getName() +"] Phase is over"));
         }
         return areSame;
     }
@@ -254,7 +254,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         if(!newSet.getWinner().equals(oldSet.getWinner())) {
             oldSet.setWinner(newSet.getWinner());
             oldSet.setDone(true);
-            String description = buildSetUpdateDescription(tournamentName, phaseName, oldSet.getRound(), oldSet.getPlayers(), newSet.getWinner());
+            String description = buildSetUpdateDescription(tournamentName, phaseName, oldSet.getName(), oldSet.getPlayers(), newSet.getWinner());
             updates.add(new Update(buildSetSO(tournamentName, phaseName, oldSet), description));
             return false;
         }

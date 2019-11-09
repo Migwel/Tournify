@@ -25,18 +25,18 @@ public class Set {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Player winner;
-    private String round;
+    private String name;
 
     private boolean done;
 
     public Set() {
     }
 
-    public Set(String externalId, Collection<Player> players, Player winner, String round, boolean done) {
+    public Set(String externalId, Collection<Player> players, Player winner, String name, boolean done) {
         this.externalId = externalId;
         this.players = players;
         this.winner = winner;
-        this.round = round;
+        this.name = name;
         this.done = done;
     }
 
@@ -65,12 +65,12 @@ public class Set {
         this.winner = winner;
     }
 
-    public String getRound() {
-        return round;
+    public String getName() {
+        return name;
     }
 
-    public void setRound(String round) {
-        this.round = round;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isDone() {

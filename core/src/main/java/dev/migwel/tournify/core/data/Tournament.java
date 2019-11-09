@@ -34,8 +34,6 @@ public class Tournament {
     @ManyToOne(cascade = CascadeType.ALL)
     private GameType gameType;
 
-    private String description;
-
     @ManyToOne(cascade = CascadeType.ALL)
     private Address address;
 
