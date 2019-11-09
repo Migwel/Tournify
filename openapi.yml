@@ -1,0 +1,307 @@
+swagger: "2.0"
+info:
+  description: "These are the API specifications of Tournify"
+  version: "alpha 0.1"
+  title: "Tournify"
+#  contact:
+#    email: ""
+#  license:
+#    name: "Apache 2.0"
+#    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+externalDocs:
+  description: "Find out more about Tournify"
+  url: "https://github.com/Migwel/Tournify"
+host: "migwel.dev:8090"
+#basePath: "/v2"
+tags:
+  - name: "tournament"
+    description: "Get tournament"
+  - name: "subscribe"
+    description: "Subscribe to get notified to any update of a tournament"
+schemes:
+  - "http"
+paths:
+  /tournament:
+    get: #This get is a bit weird? Because it can lead to "HEAD or GET Request cannot have a body."
+      tags:
+        - "tournament"
+      summary: "Get all the information over a tournament"
+      description: ""
+      operationId: "getTournament"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TournamentRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Tournament"
+        500:
+          description: "Internal error"
+  /tournament/participants:
+    post: #Should we change it to get?
+      tags:
+        - "tournament"
+      summary: "Get all the participants at a tournament"
+      description: ""
+      operationId: "getParticipants"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/TournamentRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ParticipantsResponse"
+        500:
+          description: "Internal error"
+  /subscribe:
+    post:
+      tags:
+        - "subscribe"
+      summary: "Subscribe to a tournament to receive notification about it"
+      description: ""
+      operationId: "subscribeToTournament"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/SubscriptionRequest"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/SubscriptionResponse"
+        500:
+          description: "Internal error"
+  /subscribe/id:
+    delete:
+      tags:
+        - "subscribe"
+      summary: "Subscribe to a tournament to receive notification about it"
+      description: ""
+      operationId: "deleteSubscriptionToTournament"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+        500:
+          description: "Internal error"
+
+definitions:
+  TournamentRequest:
+    type: "object"
+    required:
+      - "url"
+    properties:
+      url:
+        type: "string"
+        example: "https://smash.gg/tournament/genesis-3/events/melee-singles"
+  ParticipantsResponse:
+    type: "object"
+    properties:
+      participants:
+        type: "array"
+        items:
+          type: "string"
+
+  SubscriptionRequest:
+    type: "object"
+    required:
+      - "tournamentUrl"
+      - "callbackUrl"
+    properties:
+      tournamentUrl:
+        type: "string"
+        example: "https://smash.gg/tournament/genesis-3/events/melee-singles"
+        description: "The url of the tournament to follow"
+      callbackUrl:
+        type: "string"
+        example: "https://example.com"
+        description: "The url to which notifications should be sent"
+      players:
+        type: "array"
+        description: "List of players to follow"
+        items:
+          type: string #I guess this should be changed to Player?
+          example: "C9 | Mango"
+
+  SubscriptionResponse:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "The id of the subscription"
+      tournamentUrl:
+        type: "string"
+        example: "https://smash.gg/tournament/genesis-3/events/melee-singles"
+        description: "The url of the tournament to follow"
+      callbackUrl:
+        type: "string"
+        example: "https://example.com"
+        description: "The url to which notifications should be sent"
+
+  Tournament:
+    type: "object"
+    description: "The tournament"
+    required:
+      - "url"
+    properties:
+      externalId:
+        type: "string"
+        format: "string"
+        description: "The id of the tournament at the tournament host"
+        example: "784653"
+      name:
+        type: "string"
+        format: "string"
+        description: "The name of the tournament"
+        example: "Genesis 3"
+      gameType:
+        type: "string"
+        format: "string"
+        description: "The game played at the tournament"
+        example: "Super Smash Bros. Melee"
+      address:
+        $ref: "#/definitions/Address"
+      url:
+        type: "string"
+        format: "string"
+        description: "The url of the tournament"
+        example: "https://smash.gg/tournament/genesis-3/events/melee-singles"
+      date:
+        type: "string"
+        format: "date"
+        description: "The date at which the tournament takes place"
+        example: "2019-02-16 10:00:00"
+      done:
+        type: "boolean"
+        format: "boolean"
+        description: "Tells whether the tournament is finished or not"
+      phases:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            phase:
+              $ref: "#/definitions/Phase"
+
+  Phase:
+    type: "object"
+    description: "The phase of the tournament"
+    properties:
+      externalId:
+        type: "string"
+        format: "string"
+        description: "The id of the phase at the tournament host"
+        example: "784773"
+      name:
+        type: "string"
+        format: "string"
+        description: "The name of the phase"
+        example: "Top 8"
+      done:
+        type: "boolean"
+        format: "boolean"
+        description: "Tells whether the phase is finished or not"
+      sets:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            set:
+              $ref: "#/definitions/Set"
+
+  Set:
+    type: "object"
+    description: "The Set of the phase"
+    properties:
+      externalId:
+        type: "string"
+        format: "string"
+        description: "The id of the set at the tournament host"
+        example: "784773"
+      name:
+        type: "string"
+        format: "string"
+        description: "The name of the set"
+        example: "Winners Finals"
+      done:
+        type: "boolean"
+        format: "boolean"
+        description: "Tells whether the set is finished or not"
+      winner:
+        $ref: "#/definitions/Player"
+      players:
+        type: "array"
+        description: "The players participating in the set"
+        items:
+          type: "object"
+          properties:
+            player:
+              $ref: "#/definitions/Player"
+
+  Player:
+    type: "object"
+    description: "A player"
+    properties:
+      prefix:
+        type: "string"
+        format: "string"
+        description: "The prefix of the player, usually their sponsor"
+        example: "C9"
+      username:
+        type: "string"
+        format: "string"
+        description: "The username of the player"
+        example: "Mew2King"
+
+  Address:
+    type: "object"
+    description: "The address at which the tournament takes place"
+    properties:
+      city:
+        type: "string"
+        format: "string"
+        description: "The city in which the tournament takes place"
+        example: "San Francisco"
+      state:
+        type: "string"
+        format: "string"
+        description: "The state in which the tournament takes place"
+        example: "California"
+      street:
+        type: "string"
+        format: "string"
+        description: "The street in which the tournament takes place"
+        example: "Baker Street"
+      houseNumber:
+        type: "string"
+        format: "string"
+        description: "The house number of the place where the tournament takes place"
+        example: "313"
+      country:
+        type: "string"
+        format: "string"
+        description: "The country in which the tournament takes place"
+        example: "Belgium"
