@@ -67,17 +67,7 @@ public class SmashggClient implements TournamentClient {
         log.info("Fetching tournament at url: " + formattedUrl);
 
         SmashggEvent smashggEvent = fetchEvent(formattedUrl);
-
-        Collection<Phase> existingPhases = getExistingPhases(formattedUrl);
-        Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
-        Collection<Phase> tournamentPhases = getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase);
-        boolean tournamentDone = true;
-        if(!tournamentPhases.stream().allMatch(Phase::isDone)) {
-            tournamentDone = false;
-        }
-
-        Address address = buildAddress(smashggEvent.getTournament());
-
+        Collection<Phase> tournamentPhases = fetchPhases(formattedUrl, smashggEvent);
         log.info("Done with fetching tournament at url: "+ formattedUrl);
 
 
@@ -85,10 +75,24 @@ public class SmashggClient implements TournamentClient {
                 tournamentPhases,
                 smashggEvent.getTournament().getName() + " - "+ smashggEvent.getName(),
                 new GameType(smashggEvent.getVideogame().getDisplayName()),
-                address,
+                buildAddress(smashggEvent.getTournament()),
                 formattedUrl,
                 new Date(smashggEvent.getStartAt()*1000),
-                tournamentDone);
+                isTournamentDone(tournamentPhases));
+    }
+
+    private boolean isTournamentDone(Collection<Phase> tournamentPhases) {
+        boolean tournamentDone = true;
+        if(!tournamentPhases.stream().allMatch(Phase::isDone)) {
+            tournamentDone = false;
+        }
+        return tournamentDone;
+    }
+
+    private Collection<Phase> fetchPhases(@Nonnull String formattedUrl, SmashggEvent smashggEvent) throws FetchException {
+        Collection<Phase> existingPhases = getExistingPhases(formattedUrl);
+        Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
+        return getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase);
     }
 
     private SmashggEvent fetchEvent(@Nonnull String formattedUrl) throws FetchException {

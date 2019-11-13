@@ -26,20 +26,20 @@ public class SubscriptionService {
 
     private final TrackingService trackingService;
 
-    private final ServiceFactory serviceFactory;
+    private final TournamentServiceFactory tournamentServiceFactory;
 
     public SubscriptionService(SubscriptionRepository subscriptionRepository,
                                TournamentRepository tournamentRepository,
                                TrackingService trackingService,
-                               ServiceFactory serviceFactory) {
+                               TournamentServiceFactory tournamentServiceFactory) {
         this.subscriptionRepository = subscriptionRepository;
         this.tournamentRepository = tournamentRepository;
         this.trackingService = trackingService;
-        this.serviceFactory = serviceFactory;
+        this.tournamentServiceFactory = tournamentServiceFactory;
     }
 
     public Subscription addSubscription(String tournamentUrl, String callbackUrl, List<String> players) {
-        TournamentService tournamentService = serviceFactory.getTournamentService(tournamentUrl);
+        TournamentService tournamentService = tournamentServiceFactory.getTournamentService(tournamentUrl);
         String normalizedTournamentUrl = tournamentService.normalizeUrl(tournamentUrl);
         Subscription subscription = subscriptionRepository.findByCallbackUrlAndTournamentUrl(callbackUrl, normalizedTournamentUrl);
         if(subscription != null) {

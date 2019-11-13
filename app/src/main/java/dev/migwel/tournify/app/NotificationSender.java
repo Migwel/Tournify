@@ -2,7 +2,7 @@ package dev.migwel.tournify.app;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.migwel.tournify.app.service.ServiceFactory;
+import dev.migwel.tournify.app.service.TournamentServiceFactory;
 import dev.migwel.tournify.communication.commons.Update;
 import dev.migwel.tournify.communication.request.NotificationRequest;
 import dev.migwel.tournify.communication.response.NotificationResponse;
@@ -36,15 +36,15 @@ public class NotificationSender {
 
     private final NotificationRepository notificationRepository;
 
-    private final ServiceFactory serviceFactory;
+    private final TournamentServiceFactory tournamentServiceFactory;
 
     private final RestTemplate restTemplate;
 
     private final ObjectMapper objectMapper;
 
-    public NotificationSender(NotificationRepository notificationRepository, ServiceFactory serviceFactory, RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public NotificationSender(NotificationRepository notificationRepository, TournamentServiceFactory tournamentServiceFactory, RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.notificationRepository = notificationRepository;
-        this.serviceFactory = serviceFactory;
+        this.tournamentServiceFactory = tournamentServiceFactory;
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
     }

@@ -3,20 +3,20 @@ package dev.migwel.tournify.app.service;
 import dev.migwel.tournify.core.data.Source;
 import dev.migwel.tournify.core.service.TournamentService;
 import dev.migwel.tournify.smashgg.impl.SmashggTournamentService;
-import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 
 @Component
 @Immutable
-public class ServiceFactory {
+public class TournamentServiceFactory {
 
     private final ApplicationContext applicationContext;
 
-    public ServiceFactory(ApplicationContext applicationContext) {
+    public TournamentServiceFactory(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

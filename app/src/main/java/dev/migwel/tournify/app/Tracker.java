@@ -2,7 +2,7 @@ package dev.migwel.tournify.app;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.migwel.tournify.app.service.ServiceFactory;
+import dev.migwel.tournify.app.service.TournamentServiceFactory;
 import dev.migwel.tournify.communication.commons.Player;
 import dev.migwel.tournify.communication.commons.Update;
 import dev.migwel.tournify.communication.commons.Updates;
@@ -56,15 +56,15 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
 
     private final NotificationRepository notificationRepository;
 
-    private final ServiceFactory serviceFactory;
+    private final TournamentServiceFactory tournamentServiceFactory;
 
     private final ObjectMapper objectMapper;
 
-    public Tracker(TrackingRepository trackingRepository, SubscriptionRepository subscriptionRepository, NotificationRepository notificationRepository, ServiceFactory serviceFactory, ObjectMapper objectMapper) {
+    public Tracker(TrackingRepository trackingRepository, SubscriptionRepository subscriptionRepository, NotificationRepository notificationRepository, TournamentServiceFactory tournamentServiceFactory, ObjectMapper objectMapper) {
         this.trackingRepository = trackingRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.notificationRepository = notificationRepository;
-        this.serviceFactory = serviceFactory;
+        this.tournamentServiceFactory = tournamentServiceFactory;
         this.objectMapper = objectMapper;
     }
 
@@ -86,7 +86,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
             return;
         }
 
-        TournamentService tournamentService = serviceFactory.getTournamentService(tournament.getUrl());
+        TournamentService tournamentService = tournamentServiceFactory.getTournamentService(tournament.getUrl());
         Updates updates = tournamentService.updateTournament(tournament.getUrl()); //TODO: This should be done in a separate thread
 
         if(updates.getUpdateList().isEmpty()) {
