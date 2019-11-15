@@ -38,7 +38,7 @@ The following endpoints are available:
 * **/subscribe**: A POST request with a url and a callbackUrl will let you subscribe to update from the tournament hosted at the provided url. Once an update occurs, a API call will be made to the callbackUrl, informing you of the update.
 * **/subscribe**: A DELETE request with the id of the subscription will delete the subscription. This means that no notification will be sent anymore to the callbackUrl
 
-A server is running and available for testing at http://migwel.dev:8090
+A server is running and available for testing at http://tournify.migwel.dev
 
 # Supported Tournament Hosts
 Currently, the following tournament hosts are supported:
