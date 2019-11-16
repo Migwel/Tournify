@@ -33,6 +33,7 @@ public class NotificationSender {
     private final static long MIN = 60 * SEC;
     private final static long NOTIFY_WAIT_MS = 5 * SEC;
     private final static long[] NO_UPDATE_WAIT_MS = {MIN, MIN, 5 * MIN, 5 * MIN};
+    public static final String ACCEPTED = "accepted";
 
     private final NotificationRepository notificationRepository;
 
@@ -54,21 +55,35 @@ public class NotificationSender {
         Collection<Notification> notificationList = notificationRepository.findByNextDateBeforeAndDone(new Date(), false);
         log.info("Notification list size: "+ notificationList.size());
         for(Notification notification : notificationList) {
-            if(notification.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) {
-                notification.setDone(true);
-            }
-            else {
-                NotificationResponse response = sendNotification(notification);
-                if (response != null && "accepted".equals(response.getStatus())) {
-                    notification.setDone(true);
-                } else {
-                    notification.setNextDate(computeNextDate(notification.getNoUpdateRetries()));
-                    notification.setNoUpdateRetries(notification.getNoUpdateRetries() + 1);
-                }
-            }
-
+            processNotification(notification);
             notificationRepository.save(notification);
         }
+    }
+
+    private void processNotification(Notification notification) {
+        if(!isNotificationStillRelevant(notification)) {
+            notification.setDone(true);
+            return;
+        }
+        NotificationResponse response = sendNotification(notification);
+        if (response != null && ACCEPTED.equals(response.getStatus())) {
+            notification.setDone(true);
+        } else {
+            notification.setNextDate(computeNextDate(notification.getNoUpdateRetries()));
+            notification.setNoUpdateRetries(notification.getNoUpdateRetries() + 1);
+        }
+    }
+
+    private boolean isNotificationStillRelevant(Notification notification) {
+        if(!notification.getSubscription().isActive()) {
+            return false;
+        }
+
+        if(notification.getNoUpdateRetries() > NO_UPDATE_WAIT_MS.length - 1) {
+            return false;
+        }
+
+        return true;
     }
 
     @CheckForNull
