@@ -57,7 +57,7 @@ public class Set {
     }
 
     public Collection<Player> getWinners() {
-        return players != null ? players : new ArrayList<>();
+        return winners != null ? winners : new ArrayList<>();
     }
 
     public void setWinners(Collection<Player> winners) {
@@ -84,7 +84,7 @@ public class Set {
     public String toString() {
         return "Set{" +
                 "players=" + players +
-                ", winner=" + winners +
+                ", winners=" + winners +
                 '}';
     }
 }
