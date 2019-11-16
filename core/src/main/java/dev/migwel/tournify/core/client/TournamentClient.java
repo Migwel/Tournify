@@ -1,6 +1,6 @@
 package dev.migwel.tournify.core.client;
 
-import dev.migwel.tournify.core.data.Player;
+import dev.migwel.tournify.communication.commons.Player;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 

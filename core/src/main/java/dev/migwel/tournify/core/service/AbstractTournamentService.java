@@ -50,7 +50,7 @@ public abstract class AbstractTournamentService implements TournamentService {
 
     @Nonnull
     @Override
-    public Collection<Player> getParticipants(String url) {
+    public Collection<dev.migwel.tournify.communication.commons.Player> getParticipants(String url) {
         String formattedUrl = normalizeUrl(url);
         try {
             return tournamentClient.getParticipants(formattedUrl);

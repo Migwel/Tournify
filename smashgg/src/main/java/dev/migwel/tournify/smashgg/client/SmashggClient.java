@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -114,7 +115,7 @@ public class SmashggClient implements TournamentClient {
 
     @Nonnull
     @Override
-    public Collection<Player> getParticipants(@Nonnull String formattedUrl) throws FetchException {
+    public Collection<dev.migwel.tournify.communication.commons.Player> getParticipants(@Nonnull String formattedUrl) throws FetchException {
         log.info("Fetching tournament at url: " + formattedUrl);
         String eventSlug = findEventSlug(formattedUrl);
         return fetchParticipants(eventSlug);
@@ -183,8 +184,8 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private Collection<Player> fetchParticipants(String eventSlug) throws FetchException {
-        Collection<Player> participants = new ArrayList<>();
+    private Collection<dev.migwel.tournify.communication.commons.Player> fetchParticipants(String eventSlug) throws FetchException {
+        Collection<dev.migwel.tournify.communication.commons.Player> participants = new HashSet<>();
         SmashggEvent event;
         long page = 0;
         do {
@@ -198,7 +199,7 @@ public class SmashggClient implements TournamentClient {
 
             for(SmashggNode node : event.getEntrants().getNodes()) {
                 for(SmashggParticipant entrant : node.getParticipants()) {
-                    participants.add(new Player(entrant.getPrefix(), entrant.getGamerTag()));
+                    participants.add(new dev.migwel.tournify.communication.commons.Player(entrant.getPrefix(), entrant.getGamerTag()));
                 }
             }
 
