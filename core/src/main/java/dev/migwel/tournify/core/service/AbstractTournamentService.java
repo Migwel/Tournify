@@ -51,13 +51,13 @@ public abstract class AbstractTournamentService implements TournamentService {
 
     @Nonnull
     @Override
-    public Collection<dev.migwel.tournify.communication.commons.Player> getParticipants(String url) {
+    public java.util.Set<dev.migwel.tournify.communication.commons.Player> getParticipants(String url) {
         String formattedUrl = normalizeUrl(url);
         try {
             return tournamentClient.getParticipants(formattedUrl);
         } catch (FetchException e) {
             log.warn("Could not get participants from url: "+ formattedUrl, e);
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
     }
 

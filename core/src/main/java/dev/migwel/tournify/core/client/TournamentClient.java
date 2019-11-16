@@ -5,7 +5,7 @@ import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
+import java.util.Set;
 
 public interface TournamentClient {
 
@@ -13,5 +13,5 @@ public interface TournamentClient {
     Tournament fetchTournament(String url) throws FetchException;
 
     @Nonnull
-    Collection<Player> getParticipants(String url) throws FetchException;
+    Set<Player> getParticipants(String url) throws FetchException;
 }

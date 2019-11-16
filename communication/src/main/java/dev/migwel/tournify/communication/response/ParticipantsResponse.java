@@ -2,24 +2,24 @@ package dev.migwel.tournify.communication.response;
 
 import dev.migwel.tournify.communication.commons.Player;
 
-import java.util.Collection;
+import java.util.Set;
 
 public class ParticipantsResponse {
 
-    Collection<Player> participants;
+    Set<Player> participants;
 
     public ParticipantsResponse() {
     }
 
-    public ParticipantsResponse(Collection<Player> participants) {
+    public ParticipantsResponse(Set<Player> participants) {
         this.participants = participants;
     }
 
-    public Collection<Player> getParticipants() {
+    public Set<Player> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(Collection<Player> participants) {
+    public void setParticipants(Set<Player> participants) {
         this.participants = participants;
     }
 }

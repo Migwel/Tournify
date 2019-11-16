@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -114,7 +115,7 @@ public class SmashggClient implements TournamentClient {
 
     @Nonnull
     @Override
-    public Collection<dev.migwel.tournify.communication.commons.Player> getParticipants(@Nonnull String formattedUrl) throws FetchException {
+    public java.util.Set<dev.migwel.tournify.communication.commons.Player> getParticipants(@Nonnull String formattedUrl) throws FetchException {
         log.info("Fetching tournament at url: " + formattedUrl);
         String eventSlug = findEventSlug(formattedUrl);
         return fetchParticipants(eventSlug);
@@ -183,8 +184,8 @@ public class SmashggClient implements TournamentClient {
     }
 
     @Nonnull
-    private Collection<dev.migwel.tournify.communication.commons.Player> fetchParticipants(String eventSlug) throws FetchException {
-        Collection<dev.migwel.tournify.communication.commons.Player> participants = new HashSet<>();
+    private java.util.Set<dev.migwel.tournify.communication.commons.Player> fetchParticipants(String eventSlug) throws FetchException {
+        var participants = new TreeSet<dev.migwel.tournify.communication.commons.Player>();
         SmashggEvent event;
         long page = 0;
         do {

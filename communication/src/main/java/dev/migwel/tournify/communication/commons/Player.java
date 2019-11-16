@@ -1,8 +1,13 @@
 package dev.migwel.tournify.communication.commons;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Player {
+public class Player implements Comparable<Player> {
+
+    //Copied from https://stackoverflow.com/questions/481813/how-to-simplify-a-null-safe-compareto-implementation/23908426#23908426
+    private static Comparator<String> nullSafeStringComparator = Comparator
+            .nullsFirst(String::compareToIgnoreCase);
 
     private String prefix;
     private String username;
@@ -65,5 +70,14 @@ public class Player {
                 "prefix='" + prefix + '\'' +
                 ", username='" + username + '\'' +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Player that) {
+        int compareUsername = nullSafeStringComparator.compare(this.username, that.username);
+        if(compareUsername != 0) {
+            return compareUsername;
+        }
+        return nullSafeStringComparator.compare(this.prefix, that.prefix);
     }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.concurrent.Immutable;
-import java.util.Collection;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/tournament")
@@ -34,7 +34,7 @@ public class TournamentController {
     @RequestMapping(path="/participants", method= RequestMethod.POST)
     public ParticipantsResponse getParticipants(@RequestBody TournamentRequest request) {
         TournamentService tournamentService = tournamentServiceFactory.getTournamentService(request.getUrl());
-        Collection<Player> participants = tournamentService.getParticipants(request.getUrl());
+        Set<Player> participants = tournamentService.getParticipants(request.getUrl());
         return new ParticipantsResponse(participants);
     }
 }
