@@ -22,7 +22,7 @@ public class Set {
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Collection<Player> players;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Collection<Player> winners;
     private String name;
 
