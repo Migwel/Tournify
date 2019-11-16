@@ -9,6 +9,7 @@ import dev.migwel.tournify.core.data.Set;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.store.TournamentRepository;
+import dev.migwel.tournify.util.CollectionsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -251,7 +252,7 @@ public abstract class AbstractTournamentService implements TournamentService {
             }
         }
 
-        if(!newSet.getWinners().equals(oldSet.getWinners())) {
+        if(!CollectionsUtil.containsSameItems(newSet.getWinners(), oldSet.getWinners())) {
             oldSet.setWinners(newSet.getWinners());
             oldSet.setDone(true);
             String description = buildSetUpdateDescription(tournamentName, phaseName, oldSet.getName(), oldSet.getPlayers(), newSet.getWinners());

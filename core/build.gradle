@@ -1,4 +1,5 @@
 dependencies {
     compile 'org.postgresql:postgresql'
     compile project(':communication')
+    compile project(':util')
 }
