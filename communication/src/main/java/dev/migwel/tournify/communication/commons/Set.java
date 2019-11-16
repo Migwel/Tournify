@@ -13,19 +13,19 @@ public class Set {
 
     private Collection<Player> players;
 
-    private Player winner;
+    private Collection<Player> winners;
 
     private boolean done;
 
     public Set() {
     }
 
-    public Set(String externalId, String tournamentName, String phaseName, Collection<Player> players, Player winner, String round, boolean done) {
+    public Set(String externalId, String tournamentName, String phaseName, Collection<Player> players, Collection<Player> winners, String round, boolean done) {
         this.externalId = externalId;
         this.tournamentName = tournamentName;
         this.phaseName = phaseName;
         this.players = players;
-        this.winner = winner;
+        this.winners = winners;
         this.round = round;
         this.done = done;
     }
@@ -47,12 +47,12 @@ public class Set {
         this.players = players;
     }
 
-    public Player getWinner() {
-        return winner;
+    public Collection<Player> getWinners() {
+        return winners;
     }
 
-    public void setWinner(Player winner) {
-        this.winner = winner;
+    public void setWinners(Collection<Player> winners) {
+        this.winners = winners;
     }
 
     public String getRound() {
@@ -91,7 +91,7 @@ public class Set {
     public String toString() {
         return "Set{" +
                 "players=" + players +
-                ", winner=" + winner +
+                ", winner=" + winners +
                 '}';
     }
 }

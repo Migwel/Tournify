@@ -7,7 +7,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -23,8 +22,8 @@ public class Set {
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     private Collection<Player> players;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Player winner;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Collection<Player> winners;
     private String name;
 
     private boolean done;
@@ -32,10 +31,10 @@ public class Set {
     public Set() {
     }
 
-    public Set(String externalId, Collection<Player> players, Player winner, String name, boolean done) {
+    public Set(String externalId, Collection<Player> players, Collection<Player> winners, String name, boolean done) {
         this.externalId = externalId;
         this.players = players;
-        this.winner = winner;
+        this.winners = winners;
         this.name = name;
         this.done = done;
     }
@@ -57,12 +56,12 @@ public class Set {
         this.players = players;
     }
 
-    public Player getWinner() {
-        return winner;
+    public Collection<Player> getWinners() {
+        return players != null ? players : new ArrayList<>();
     }
 
-    public void setWinner(Player winner) {
-        this.winner = winner;
+    public void setWinners(Collection<Player> winners) {
+        this.winners = winners;
     }
 
     public String getName() {
@@ -85,7 +84,7 @@ public class Set {
     public String toString() {
         return "Set{" +
                 "players=" + players +
-                ", winner=" + winner +
+                ", winner=" + winners +
                 '}';
     }
 }

@@ -9,4 +9,4 @@ else
   url=$1
 fi
 
-curl -H "Content-Type: application/json" -X GET -d '{"url":"'$url'"}' http://migwel.dev:8090/tournament | json_pp
+curl -H "Content-Type: application/json" -X GET -d '{"url":"'$url'"}' http://localhost:8090/tournament | json_pp

@@ -12,6 +12,7 @@ import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.http.HttpClient;
 import dev.migwel.tournify.core.store.TournamentRepository;
 import dev.migwel.tournify.smashgg.config.SmashggConfiguration;
+import dev.migwel.tournify.smashgg.data.Participant;
 import dev.migwel.tournify.smashgg.response.SmashggEntrant;
 import dev.migwel.tournify.smashgg.response.SmashggEvent;
 import dev.migwel.tournify.smashgg.response.SmashggEventResponse;
@@ -38,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -174,7 +176,8 @@ public class SmashggClient implements TournamentClient {
                 " pageInfo {total totalPages} "+
                 " nodes {id fullRoundText winnerId "+
                 " slots(includeByes: false) { "+
-                " entrant{id name}}" +
+                " entrant{id name" +
+                " participants{gamerTag prefix}}}" +
                 " }}}}\", " +
                 "\"variables\":{\"id\":\"%d\", \"page\":\"%d\", \"perPage\":\"%d\"}}", phaseGroupId, page, perPage);
     }
@@ -269,7 +272,7 @@ public class SmashggClient implements TournamentClient {
                 continue;
             }
             long winnerId = node.getWinnerId();
-            Player winner = null;
+            Collection<Player> winners = null;
             Collection<Player> players = new ArrayList<>();
             for(SmashggSlot slot : node.getSlots()) {
                 if(slot == null) {
@@ -280,16 +283,24 @@ public class SmashggClient implements TournamentClient {
                     continue;
                 }
 
-                Player player = new Player(entrant.getName());
-                players.add(player);
+                Collection<Player> slotPlayers = buildPlayerList(entrant);
+                players.addAll(slotPlayers);
                 if(entrant.getId() == winnerId) {
-                    winner = player;
+                    winners = slotPlayers;
                 }
             }
-            sets.add(new Set(node.getId(), players, winner, phaseGroupName+ " - "+ node.getFullRoundText(), winner != null));
+            sets.add(new Set(node.getId(), players, winners, phaseGroupName+ " - "+ node.getFullRoundText(), winners != null && !winners.isEmpty()));
         }
 
         return sets;
+    }
+
+    private Collection<Player> buildPlayerList(SmashggEntrant entrant) {
+        List<Player> players = new ArrayList<>();
+        for(Participant participant : entrant.getParticipants()) {
+            players.add(new Player(participant.getPrefix(), participant.getGamerTag()));
+        }
+        return players;
     }
 
     private String findEventSlug(String eventUrl) {
