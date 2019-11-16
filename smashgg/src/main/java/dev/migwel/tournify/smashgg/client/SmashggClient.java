@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -273,8 +272,8 @@ public class SmashggClient implements TournamentClient {
                 continue;
             }
             long winnerId = node.getWinnerId();
-            Collection<Player> winners = null;
-            Collection<Player> players = new ArrayList<>();
+            java.util.Set<Player> winners = null;
+            java.util.Set<Player> players = new HashSet<>();
             for(SmashggSlot slot : node.getSlots()) {
                 if(slot == null) {
                     continue;
@@ -284,7 +283,7 @@ public class SmashggClient implements TournamentClient {
                     continue;
                 }
 
-                Collection<Player> slotPlayers = buildPlayerList(entrant);
+                java.util.Set<Player> slotPlayers = buildPlayerList(entrant);
                 players.addAll(slotPlayers);
                 if(entrant.getId() == winnerId) {
                     winners = slotPlayers;
@@ -296,8 +295,8 @@ public class SmashggClient implements TournamentClient {
         return sets;
     }
 
-    private Collection<Player> buildPlayerList(SmashggEntrant entrant) {
-        List<Player> players = new ArrayList<>();
+    private java.util.Set<Player> buildPlayerList(SmashggEntrant entrant) {
+        java.util.Set<Player> players = new HashSet<>();
         for(Participant participant : entrant.getParticipants()) {
             players.add(new Player(participant.getPrefix(), participant.getGamerTag()));
         }

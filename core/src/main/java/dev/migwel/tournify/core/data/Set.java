@@ -7,8 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 public class Set {
@@ -20,10 +19,10 @@ public class Set {
     private String externalId;
 
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private Collection<Player> players;
+    private java.util.Set<Player> players;
 
     @ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    private Collection<Player> winners;
+    private java.util.Set<Player> winners;
     private String name;
 
     private boolean done;
@@ -31,7 +30,7 @@ public class Set {
     public Set() {
     }
 
-    public Set(String externalId, Collection<Player> players, Collection<Player> winners, String name, boolean done) {
+    public Set(String externalId, java.util.Set<Player> players, java.util.Set<Player> winners, String name, boolean done) {
         this.externalId = externalId;
         this.players = players;
         this.winners = winners;
@@ -48,19 +47,19 @@ public class Set {
     }
 
     @Nonnull
-    public Collection<Player> getPlayers() {
-        return players != null ? players : new ArrayList<>();
+    public java.util.Set<Player> getPlayers() {
+        return players != null ? players : new HashSet<>();
     }
 
-    public void setPlayers(Collection<Player> players) {
+    public void setPlayers(java.util.Set<Player> players) {
         this.players = players;
     }
 
-    public Collection<Player> getWinners() {
-        return winners != null ? winners : new ArrayList<>();
+    public java.util.Set<Player> getWinners() {
+        return winners != null ? winners : new HashSet<>();
     }
 
-    public void setWinners(Collection<Player> winners) {
+    public void setWinners(java.util.Set<Player> winners) {
         this.winners = winners;
     }
 
