@@ -58,6 +58,10 @@ public class SubscriptionService {
     }
 
     private Subscription updateSubscription(Subscription subscription, List<String> players) {
+        if(!subscription.isActive()) {
+            reactivateSubscription(subscription, players);
+            return subscription;
+        }
         List<String> followedPlayers = subscription.getPlayers();
         if(followedPlayers.isEmpty()) {
             return subscription;
@@ -74,6 +78,12 @@ public class SubscriptionService {
         subscription.setPlayers(followedPlayers);
         subscriptionRepository.save(subscription);
         return subscription;
+    }
+
+    private void reactivateSubscription(Subscription subscription, List<String> players) {
+        subscription.setPlayers(players);
+        subscription.setActive(true);
+        subscriptionRepository.save(subscription);
     }
 
     private Tournament createAndTrackTournament(String normalizedTournamentUrl) {
