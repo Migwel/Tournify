@@ -262,7 +262,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         return true;
     }
 
-    private String buildSetUpdateDescription(String tournamentName, String phaseName, String round, Collection<Player> players, Collection<Player> winner) {
+    private String buildSetUpdateDescription(String tournamentName, String phaseName, String round, Collection<Player> players, Collection<Player> winners) {
         return "Tournament [" +
                 tournamentName +
                 "] - Phase [" +
@@ -272,7 +272,7 @@ public abstract class AbstractTournamentService implements TournamentService {
                 "] - " +
                 players.stream().map(Player::getDisplayUsername).collect(Collectors.joining(" vs ")) +
                 " - Winner is " +
-                players.stream().map(Player::getDisplayUsername).collect(Collectors.joining(" vs "));
+                winners.stream().map(Player::getDisplayUsername).collect(Collectors.joining(" vs "));
     }
 
     private Map<String,Set> setsToMap(Collection<Set> sets) {
