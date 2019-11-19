@@ -43,7 +43,11 @@ allprojects {
         compile group: 'com.sun.xml.ws', name: 'jaxws-ri', version: '2.3.2'
 
         testCompile 'org.mockito:mockito-core:2.+'
-        testCompile 'org.mockito:mockito-junit-jupiter:2.18.3'
+        testImplementation('org.junit.jupiter:junit-jupiter:5.4.0')
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
