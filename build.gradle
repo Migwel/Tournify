@@ -50,13 +50,3 @@ allprojects {
         useJUnitPlatform()
     }
 }
-
-apply plugin: 'findbugs'
-findbugs {
-    ignoreFailures = true
-    toolVersion = "3.0.1"
-    sourceSets=[sourceSets.main]
-    excludeFilter = file("config/findbugs/excludeFilter.xml")
-    reportsDir = file("$project.buildDir/reports/findbugs")
-    effort = "max"
-}
