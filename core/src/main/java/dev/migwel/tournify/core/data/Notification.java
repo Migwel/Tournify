@@ -1,5 +1,6 @@
 package dev.migwel.tournify.core.data;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,11 +32,11 @@ public class Notification {
     public Notification() {
     }
 
-    public Notification(Subscription subscription, String content, Date startDate, Date nextDate) {
+    public Notification(Subscription subscription, String content, @Nonnull Date startDate, @Nonnull Date nextDate) {
         this.subscription = subscription;
         this.content = content;
-        this.startDate = startDate;
-        this.nextDate = nextDate;
+        this.startDate = new Date(startDate.getTime());
+        this.nextDate = new Date(nextDate.getTime());
     }
 
     public Long getId() {
@@ -79,18 +80,30 @@ public class Notification {
     }
 
     public Date getStartDate() {
-        return startDate;
+        if(startDate == null) {
+            return null;
+        }
+        return new Date(startDate.getTime());
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+        if(startDate == null) {
+            return;
+        }
+        this.startDate = new Date(startDate.getTime());
     }
 
     public Date getNextDate() {
-        return nextDate;
+        if(nextDate == null) {
+            return null;
+        }
+        return new Date(nextDate.getTime());
     }
 
     public void setNextDate(Date nextDate) {
-        this.nextDate = nextDate;
+        if(nextDate == null) {
+            return;
+        }
+        this.nextDate = new Date(nextDate.getTime());
     }
 }
