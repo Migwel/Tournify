@@ -1,8 +1,4 @@
-group 'dev.migwel.tournify'
-version '1.0-SNAPSHOT'
-
 buildscript {
-    ext.spring_boot_version = '1.5.3.RELEASE'
     repositories {
         mavenCentral()
     }
@@ -10,6 +6,12 @@ buildscript {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
     }
 }
+
+plugins {
+    id "com.github.spotbugs" version "$spotBugsVersion"
+}
+
+apply from: "$rootProject.projectDir/spotbugs.gradle"
 
 allprojects {
     apply plugin: 'java'
