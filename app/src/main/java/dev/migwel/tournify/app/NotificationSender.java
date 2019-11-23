@@ -19,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.Immutable;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
@@ -96,7 +97,7 @@ public class NotificationSender {
         Update update;
         try {
             byte[] contentByte = Base64.getDecoder().decode(notification.getContent());
-            update = objectMapper.readValue(new String(contentByte), new TypeReference<Update>(){});
+            update = objectMapper.readValue(new String(contentByte, StandardCharsets.UTF_8), new TypeReference<Update>(){});
         } catch (IOException e) {
             log.warn("Could not deserialize notification: "+ notification.getContent(), e);
             return null;

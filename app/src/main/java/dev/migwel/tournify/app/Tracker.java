@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.concurrent.Immutable;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
@@ -136,7 +137,7 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
                 if(updateStr == null) {
                     continue;
                 }
-                Notification notification = new Notification(subscription, Base64.getEncoder().encodeToString(updateStr.getBytes()), new Date(), new Date());
+                Notification notification = new Notification(subscription, Base64.getEncoder().encodeToString(updateStr.getBytes(StandardCharsets.UTF_8)), new Date(), new Date());
                 notificationRepository.save(notification);
             }
         }
