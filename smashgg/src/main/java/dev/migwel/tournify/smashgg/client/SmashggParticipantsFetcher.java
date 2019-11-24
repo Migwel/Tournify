@@ -9,11 +9,13 @@ import dev.migwel.tournify.smashgg.response.SmashggNode;
 import dev.migwel.tournify.smashgg.response.SmashggParticipant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Component
 public class SmashggParticipantsFetcher {
     private static final Logger log = LoggerFactory.getLogger(SmashggParticipantsFetcher.class);
     private final SmashggConfiguration configuration;

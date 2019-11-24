@@ -6,9 +6,11 @@ import dev.migwel.tournify.smashgg.response.SmashggPhaseGroup;
 import dev.migwel.tournify.smashgg.response.SmashggPhaseGroupResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 
+@Component
 public class SmashggPhaseGroupFetcher {
     private static final Logger log = LoggerFactory.getLogger(SmashggFetcher.class);
     private final SmashggConfiguration configuration;

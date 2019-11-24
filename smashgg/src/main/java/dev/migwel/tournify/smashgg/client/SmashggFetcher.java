@@ -8,6 +8,7 @@ import dev.migwel.tournify.smashgg.response.SmashggResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.util.Pair;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import javax.xml.ws.http.HTTPException;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;
 
+@Component
 public class SmashggFetcher {
     private static final Logger log = LoggerFactory.getLogger(SmashggFetcher.class);
 

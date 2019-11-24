@@ -13,6 +13,7 @@ import dev.migwel.tournify.smashgg.response.SmashggNode;
 import dev.migwel.tournify.smashgg.response.SmashggPhase;
 import dev.migwel.tournify.smashgg.response.SmashggPhaseGroup;
 import dev.migwel.tournify.smashgg.response.SmashggSlot;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+@Component
 public class SmashggPhaseFetcher {
     private final TournamentRepository tournamentRepository;
     private final SmashggPhaseGroupFetcher smashggPhaseGroupFetcher;

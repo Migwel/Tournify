@@ -6,9 +6,11 @@ import dev.migwel.tournify.smashgg.response.SmashggEventResponse;
 import dev.migwel.tournify.smashgg.util.SmashggUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 
+@Component
 public class SmashggEventFetcher {
     private static final Logger log = LoggerFactory.getLogger(SmashggEventFetcher.class);
     private final SmashggFetcher smashggFetcher;
