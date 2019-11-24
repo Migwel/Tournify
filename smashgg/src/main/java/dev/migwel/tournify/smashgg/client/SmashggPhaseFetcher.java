@@ -83,10 +83,9 @@ public class SmashggPhaseFetcher {
         do {
             page++;
             phaseGroup = smashggPhaseGroupFetcher.fetchPhaseGroup(phaseGroupId, page);
-            if(phaseGroup == null ||
-                    phaseGroup.getPaginatedSets() == null ||
-                    phaseGroup.getPaginatedSets().getPageInfo() == null ||
-                    phaseGroup.getPaginatedSets().getPageInfo().getTotalPages() == 0) {
+            if(phaseGroup.getPaginatedSets() == null ||
+               phaseGroup.getPaginatedSets().getPageInfo() == null ||
+               phaseGroup.getPaginatedSets().getPageInfo().getTotalPages() == 0) {
                 break;
             }
 
@@ -144,7 +143,6 @@ public class SmashggPhaseFetcher {
                 return existingPhase.isDone();
             }
         }
-
         return false;
     }
 }
