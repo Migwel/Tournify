@@ -42,7 +42,7 @@ A server is running and available for testing at http://tournify.migwel.dev
 
 # Supported Tournament Hosts
 Currently, the following tournament hosts are supported:
-* [smash.gg](https://smash.gg/)
+* [smash.gg](https://smash.gg/): A tournament in Tournify is an event in smash.gg. It is then not possible to follow a smash.gg tournament (for example, Genesis 3) but only smash.gg events (for example, SSBM at Genesis 3).
 
 If you have suggestions of tournament hosts that you would like to see being supported, feel free to open an issue and let me know. Tournify is currently "optimized" for video game tournament happening over the span of a week-end but this may change in the future if the need is there.
 
