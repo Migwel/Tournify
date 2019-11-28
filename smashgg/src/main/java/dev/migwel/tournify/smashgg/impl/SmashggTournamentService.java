@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.concurrent.Immutable;
 
-@Service
+@Service("SmashggTournamentService")
 @Immutable
 public class SmashggTournamentService extends AbstractTournamentService {
 
