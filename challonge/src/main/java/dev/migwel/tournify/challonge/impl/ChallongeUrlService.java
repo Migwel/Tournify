@@ -26,6 +26,6 @@ public class ChallongeUrlService implements UrlService {
             throw new IllegalArgumentException("Invalid url: "+ url);
         }
 
-        return " https://api.challonge.com/v1/tournaments/"+ m.group(6);
+        return "https://api.challonge.com/v1/tournaments/"+ m.group(6);
     }
 }
