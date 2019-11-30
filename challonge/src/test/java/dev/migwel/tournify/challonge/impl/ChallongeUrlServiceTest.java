@@ -1,6 +1,5 @@
 package dev.migwel.tournify.challonge.impl;
 
-import dev.migwel.tournify.core.service.UrlService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +8,7 @@ import java.util.Map;
 
 public class ChallongeUrlServiceTest {
 
-    private final UrlService challongeUrlService = new ChallongeUrlService();
+    private final ChallongeUrlService challongeUrlService = new ChallongeUrlService();
     private static final Map<String, String> urlsToNormalizedUrls = new HashMap<>();
     static {
         urlsToNormalizedUrls.put("https://challonge.com/ycmopwda", "https://api.challonge.com/v1/tournaments/ycmopwda");
@@ -20,5 +19,17 @@ public class ChallongeUrlServiceTest {
         for(var urlToNormalizedURl : urlsToNormalizedUrls.entrySet()) {
             Assertions.assertEquals(urlToNormalizedURl.getValue(), challongeUrlService.normalizeUrl(urlToNormalizedURl.getKey()));
         }
+    }
+
+    @Test
+    public void testAddUsernamePasswordToUrl() {
+        Assertions.assertEquals("https://username:apiToken@api.challonge.com/v1/tournaments/ycmopwda",
+                challongeUrlService.addUsernamePasswordToUrl("https://api.challonge.com/v1/tournaments/ycmopwda", "username", "apiToken"));
+    }
+
+    @Test
+    public void testBuildParticipantsUrl() {
+        Assertions.assertEquals("https://api.challonge.com/v1/tournaments/ycmopwda/participants.json",
+                challongeUrlService.buildParticipantsUrl("https://api.challonge.com/v1/tournaments/ycmopwda"));
     }
 }

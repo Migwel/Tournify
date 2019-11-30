@@ -28,4 +28,13 @@ public class ChallongeUrlService implements UrlService {
 
         return "https://api.challonge.com/v1/tournaments/"+ m.group(6);
     }
+
+    public String addUsernamePasswordToUrl(@Nonnull String formattedUrl, @Nonnull String username, @Nonnull String apiToken) {
+        int apiIndex = formattedUrl.indexOf("api");
+        return formattedUrl.substring(0, apiIndex) + username + ":" + apiToken + "@" + formattedUrl.substring(apiIndex);
+    }
+
+    public String buildParticipantsUrl(String baseUrl) {
+        return baseUrl + "/participants.json";
+    }
 }

@@ -3,6 +3,7 @@ package dev.migwel.tournify.core.http;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -42,6 +43,39 @@ public class HttpClient {
         }
         HttpPost httpPost = new HttpPost(url);
         httpPost.setEntity(requestEntity);
+        httpPost.setHeader("Content-type", "application/json");
+        for(Pair<String, String> header : headers) {
+            httpPost.setHeader(header.getFirst(), header.getSecond());
+        }
+        CloseableHttpResponse response;
+        try {
+            response = client.execute(httpPost);
+        } catch (UnknownHostException e) {
+            log.warn("An UnknownHostException occurred while executing the POST request", e);
+            throw new HTTPException(HttpStatus.SC_SERVICE_UNAVAILABLE);
+        } catch (IOException e) {
+            log.warn("An IOException occurred while executing the POST request", e);
+            throw new HTTPException(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+        }
+
+        HttpEntity responseEntity = response.getEntity();
+        if (responseEntity == null) {
+            log.warn("Response entity was null");
+            throw new HTTPException(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+        }
+
+        try {
+            return EntityUtils.toString(responseEntity);
+        } catch (IOException e) {
+            log.warn("Could not get content from response entity", e);
+            throw new HTTPException(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @Nonnull
+    public String get(@Nonnull String url, @Nonnull Collection<Pair<String, String>> headers) {
+        CloseableHttpClient client = HttpClients.createDefault();
+        HttpGet httpPost = new HttpGet(url);
         httpPost.setHeader("Content-type", "application/json");
         for(Pair<String, String> header : headers) {
             httpPost.setHeader(header.getFirst(), header.getSecond());

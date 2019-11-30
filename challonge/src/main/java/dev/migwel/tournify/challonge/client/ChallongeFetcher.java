@@ -1,39 +1,41 @@
-package dev.migwel.tournify.smashgg.client;
+package dev.migwel.tournify.challonge.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.migwel.tournify.challonge.config.ChallongeConfiguration;
+import dev.migwel.tournify.challonge.impl.ChallongeUrlService;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.http.HttpClient;
-import dev.migwel.tournify.smashgg.config.SmashggConfiguration;
-import dev.migwel.tournify.smashgg.response.SmashggResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import javax.xml.ws.http.HTTPException;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 
 @Component
-public class SmashggFetcher {
-    private static final Logger log = LoggerFactory.getLogger(SmashggFetcher.class);
+public class ChallongeFetcher {
+    private static final Logger log = LoggerFactory.getLogger(ChallongeFetcher.class);
 
-    private final SmashggConfiguration configuration;
+    private final ChallongeConfiguration configuration;
+    private final ChallongeUrlService challongeUrlService;
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    public SmashggFetcher(SmashggConfiguration configuration, HttpClient httpClient, ObjectMapper objectMapper) {
+    public ChallongeFetcher(ChallongeConfiguration configuration, ChallongeUrlService challongeUrlService, HttpClient httpClient, ObjectMapper objectMapper) {
         this.configuration = configuration;
+        this.challongeUrlService = challongeUrlService;
         this.httpClient = httpClient;
         this.objectMapper = objectMapper;
     }
 
-    <T> T fetchWithRetries(String request, Class<? extends SmashggResponse> responseClass) throws FetchException {
+    @Nonnull
+    <T> T fetchWithRetries(String url, Class<T> responseClass) throws FetchException {
+        String urlWithToken = challongeUrlService.addUsernamePasswordToUrl(url, configuration.getUsername(), configuration.getApiToken());
         for (int i = 0; i < configuration.getRetryNumber(); i++) {
             try {
-                return fetch(request, responseClass);
+                return fetch(urlWithToken, responseClass);
             } catch (FetchException e) {
                 log.info("An error occurred while fetching the data", e);
                 try {
@@ -48,15 +50,14 @@ public class SmashggFetcher {
     }
 
     @Nonnull
-    private <T> T fetch(String request, Class<? extends SmashggResponse> responseClass) throws FetchException {
-        String responseStr = postRequest(request);
+    private <T> T fetch(String request, Class<T> responseClass) throws FetchException {
+        String responseStr = get(request);
         return parseResponse(responseClass, responseStr);
     }
 
-    private String postRequest(String request) throws FetchException {
-        Collection<Pair<String, String>> headers = Collections.singleton(Pair.of("Authorization", "Bearer " + configuration.getApiToken()));
+    private String get(String url) throws FetchException {
         try {
-            return httpClient.postRequest(request, configuration.getApiUrl(), headers);
+            return httpClient.get(url, Collections.emptyList());
         }
         catch (HTTPException e) {
             log.warn("HttpException while posting request", e);
@@ -64,14 +65,10 @@ public class SmashggFetcher {
         }
     }
 
-    private <T> T parseResponse(Class<? extends SmashggResponse> responseClass, String responseStr) throws FetchException {
+    @Nonnull
+    private <T> T parseResponse(Class<T> responseClass, String responseStr) throws FetchException {
         try {
-            @SuppressWarnings("unchecked")
-            SmashggResponse<T> response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
-            if(response == null || response.getData() == null) {
-                throw new FetchException();
-            }
-            return response.getData().getObject();
+            return responseClass.cast(objectMapper.readValue(responseStr, responseClass));
         } catch (IOException e) {
             log.warn("Could not convert JSON response "+ responseStr +" to "+ responseClass, e);
             throw new FetchException(e);
