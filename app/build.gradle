@@ -3,6 +3,7 @@ dependencies {
     compile project(':core')
     compile project(':communication')
     compile project(':smashgg')
+    compile project(':challonge')
 }
 
 apply plugin: 'org.springframework.boot'
