@@ -15,6 +15,8 @@ public class Player {
     private String prefix;
     private String username;
 
+    private String externalId;
+
     public Player() {
         this(null);
     }
@@ -26,6 +28,12 @@ public class Player {
     public Player(String prefix, String username) {
         this.prefix = prefix;
         this.username = username;
+    }
+
+    public Player(String prefix, String username, String externalId) {
+        this.prefix = prefix;
+        this.username = username;
+        this.externalId = externalId;
     }
 
     public String getPrefix() {
@@ -51,6 +59,14 @@ public class Player {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     @Override

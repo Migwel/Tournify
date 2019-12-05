@@ -6,11 +6,12 @@ import java.util.Objects;
 public class Player implements Comparable<Player> {
 
     //Copied from https://stackoverflow.com/questions/481813/how-to-simplify-a-null-safe-compareto-implementation/23908426#23908426
-    private static Comparator<String> nullSafeStringComparator = Comparator
+    private final static Comparator<String> nullSafeStringComparator = Comparator
             .nullsFirst(String::compareToIgnoreCase);
 
     private String prefix;
     private String username;
+    private String externalId;
 
     public Player() {
         this(null);
@@ -23,6 +24,12 @@ public class Player implements Comparable<Player> {
     public Player(String prefix, String username) {
         this.prefix = prefix;
         this.username = username;
+    }
+
+    public Player(String prefix, String username, String externalId) {
+        this.prefix = prefix;
+        this.username = username;
+        this.externalId = externalId;
     }
 
     public String getPrefix() {
@@ -48,6 +55,14 @@ public class Player implements Comparable<Player> {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     @Override

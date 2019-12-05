@@ -37,4 +37,12 @@ public class ChallongeUrlService implements UrlService {
     public String buildParticipantsUrl(String baseUrl) {
         return baseUrl + "/participants.json";
     }
+
+    public String buildTournamentUrl(String baseUrl) {
+        return baseUrl + ".json";
+    }
+
+    public String buildMatchesUrl(String baseUrl) {
+        return baseUrl + "/matches.json";
+    }
 }
