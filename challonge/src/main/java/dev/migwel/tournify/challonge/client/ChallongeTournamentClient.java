@@ -22,16 +22,16 @@ import java.util.Collections;
 import java.util.HashSet;
 
 @Component
-public class ChallongeClient implements TournamentClient {
+public class ChallongeTournamentClient implements TournamentClient {
 
-    private static final Logger log = LoggerFactory.getLogger(ChallongeClient.class);
+    private static final Logger log = LoggerFactory.getLogger(ChallongeTournamentClient.class);
 
     private final ChallongeFetcher challongeFetcher;
     private final ChallongeUrlService challongeUrlService;
     private final ChallongeTournamentFetcher challongeTournamentFetcher;
     private final ChallongeMatchesFetcher challongeMatchesFetcher;
 
-    public ChallongeClient(ChallongeFetcher challongeFetcher, ChallongeUrlService challongeUrlService, ChallongeTournamentFetcher challongeTournamentFetcher, ChallongeMatchesFetcher challongeMatchesFetcher) {
+    public ChallongeTournamentClient(ChallongeFetcher challongeFetcher, ChallongeUrlService challongeUrlService, ChallongeTournamentFetcher challongeTournamentFetcher, ChallongeMatchesFetcher challongeMatchesFetcher) {
         this.challongeFetcher = challongeFetcher;
         this.challongeUrlService = challongeUrlService;
         this.challongeTournamentFetcher = challongeTournamentFetcher;
@@ -41,7 +41,7 @@ public class ChallongeClient implements TournamentClient {
     @Override
     @Nonnull
     public Tournament fetchTournament(@Nonnull String formattedUrl) throws FetchException {
-        ChallongeClient.log.info("Fetching tournament at url: " + formattedUrl);
+        ChallongeTournamentClient.log.info("Fetching tournament at url: " + formattedUrl);
         ChallongeTournament challongeTournament = challongeTournamentFetcher.fetchTournament(formattedUrl);
 
         if(challongeTournament == null) {
