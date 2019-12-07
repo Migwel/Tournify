@@ -3,6 +3,7 @@ package dev.migwel.tournify.core.service;
 import dev.migwel.tournify.communication.commons.Update;
 import dev.migwel.tournify.communication.commons.Updates;
 import dev.migwel.tournify.core.client.TournamentClient;
+import dev.migwel.tournify.core.converter.DataToServiceConverter;
 import dev.migwel.tournify.core.data.Phase;
 import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Set;
@@ -62,12 +63,12 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     @Nullable
-    public Tournament getTournament(String url) {
+    public dev.migwel.tournify.communication.commons.Tournament getTournament(String url) {
         String formattedUrl = urlService.normalizeUrl(url);
         Tournament tournament = tournamentRepository.findByUrl(formattedUrl);
         if (tournament != null) {
             log.info("Tournament was found in database for url: "+ formattedUrl);
-            return tournament;
+            return DataToServiceConverter.convertTournament(tournament);
         }
 
         log.info("No tournament was found, let's fetch it. url = "+ formattedUrl);
@@ -79,7 +80,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         }
         tournamentRepository.save(tournament);
         trackingService.trackTournament(tournament);
-        return tournament;
+        return DataToServiceConverter.convertTournament(tournament);
     }
 
     @Nonnull
@@ -168,37 +169,10 @@ public abstract class AbstractTournamentService implements TournamentService {
     private Collection<Update> getNewSets(Collection<Set> sets, String tournamentName, String phaseName) {
         Collection<Update> updates = new LinkedList<>();
         for(Set set : sets) {
-            dev.migwel.tournify.communication.commons.Set setSO = buildSetSO(tournamentName, phaseName, set);
+            dev.migwel.tournify.communication.commons.Set setSO = DataToServiceConverter.convertSet(tournamentName, phaseName, set);
             updates.add(new Update(setSO, "New set found")); //TODO: Change description
         }
         return updates;
-    }
-
-    private dev.migwel.tournify.communication.commons.Set buildSetSO(String tournamentName, String phaseName, Set set) {
-        return new dev.migwel.tournify.communication.commons.Set(
-                set.getExternalId(),
-                tournamentName,
-                phaseName,
-                buildPlayersSO(set.getPlayers()),
-                buildPlayersSO(set.getWinners()),
-                set.getName(),
-                set.isDone()
-        );
-    }
-
-    private List<dev.migwel.tournify.communication.commons.Player> buildPlayersSO(Collection<Player> players) {
-        List<dev.migwel.tournify.communication.commons.Player> playersSO = new ArrayList<>();
-        for(Player player : players) {
-            playersSO.add(buildPlayerSO(player));
-        }
-        return playersSO;
-    }
-
-    private dev.migwel.tournify.communication.commons.Player buildPlayerSO(Player player) {
-        if(player == null) {
-            return null;
-        }
-        return new dev.migwel.tournify.communication.commons.Player(player.getPrefix(), player.getUsername());
     }
 
     //Returns true if phases are the same
@@ -223,7 +197,7 @@ public abstract class AbstractTournamentService implements TournamentService {
                 oldSets.add(newSet);
                 if(newSet.isDone()) {
                     String description = buildSetUpdateDescription(tournamentName, oldPhase.getName(), newSet.getName(), newSet.getPlayers(), newSet.getWinners());
-                    updates.add(new Update(buildSetSO(tournamentName, oldPhase.getName(), newSet), description));
+                    updates.add(new Update(DataToServiceConverter.convertSet(tournamentName, oldPhase.getName(), newSet), description));
                 }
                 areSame = false;
                 continue;
@@ -256,7 +230,7 @@ public abstract class AbstractTournamentService implements TournamentService {
             oldSet.setWinners(newSet.getWinners());
             oldSet.setDone(true);
             String description = buildSetUpdateDescription(tournamentName, phaseName, oldSet.getName(), oldSet.getPlayers(), newSet.getWinners());
-            updates.add(new Update(buildSetSO(tournamentName, phaseName, oldSet), description));
+            updates.add(new Update(DataToServiceConverter.convertSet(tournamentName, phaseName, oldSet), description));
             return false;
         }
 

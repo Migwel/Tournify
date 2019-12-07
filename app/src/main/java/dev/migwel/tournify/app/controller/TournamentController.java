@@ -2,9 +2,9 @@ package dev.migwel.tournify.app.controller;
 
 import dev.migwel.tournify.app.service.TournamentServiceFactory;
 import dev.migwel.tournify.communication.commons.Player;
+import dev.migwel.tournify.communication.commons.Tournament;
 import dev.migwel.tournify.communication.request.TournamentRequest;
 import dev.migwel.tournify.communication.response.ParticipantsResponse;
-import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.service.TournamentService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

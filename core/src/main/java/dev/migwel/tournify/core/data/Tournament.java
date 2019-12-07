@@ -1,7 +1,5 @@
 package dev.migwel.tournify.core.data;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.annotation.Nonnull;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,7 +38,6 @@ public class Tournament {
     @Column(unique = true)
     private String url;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
     private boolean done;
@@ -118,6 +115,14 @@ public class Tournament {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    public GameType getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(GameType gameType) {
+        this.gameType = gameType;
     }
 
     @Override
