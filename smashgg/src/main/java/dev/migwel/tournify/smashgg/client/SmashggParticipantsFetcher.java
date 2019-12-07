@@ -1,6 +1,6 @@
 package dev.migwel.tournify.smashgg.client;
 
-import dev.migwel.tournify.communication.commons.Player;
+import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.smashgg.config.SmashggConfiguration;
 import dev.migwel.tournify.smashgg.response.SmashggEvent;

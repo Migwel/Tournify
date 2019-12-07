@@ -4,6 +4,7 @@ import dev.migwel.tournify.core.client.TournamentClient;
 import dev.migwel.tournify.core.data.Address;
 import dev.migwel.tournify.core.data.GameType;
 import dev.migwel.tournify.core.data.Phase;
+import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.smashgg.response.SmashggEvent;
@@ -64,7 +65,7 @@ public class SmashggTournamentClient implements TournamentClient {
 
     @Nonnull
     @Override
-    public java.util.Set<dev.migwel.tournify.communication.commons.Player> getParticipants(@Nonnull String formattedUrl) throws FetchException {
+    public java.util.Set<Player> getParticipants(@Nonnull String formattedUrl) throws FetchException {
         log.info("Fetching tournament at url: " + formattedUrl);
         String eventSlug = SmashggUtil.findEventSlug(formattedUrl);
         return smashggParticipantsFetcher.fetchParticipants(eventSlug);

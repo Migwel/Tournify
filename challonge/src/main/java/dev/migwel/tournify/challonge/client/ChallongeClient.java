@@ -5,10 +5,10 @@ import dev.migwel.tournify.challonge.response.ChallongeMatch;
 import dev.migwel.tournify.challonge.response.ChallongeParticipant;
 import dev.migwel.tournify.challonge.response.ChallongeTournament;
 import dev.migwel.tournify.challonge.response.ParticipantsResponse;
-import dev.migwel.tournify.communication.commons.Player;
 import dev.migwel.tournify.core.client.TournamentClient;
 import dev.migwel.tournify.core.data.GameType;
 import dev.migwel.tournify.core.data.Phase;
+import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.util.TextUtil;
@@ -23,7 +23,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Component
 public class ChallongeClient implements TournamentClient {
@@ -54,13 +53,8 @@ public class ChallongeClient implements TournamentClient {
 
         Set<ChallongeMatch> matches = challongeMatchesFetcher.fetchMatches(formattedUrl);
         Set<Player> players = getParticipants(formattedUrl);
-        // This is stupid. We should use communication objects everywhere or data but not sometimes ones sometimes the others
-        Set<dev.migwel.tournify.core.data.Player> playersData = players
-                .stream()
-                .map(p -> new dev.migwel.tournify.core.data.Player(p.getPrefix(), p.getUsername(), p.getExternalId()))
-                .collect(Collectors.toSet());
 
-        Collection<Phase> phases = buildPhases(matches, playersData);
+        Collection<Phase> phases = buildPhases(matches, players);
         boolean isDone = phases.stream().allMatch(Phase::isDone);
         return new Tournament(
                 challongeTournament.getId(),
