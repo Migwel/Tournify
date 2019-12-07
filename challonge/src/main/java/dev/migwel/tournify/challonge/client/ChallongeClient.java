@@ -1,7 +1,6 @@
 package dev.migwel.tournify.challonge.client;
 
 import dev.migwel.tournify.challonge.impl.ChallongeUrlService;
-import dev.migwel.tournify.challonge.response.ChallongeMatch;
 import dev.migwel.tournify.challonge.response.ChallongeParticipant;
 import dev.migwel.tournify.challonge.response.ChallongeTournament;
 import dev.migwel.tournify.challonge.response.ParticipantsResponse;
@@ -9,6 +8,7 @@ import dev.migwel.tournify.core.client.TournamentClient;
 import dev.migwel.tournify.core.data.GameType;
 import dev.migwel.tournify.core.data.Phase;
 import dev.migwel.tournify.core.data.Player;
+import dev.migwel.tournify.core.data.Set;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.util.TextUtil;
@@ -19,10 +19,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 @Component
 public class ChallongeClient implements TournamentClient {
@@ -51,10 +48,10 @@ public class ChallongeClient implements TournamentClient {
             throw new FetchException("Could not fetch tournalement for url "+ formattedUrl);
         }
 
-        Set<ChallongeMatch> matches = challongeMatchesFetcher.fetchMatches(formattedUrl);
-        Set<Player> players = getParticipants(formattedUrl);
+        Collection<Player> players = getParticipants(formattedUrl);
+        Collection<Set> sets = challongeMatchesFetcher.fetchMatches(formattedUrl, players);
 
-        Collection<Phase> phases = buildPhases(matches, players);
+        Collection<Phase> phases = buildPhases(sets);
         boolean isDone = phases.stream().allMatch(Phase::isDone);
         return new Tournament(
                 challongeTournament.getId(),
@@ -67,28 +64,10 @@ public class ChallongeClient implements TournamentClient {
                 isDone);
     }
 
-    private Collection<Phase> buildPhases(Set<ChallongeMatch> matches, Set<dev.migwel.tournify.core.data.Player> players) {
-        Collection<dev.migwel.tournify.core.data.Set> sets = buildSets(matches, players);
-        boolean isDone = sets.stream().allMatch(dev.migwel.tournify.core.data.Set::isDone);
+    private Collection<Phase> buildPhases(Collection<Set> sets) {
+        boolean isDone = sets.stream().allMatch(Set::isDone);
         Phase phase = new Phase(null, sets, null, isDone);
         return Collections.singleton(phase);
-    }
-
-    private Collection<dev.migwel.tournify.core.data.Set> buildSets(Set<ChallongeMatch> matches, Set<dev.migwel.tournify.core.data.Player> players) {
-        Map<String, dev.migwel.tournify.core.data.Player> idToPlayer = new HashMap<>();
-        players.forEach(e -> idToPlayer.put(e.getExternalId(), e));
-
-        Collection<dev.migwel.tournify.core.data.Set> sets = new HashSet<>();
-        for (ChallongeMatch match : matches) {
-            dev.migwel.tournify.core.data.Set set = new dev.migwel.tournify.core.data.Set(match.getId(),
-                    Set.of(idToPlayer.get(match.getPlayer1Id()), idToPlayer.get(match.getPlayer2Id())),
-                    Set.of(idToPlayer.get(match.getWinnerId())),
-                    null,
-                    TextUtil.hasText(match.getWinnerId())
-                    );
-            sets.add(set);
-        }
-        return sets;
     }
 
     @Nonnull
@@ -100,8 +79,8 @@ public class ChallongeClient implements TournamentClient {
         return convertChallongeParticipantResponse(participantResponses);
     }
 
-    private Set<Player> convertChallongeParticipantResponse(@Nonnull ParticipantsResponse[] participantsResponses) {
-        final Set<Player> players = new HashSet<>();
+    private java.util.Set<Player> convertChallongeParticipantResponse(@Nonnull ParticipantsResponse[] participantsResponses) {
+        final java.util.Set<Player> players = new HashSet<>();
         for(ParticipantsResponse participantsResponse : participantsResponses) {
             if(participantsResponse == null ||
                participantsResponse.getParticipant() == null ||
