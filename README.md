@@ -31,7 +31,6 @@ Tournify is a service aimed at helping people to follow tournament results. The 
   * username: the username of the Player. For example Mew2King
 
 # Endpoints
-
 The following endpoints are available:
 * **/tournament**: A GET request with a url sent to that endpoint will return the tournament hosted at the provided url
 * **/participants**: A GET request with a url sent to that endpoint will return the list of players participating at the tournament hosted at the provided url
