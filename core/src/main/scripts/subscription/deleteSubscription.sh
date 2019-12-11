@@ -8,4 +8,4 @@ else
   subscriptionId=$1
 fi
 
-curl -X "DELETE"  http://localhost:8090/subscribe/$subscriptionId
+curl -X "DELETE"  https://tournify.migwel.dev/subscribe/$subscriptionId
