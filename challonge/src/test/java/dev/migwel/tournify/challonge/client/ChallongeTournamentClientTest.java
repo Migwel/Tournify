@@ -3,8 +3,8 @@ package dev.migwel.tournify.challonge.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.migwel.tournify.challonge.config.ChallongeConfiguration;
 import dev.migwel.tournify.challonge.impl.ChallongeUrlService;
-import dev.migwel.tournify.communication.commons.Player;
 import dev.migwel.tournify.core.client.TournamentClient;
+import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.http.HttpClient;
@@ -26,7 +26,7 @@ import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ChallongeClientTest {
+public class ChallongeTournamentClientTest {
 
 
     private ChallongeConfiguration challongeConfiguration = new ChallongeConfiguration();
@@ -36,7 +36,7 @@ public class ChallongeClientTest {
     private ChallongeFetcher challongeFetcher = new ChallongeFetcher(challongeConfiguration, challongeUrlService, httpClient, objectMapper);
     private ChallongeTournamentFetcher challongeTournamentFetcher = new ChallongeTournamentFetcher(challongeUrlService, challongeFetcher);
     private ChallongeMatchesFetcher challongeMatchesFetcher = new ChallongeMatchesFetcher(challongeUrlService, challongeFetcher);
-    private TournamentClient tournamentClient = new ChallongeClient(challongeFetcher, challongeUrlService, challongeTournamentFetcher, challongeMatchesFetcher);
+    private TournamentClient tournamentClient = new ChallongeTournamentClient(challongeFetcher, challongeUrlService, challongeTournamentFetcher, challongeMatchesFetcher);
 
     @BeforeEach
     void before() throws URISyntaxException, IOException {
