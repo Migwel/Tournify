@@ -55,7 +55,7 @@ public abstract class AbstractTournamentService implements TournamentService {
     public java.util.Set<dev.migwel.tournify.communication.commons.Player> getParticipants(String url) {
         String formattedUrl = normalizeUrl(url);
         try {
-            return tournamentClient.getParticipants(formattedUrl);
+            return DataToServiceConverter.convertPlayers(tournamentClient.getParticipants(formattedUrl));
         } catch (FetchException e) {
             log.warn("Could not get participants from url: "+ formattedUrl, e);
             return Collections.emptySet();

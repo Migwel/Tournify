@@ -63,8 +63,8 @@ public final class DataToServiceConverter {
                        setData.isDone());
     }
 
-    private static Collection<Player> convertPlayers(@CheckForNull Collection<dev.migwel.tournify.core.data.Player> playersData) {
-        Collection<Player> players = new HashSet<>();
+    public static java.util.Set<Player> convertPlayers(@CheckForNull Collection<dev.migwel.tournify.core.data.Player> playersData) {
+        java.util.Set<Player> players = new HashSet<>();
         if (CollectionsUtil.hasItems(playersData)) {
             playersData.stream()
                        .filter(Objects::nonNull)
