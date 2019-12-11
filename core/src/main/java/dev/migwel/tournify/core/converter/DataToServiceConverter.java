@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.TreeSet;
 
 public final class DataToServiceConverter {
     public DataToServiceConverter() {
@@ -64,7 +65,7 @@ public final class DataToServiceConverter {
     }
 
     public static java.util.Set<Player> convertPlayers(@CheckForNull Collection<dev.migwel.tournify.core.data.Player> playersData) {
-        java.util.Set<Player> players = new HashSet<>();
+        java.util.Set<Player> players = new TreeSet<>();
         if (CollectionsUtil.hasItems(playersData)) {
             playersData.stream()
                        .filter(Objects::nonNull)
