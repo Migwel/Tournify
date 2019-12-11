@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.migwel.tournify.challonge.config.ChallongeConfiguration;
 import dev.migwel.tournify.challonge.impl.ChallongeUrlService;
 import dev.migwel.tournify.core.client.TournamentClient;
+import dev.migwel.tournify.core.data.Phase;
 import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.http.HttpClient;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -72,6 +74,9 @@ public class ChallongeTournamentClientTest {
     void testGetTournament() throws FetchException {
         String url = "https://api.challonge.com/v1/tournaments/xgt2019nov";
         Tournament tournament = tournamentClient.fetchTournament(url);
-        System.out.println(tournament);
+        Assertions.assertEquals("Super Smash Bros. Ultimate", tournament.getGameType().getName());
+        Assertions.assertEquals(1, tournament.getPhases().size());
+        Phase phase = tournament.getPhases().iterator().next();
+        Assertions.assertEquals(57, phase.getSets().size());
     }
 }
