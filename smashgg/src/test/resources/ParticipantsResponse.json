@@ -1,0 +1,214 @@
+{
+  "data": {
+    "event": {
+      "entrants": {
+        "pageInfo": {
+          "total": 23,
+          "totalPages": 1
+        },
+        "nodes": [
+          {
+            "participants": [
+              {
+                "gamerTag": "PeW",
+                "prefix": "LSE"
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Eroking",
+                "prefix": null
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Maxself",
+                "prefix": "Maxself"
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Marty",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Diploducul",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Le Shibateur",
+                "prefix": "SE"
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Kawoshi",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Tibec",
+                "prefix": "Free?"
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Amiin",
+                "prefix": "YnT"
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "NA2",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Leon",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Ingalou",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Demo",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "VictorB",
+                "prefix": "NeS"
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "AcidBath",
+                "prefix": "DF"
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Yapoto",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Dizuite",
+                "prefix": "CEW"
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Little Branz",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Lalalilalo",
+                "prefix": null
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Wooax",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Branzy",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "Mohss",
+                "prefix": ""
+              }
+            ]
+          },
+          {
+            "participants": [
+              {
+                "gamerTag": "lapogne36",
+                "prefix": ""
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cacheControl": {
+      "version": 1,
+      "hints": [
+        {
+          "path": [
+            "event"
+          ],
+          "maxAge": 60,
+          "scope": "PRIVATE"
+        }
+      ]
+    },
+    "queryComplexity": 24
+  },
+  "actionRecords": []
+}

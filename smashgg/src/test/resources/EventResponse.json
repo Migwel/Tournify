@@ -1,0 +1,51 @@
+{
+  "data": {
+    "event": {
+      "id": 423789,
+      "slug": "tournament\/jackpot-4\/event\/smash-ultimate-1vs1",
+      "startAt": 1575913500,
+      "name": "Smash Ultimate 1vs1",
+      "tournament": {
+        "id": 186408,
+        "name": "Jackpot #4",
+        "city": "Paris",
+        "addrState": "\u00cele-de-France",
+        "venueAddress": "37 Rue de Lappe, 75011 Paris, France",
+        "countryCode": "FR"
+      },
+      "phaseGroups": [
+        {
+          "id": 1149999,
+          "state": 3,
+          "phaseId": 710213,
+          "displayIdentifier": "1"
+        }
+      ],
+      "phases": [
+        {
+          "id": 710213,
+          "name": "Bracket"
+        }
+      ],
+      "videogame": {
+        "displayName": "Super Smash Bros. Ultimate"
+      }
+    }
+  },
+  "extensions": {
+    "cacheControl": {
+      "version": 1,
+      "hints": [
+        {
+          "path": [
+            "event"
+          ],
+          "maxAge": 60,
+          "scope": "PRIVATE"
+        }
+      ]
+    },
+    "queryComplexity": 6
+  },
+  "actionRecords": []
+}

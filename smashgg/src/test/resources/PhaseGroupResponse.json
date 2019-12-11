@@ -1,0 +1,1419 @@
+{
+  "data": {
+    "phaseGroup": {
+      "id": 1149999,
+      "displayIdentifier": "1",
+      "paginatedSets": {
+        "pageInfo": {
+          "total": 45,
+          "totalPages": 1
+        },
+        "nodes": [
+          {
+            "id": 25177158,
+            "fullRoundText": "Winners Final",
+            "winnerId": 4279484,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4274278,
+                  "name": "Leon",
+                  "participants": [
+                    {
+                      "gamerTag": "Leon",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279484,
+                  "name": "LSE | PeW",
+                  "participants": [
+                    {
+                      "gamerTag": "PeW",
+                      "prefix": "LSE"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177222,
+            "fullRoundText": "Losers Final",
+            "winnerId": 4274278,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4274278,
+                  "name": "Leon",
+                  "participants": [
+                    {
+                      "gamerTag": "Leon",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4275773,
+                  "name": "YnT | Amiin",
+                  "participants": [
+                    {
+                      "gamerTag": "Amiin",
+                      "prefix": "YnT"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177221,
+            "fullRoundText": "Losers Semi-Final",
+            "winnerId": 4275773,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4275773,
+                  "name": "YnT | Amiin",
+                  "participants": [
+                    {
+                      "gamerTag": "Amiin",
+                      "prefix": "YnT"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279376,
+                  "name": "SE | Le Shibateur",
+                  "participants": [
+                    {
+                      "gamerTag": "Le Shibateur",
+                      "prefix": "SE"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177156,
+            "fullRoundText": "Winners Semi-Final",
+            "winnerId": 4274278,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4274278,
+                  "name": "Leon",
+                  "participants": [
+                    {
+                      "gamerTag": "Leon",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4272821,
+                  "name": "Demo",
+                  "participants": [
+                    {
+                      "gamerTag": "Demo",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177157,
+            "fullRoundText": "Winners Semi-Final",
+            "winnerId": 4279484,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279484,
+                  "name": "LSE | PeW",
+                  "participants": [
+                    {
+                      "gamerTag": "PeW",
+                      "prefix": "LSE"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4275773,
+                  "name": "YnT | Amiin",
+                  "participants": [
+                    {
+                      "gamerTag": "Amiin",
+                      "prefix": "YnT"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177219,
+            "fullRoundText": "Losers Quarter-Final",
+            "winnerId": 4275773,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4275773,
+                  "name": "YnT | Amiin",
+                  "participants": [
+                    {
+                      "gamerTag": "Amiin",
+                      "prefix": "YnT"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4253013,
+                  "name": "lapogne36",
+                  "participants": [
+                    {
+                      "gamerTag": "lapogne36",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177220,
+            "fullRoundText": "Losers Quarter-Final",
+            "winnerId": 4279376,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4272821,
+                  "name": "Demo",
+                  "participants": [
+                    {
+                      "gamerTag": "Demo",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279376,
+                  "name": "SE | Le Shibateur",
+                  "participants": [
+                    {
+                      "gamerTag": "Le Shibateur",
+                      "prefix": "SE"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177217,
+            "fullRoundText": "Losers Round 4",
+            "winnerId": 4253013,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4253013,
+                  "name": "lapogne36",
+                  "participants": [
+                    {
+                      "gamerTag": "lapogne36",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4272632,
+                  "name": "DF | AcidBath",
+                  "participants": [
+                    {
+                      "gamerTag": "AcidBath",
+                      "prefix": "DF"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177218,
+            "fullRoundText": "Losers Round 4",
+            "winnerId": 4279376,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279376,
+                  "name": "SE | Le Shibateur",
+                  "participants": [
+                    {
+                      "gamerTag": "Le Shibateur",
+                      "prefix": "SE"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4276026,
+                  "name": "Free? | Tibec",
+                  "participants": [
+                    {
+                      "gamerTag": "Tibec",
+                      "prefix": "Free?"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177152,
+            "fullRoundText": "Winners Quarter-Final",
+            "winnerId": 4274278,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4274278,
+                  "name": "Leon",
+                  "participants": [
+                    {
+                      "gamerTag": "Leon",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4274952,
+                  "name": "NA2",
+                  "participants": [
+                    {
+                      "gamerTag": "NA2",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177153,
+            "fullRoundText": "Winners Quarter-Final",
+            "winnerId": 4272821,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4253013,
+                  "name": "lapogne36",
+                  "participants": [
+                    {
+                      "gamerTag": "lapogne36",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4272821,
+                  "name": "Demo",
+                  "participants": [
+                    {
+                      "gamerTag": "Demo",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177154,
+            "fullRoundText": "Winners Quarter-Final",
+            "winnerId": 4279484,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279484,
+                  "name": "LSE | PeW",
+                  "participants": [
+                    {
+                      "gamerTag": "PeW",
+                      "prefix": "LSE"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4276026,
+                  "name": "Free? | Tibec",
+                  "participants": [
+                    {
+                      "gamerTag": "Tibec",
+                      "prefix": "Free?"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177155,
+            "fullRoundText": "Winners Quarter-Final",
+            "winnerId": 4275773,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4275773,
+                  "name": "YnT | Amiin",
+                  "participants": [
+                    {
+                      "gamerTag": "Amiin",
+                      "prefix": "YnT"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279376,
+                  "name": "SE | Le Shibateur",
+                  "participants": [
+                    {
+                      "gamerTag": "Le Shibateur",
+                      "prefix": "SE"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177213,
+            "fullRoundText": "Losers Round 3",
+            "winnerId": 4253013,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4253013,
+                  "name": "lapogne36",
+                  "participants": [
+                    {
+                      "gamerTag": "lapogne36",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4273194,
+                  "name": "Ingalou",
+                  "participants": [
+                    {
+                      "gamerTag": "Ingalou",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177214,
+            "fullRoundText": "Losers Round 3",
+            "winnerId": 4272632,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4274952,
+                  "name": "NA2",
+                  "participants": [
+                    {
+                      "gamerTag": "NA2",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4272632,
+                  "name": "DF | AcidBath",
+                  "participants": [
+                    {
+                      "gamerTag": "AcidBath",
+                      "prefix": "DF"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177215,
+            "fullRoundText": "Losers Round 3",
+            "winnerId": 4279376,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279376,
+                  "name": "SE | Le Shibateur",
+                  "participants": [
+                    {
+                      "gamerTag": "Le Shibateur",
+                      "prefix": "SE"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4256620,
+                  "name": "Wooax",
+                  "participants": [
+                    {
+                      "gamerTag": "Wooax",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177216,
+            "fullRoundText": "Losers Round 3",
+            "winnerId": 4276026,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4276026,
+                  "name": "Free? | Tibec",
+                  "participants": [
+                    {
+                      "gamerTag": "Tibec",
+                      "prefix": "Free?"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279398,
+                  "name": "Marty",
+                  "participants": [
+                    {
+                      "gamerTag": "Marty",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177209,
+            "fullRoundText": "Losers Round 2",
+            "winnerId": 4273194,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4273194,
+                  "name": "Ingalou",
+                  "participants": [
+                    {
+                      "gamerTag": "Ingalou",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279399,
+                  "name": "Maxself | Maxself",
+                  "participants": [
+                    {
+                      "gamerTag": "Maxself",
+                      "prefix": "Maxself"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177210,
+            "fullRoundText": "Losers Round 2",
+            "winnerId": 4272632,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4272632,
+                  "name": "DF | AcidBath",
+                  "participants": [
+                    {
+                      "gamerTag": "AcidBath",
+                      "prefix": "DF"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279392,
+                  "name": "Diploducul",
+                  "participants": [
+                    {
+                      "gamerTag": "Diploducul",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177211,
+            "fullRoundText": "Losers Round 2",
+            "winnerId": 4256620,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279443,
+                  "name": "Eroking",
+                  "participants": [
+                    {
+                      "gamerTag": "Eroking",
+                      "prefix": null
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4256620,
+                  "name": "Wooax",
+                  "participants": [
+                    {
+                      "gamerTag": "Wooax",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177212,
+            "fullRoundText": "Losers Round 2",
+            "winnerId": 4279398,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4259267,
+                  "name": "CEW | Dizuite",
+                  "participants": [
+                    {
+                      "gamerTag": "Dizuite",
+                      "prefix": "CEW"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279398,
+                  "name": "Marty",
+                  "participants": [
+                    {
+                      "gamerTag": "Marty",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177144,
+            "fullRoundText": "Winners Round 2",
+            "winnerId": 4274278,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4274278,
+                  "name": "Leon",
+                  "participants": [
+                    {
+                      "gamerTag": "Leon",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4256615,
+                  "name": "Branzy",
+                  "participants": [
+                    {
+                      "gamerTag": "Branzy",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177145,
+            "fullRoundText": "Winners Round 2",
+            "winnerId": 4274952,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4274952,
+                  "name": "NA2",
+                  "participants": [
+                    {
+                      "gamerTag": "NA2",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4259267,
+                  "name": "CEW | Dizuite",
+                  "participants": [
+                    {
+                      "gamerTag": "Dizuite",
+                      "prefix": "CEW"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177146,
+            "fullRoundText": "Winners Round 2",
+            "winnerId": 4253013,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4253013,
+                  "name": "lapogne36",
+                  "participants": [
+                    {
+                      "gamerTag": "lapogne36",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4256620,
+                  "name": "Wooax",
+                  "participants": [
+                    {
+                      "gamerTag": "Wooax",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177147,
+            "fullRoundText": "Winners Round 2",
+            "winnerId": 4272821,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4272821,
+                  "name": "Demo",
+                  "participants": [
+                    {
+                      "gamerTag": "Demo",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279443,
+                  "name": "Eroking",
+                  "participants": [
+                    {
+                      "gamerTag": "Eroking",
+                      "prefix": null
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177148,
+            "fullRoundText": "Winners Round 2",
+            "winnerId": 4279484,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279484,
+                  "name": "LSE | PeW",
+                  "participants": [
+                    {
+                      "gamerTag": "PeW",
+                      "prefix": "LSE"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279392,
+                  "name": "Diploducul",
+                  "participants": [
+                    {
+                      "gamerTag": "Diploducul",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177149,
+            "fullRoundText": "Winners Round 2",
+            "winnerId": 4276026,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4272632,
+                  "name": "DF | AcidBath",
+                  "participants": [
+                    {
+                      "gamerTag": "AcidBath",
+                      "prefix": "DF"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4276026,
+                  "name": "Free? | Tibec",
+                  "participants": [
+                    {
+                      "gamerTag": "Tibec",
+                      "prefix": "Free?"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177150,
+            "fullRoundText": "Winners Round 2",
+            "winnerId": 4275773,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4275773,
+                  "name": "YnT | Amiin",
+                  "participants": [
+                    {
+                      "gamerTag": "Amiin",
+                      "prefix": "YnT"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279399,
+                  "name": "Maxself | Maxself",
+                  "participants": [
+                    {
+                      "gamerTag": "Maxself",
+                      "prefix": "Maxself"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177151,
+            "fullRoundText": "Winners Round 2",
+            "winnerId": 4279376,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279376,
+                  "name": "SE | Le Shibateur",
+                  "participants": [
+                    {
+                      "gamerTag": "Le Shibateur",
+                      "prefix": "SE"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4273194,
+                  "name": "Ingalou",
+                  "participants": [
+                    {
+                      "gamerTag": "Ingalou",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177204,
+            "fullRoundText": "Losers Round 1",
+            "winnerId": 4279392,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279392,
+                  "name": "Diploducul",
+                  "participants": [
+                    {
+                      "gamerTag": "Diploducul",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4256621,
+                  "name": "Lalalilalo",
+                  "participants": [
+                    {
+                      "gamerTag": "Lalalilalo",
+                      "prefix": null
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177205,
+            "fullRoundText": "Losers Round 1",
+            "winnerId": 4279443,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279443,
+                  "name": "Eroking",
+                  "participants": [
+                    {
+                      "gamerTag": "Eroking",
+                      "prefix": null
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4254172,
+                  "name": "Mohss",
+                  "participants": [
+                    {
+                      "gamerTag": "Mohss",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177206,
+            "fullRoundText": "Losers Round 1",
+            "winnerId": 4256620,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4256620,
+                  "name": "Wooax",
+                  "participants": [
+                    {
+                      "gamerTag": "Wooax",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279328,
+                  "name": "Kawoshi",
+                  "participants": [
+                    {
+                      "gamerTag": "Kawoshi",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177207,
+            "fullRoundText": "Losers Round 1",
+            "winnerId": 4259267,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4259267,
+                  "name": "CEW | Dizuite",
+                  "participants": [
+                    {
+                      "gamerTag": "Dizuite",
+                      "prefix": "CEW"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4256653,
+                  "name": "Little Branz",
+                  "participants": [
+                    {
+                      "gamerTag": "Little Branz",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177208,
+            "fullRoundText": "Losers Round 1",
+            "winnerId": 4279398,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4256615,
+                  "name": "Branzy",
+                  "participants": [
+                    {
+                      "gamerTag": "Branzy",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279398,
+                  "name": "Marty",
+                  "participants": [
+                    {
+                      "gamerTag": "Marty",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177201,
+            "fullRoundText": "Losers Round 1",
+            "winnerId": 4273194,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4273194,
+                  "name": "Ingalou",
+                  "participants": [
+                    {
+                      "gamerTag": "Ingalou",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4265066,
+                  "name": "Yapoto",
+                  "participants": [
+                    {
+                      "gamerTag": "Yapoto",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177203,
+            "fullRoundText": "Losers Round 1",
+            "winnerId": 4272632,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4272632,
+                  "name": "DF | AcidBath",
+                  "participants": [
+                    {
+                      "gamerTag": "AcidBath",
+                      "prefix": "DF"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4272666,
+                  "name": "NeS | VictorB",
+                  "participants": [
+                    {
+                      "gamerTag": "VictorB",
+                      "prefix": "NeS"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177129,
+            "fullRoundText": "Winners Round 1",
+            "winnerId": 4256615,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4265066,
+                  "name": "Yapoto",
+                  "participants": [
+                    {
+                      "gamerTag": "Yapoto",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4256615,
+                  "name": "Branzy",
+                  "participants": [
+                    {
+                      "gamerTag": "Branzy",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177133,
+            "fullRoundText": "Winners Round 1",
+            "winnerId": 4256620,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4256620,
+                  "name": "Wooax",
+                  "participants": [
+                    {
+                      "gamerTag": "Wooax",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4272666,
+                  "name": "NeS | VictorB",
+                  "participants": [
+                    {
+                      "gamerTag": "VictorB",
+                      "prefix": "NeS"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177135,
+            "fullRoundText": "Winners Round 1",
+            "winnerId": 4279443,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4256621,
+                  "name": "Lalalilalo",
+                  "participants": [
+                    {
+                      "gamerTag": "Lalalilalo",
+                      "prefix": null
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279443,
+                  "name": "Eroking",
+                  "participants": [
+                    {
+                      "gamerTag": "Eroking",
+                      "prefix": null
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177137,
+            "fullRoundText": "Winners Round 1",
+            "winnerId": 4279392,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279392,
+                  "name": "Diploducul",
+                  "participants": [
+                    {
+                      "gamerTag": "Diploducul",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4254172,
+                  "name": "Mohss",
+                  "participants": [
+                    {
+                      "gamerTag": "Mohss",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177139,
+            "fullRoundText": "Winners Round 1",
+            "winnerId": 4276026,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4276026,
+                  "name": "Free? | Tibec",
+                  "participants": [
+                    {
+                      "gamerTag": "Tibec",
+                      "prefix": "Free?"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279328,
+                  "name": "Kawoshi",
+                  "participants": [
+                    {
+                      "gamerTag": "Kawoshi",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177141,
+            "fullRoundText": "Winners Round 1",
+            "winnerId": 4279399,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4256653,
+                  "name": "Little Branz",
+                  "participants": [
+                    {
+                      "gamerTag": "Little Branz",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279399,
+                  "name": "Maxself | Maxself",
+                  "participants": [
+                    {
+                      "gamerTag": "Maxself",
+                      "prefix": "Maxself"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177143,
+            "fullRoundText": "Winners Round 1",
+            "winnerId": 4273194,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4273194,
+                  "name": "Ingalou",
+                  "participants": [
+                    {
+                      "gamerTag": "Ingalou",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279398,
+                  "name": "Marty",
+                  "participants": [
+                    {
+                      "gamerTag": "Marty",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177159,
+            "fullRoundText": "Grand Final",
+            "winnerId": 4274278,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4279484,
+                  "name": "LSE | PeW",
+                  "participants": [
+                    {
+                      "gamerTag": "PeW",
+                      "prefix": "LSE"
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4274278,
+                  "name": "Leon",
+                  "participants": [
+                    {
+                      "gamerTag": "Leon",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "id": 25177160,
+            "fullRoundText": "Grand Final Reset",
+            "winnerId": 4274278,
+            "slots": [
+              {
+                "entrant": {
+                  "id": 4274278,
+                  "name": "Leon",
+                  "participants": [
+                    {
+                      "gamerTag": "Leon",
+                      "prefix": ""
+                    }
+                  ]
+                }
+              },
+              {
+                "entrant": {
+                  "id": 4279484,
+                  "name": "LSE | PeW",
+                  "participants": [
+                    {
+                      "gamerTag": "PeW",
+                      "prefix": "LSE"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "extensions": {
+    "cacheControl": {
+      "version": 1,
+      "hints": null
+    },
+    "queryComplexity": 316
+  },
+  "actionRecords": []
+}
