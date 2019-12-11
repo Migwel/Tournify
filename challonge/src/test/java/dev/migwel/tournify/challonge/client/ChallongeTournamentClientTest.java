@@ -51,8 +51,7 @@ public class ChallongeTournamentClientTest {
         String matchesJson = loadJson("MatchesResponse.json");
         when(httpClient.get(contains("participants"), anyCollection())).thenReturn(participantsJson);
         when(httpClient.get(contains("xgt2019nov.json"), anyCollection())).thenReturn(tournamentJson);
-        when(httpClient.get(contains("matches.json"), anyCollection())).thenReturn(matchesJson);;
-        ;
+        when(httpClient.get(contains("matches.json"), anyCollection())).thenReturn(matchesJson);
     }
 
     private String loadJson(String filename) throws URISyntaxException, IOException {
