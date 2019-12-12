@@ -3,8 +3,10 @@ package dev.migwel.tournify.core.data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "gametype")
 public class GameType {
 
     @Id

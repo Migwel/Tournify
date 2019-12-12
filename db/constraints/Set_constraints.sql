@@ -1,0 +1,2 @@
+ALTER TABLE ONLY public.set
+    ADD CONSTRAINT set_pkey PRIMARY KEY (id);
