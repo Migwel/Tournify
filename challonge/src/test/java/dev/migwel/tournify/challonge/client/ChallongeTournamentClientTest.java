@@ -9,18 +9,14 @@ import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.http.HttpClient;
+import dev.migwel.tournify.util.FileUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyCollection;
@@ -46,20 +42,12 @@ public class ChallongeTournamentClientTest {
         challongeConfiguration.setApiToken("password");
         challongeConfiguration.setRetryNumber(3);
 
-        String participantsJson = loadJson("ParticipantResponse.json");
-        String tournamentJson = loadJson("TournamentResponse.json");
-        String matchesJson = loadJson("MatchesResponse.json");
+        String participantsJson = FileUtil.loadJson("ParticipantResponse.json");
+        String tournamentJson = FileUtil.loadJson("TournamentResponse.json");
+        String matchesJson = FileUtil.loadJson("MatchesResponse.json");
         when(httpClient.get(contains("participants"), anyCollection())).thenReturn(participantsJson);
         when(httpClient.get(contains("xgt2019nov.json"), anyCollection())).thenReturn(tournamentJson);
         when(httpClient.get(contains("matches.json"), anyCollection())).thenReturn(matchesJson);
-    }
-
-    private String loadJson(String filename) throws URISyntaxException, IOException {
-        Path path = Paths.get(this.getClass().getClassLoader().getResource(filename).toURI());
-        Stream<String> lines = Files.lines(path);
-        String json = lines.collect(Collectors.joining("\n"));
-        lines.close();
-        return json;
     }
 
     @Test

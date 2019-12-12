@@ -9,17 +9,13 @@ import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.http.HttpClient;
 import dev.migwel.tournify.core.store.TournamentRepository;
 import dev.migwel.tournify.smashgg.config.SmashggConfiguration;
+import dev.migwel.tournify.util.FileUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -50,9 +46,9 @@ public class SmashggTournamentClientTest {
 
         when(tournamentRepository.findByUrl(anyString())).thenReturn(null);
 
-        String participantsJson = loadJson("ParticipantsResponse.json");
-        String eventJson = loadJson("EventResponse.json");
-        String phaseGroupJson = loadJson("PhaseGroupResponse.json");
+        String participantsJson = FileUtil.loadJson("ParticipantsResponse.json");
+        String eventJson = FileUtil.loadJson("EventResponse.json");
+        String phaseGroupJson = FileUtil.loadJson("PhaseGroupResponse.json");
         when(httpClient.postRequest(contains("entrants("), anyString(), anyCollection())).thenReturn(participantsJson);
         when(httpClient.postRequest(contains("tournament {"), anyString(), anyCollection())).thenReturn(eventJson);
         when(httpClient.postRequest(contains("query phaseGroup("), anyString(), anyCollection())).thenReturn(phaseGroupJson);
@@ -72,15 +68,6 @@ public class SmashggTournamentClientTest {
         assertEquals(1, tournament.getPhases().size());
         Phase phase = tournament.getPhases().iterator().next();
         assertEquals(45, phase.getSets().size());
-    }
-
-
-    private String loadJson(String filename) throws URISyntaxException, IOException {
-        Path path = Paths.get(this.getClass().getClassLoader().getResource(filename).toURI());
-        Stream<String> lines = Files.lines(path);
-        String json = lines.collect(Collectors.joining("\n"));
-        lines.close();
-        return json;
     }
 
 }
