@@ -1,3 +1,5 @@
+ALTER TABLE public.tournamenttracking OWNER TO user_tournify;
+
 ALTER TABLE ONLY public.tournamenttracking
     ADD CONSTRAINT tournament_tracking_pkey PRIMARY KEY (id);
 

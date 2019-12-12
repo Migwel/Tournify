@@ -1,3 +1,5 @@
+ALTER TABLE public.phase_sets OWNER TO user_tournify;
+
 ALTER TABLE ONLY public.phase_sets
     ADD CONSTRAINT uk_slf4t3ulunpjndjmglmprknnu UNIQUE (sets_id);
 

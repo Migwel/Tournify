@@ -1,3 +1,5 @@
+ALTER TABLE public.set_winners OWNER TO user_tournify;
+
 ALTER TABLE ONLY public.set_winners
     ADD CONSTRAINT fkhum1sm46mnwmfkp0j4su7weyp FOREIGN KEY (set_id) REFERENCES public.set(id);
 

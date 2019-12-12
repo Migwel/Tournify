@@ -1,3 +1,5 @@
+ALTER TABLE public.subscription_players OWNER TO user_tournify;
+
 ALTER TABLE ONLY public.subscription_players
     ADD CONSTRAINT subscription_players_pkey PRIMARY KEY (subscription_id, players_order);
 

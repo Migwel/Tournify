@@ -1,3 +1,5 @@
+ALTER TABLE public.tournament_phases OWNER TO user_tournify;
+
 ALTER TABLE ONLY public.tournament_phases
     ADD CONSTRAINT uk_kl5aykpqy9ax0ggrxxyd88pdy UNIQUE (phases_id);
 

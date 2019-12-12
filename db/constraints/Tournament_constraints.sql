@@ -1,3 +1,5 @@
+ALTER TABLE public.tournament OWNER TO user_tournify;
+
 ALTER TABLE ONLY public.tournament
     ADD CONSTRAINT tournament_pkey PRIMARY KEY (id);
 

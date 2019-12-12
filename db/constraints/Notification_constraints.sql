@@ -1,3 +1,5 @@
+ALTER TABLE public.notification OWNER TO user_tournify;
+
 ALTER TABLE ONLY public.notification
     ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
 
