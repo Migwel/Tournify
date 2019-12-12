@@ -46,9 +46,9 @@ public class SmashggTournamentClientTest {
 
         when(tournamentRepository.findByUrl(anyString())).thenReturn(null);
 
-        String participantsJson = FileUtil.loadJson("ParticipantsResponse.json");
-        String eventJson = FileUtil.loadJson("EventResponse.json");
-        String phaseGroupJson = FileUtil.loadJson("PhaseGroupResponse.json");
+        String participantsJson = FileUtil.loadFile("ParticipantsResponse.json");
+        String eventJson = FileUtil.loadFile("EventResponse.json");
+        String phaseGroupJson = FileUtil.loadFile("PhaseGroupResponse.json");
         when(httpClient.postRequest(contains("entrants("), anyString(), anyCollection())).thenReturn(participantsJson);
         when(httpClient.postRequest(contains("tournament {"), anyString(), anyCollection())).thenReturn(eventJson);
         when(httpClient.postRequest(contains("query phaseGroup("), anyString(), anyCollection())).thenReturn(phaseGroupJson);

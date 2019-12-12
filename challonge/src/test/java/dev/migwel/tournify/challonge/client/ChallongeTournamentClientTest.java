@@ -42,9 +42,9 @@ public class ChallongeTournamentClientTest {
         challongeConfiguration.setApiToken("password");
         challongeConfiguration.setRetryNumber(3);
 
-        String participantsJson = FileUtil.loadJson("ParticipantResponse.json");
-        String tournamentJson = FileUtil.loadJson("TournamentResponse.json");
-        String matchesJson = FileUtil.loadJson("MatchesResponse.json");
+        String participantsJson = FileUtil.loadFile("ParticipantResponse.json");
+        String tournamentJson = FileUtil.loadFile("TournamentResponse.json");
+        String matchesJson = FileUtil.loadFile("MatchesResponse.json");
         when(httpClient.get(contains("participants"), anyCollection())).thenReturn(participantsJson);
         when(httpClient.get(contains("xgt2019nov.json"), anyCollection())).thenReturn(tournamentJson);
         when(httpClient.get(contains("matches.json"), anyCollection())).thenReturn(matchesJson);

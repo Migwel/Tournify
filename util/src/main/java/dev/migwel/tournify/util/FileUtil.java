@@ -15,7 +15,7 @@ public final class FileUtil {
         //Util
     }
 
-    public static String loadJson(String filename) throws URISyntaxException, IOException {
+    public static String loadFile(String filename) throws URISyntaxException, IOException {
         URL fileUrl = FileUtil.class.getClassLoader().getResource(filename);
         if (fileUrl == null) {
             throw new IOException("File could not be found: "+ filename);
