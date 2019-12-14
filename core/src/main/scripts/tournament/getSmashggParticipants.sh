@@ -9,4 +9,4 @@ else
   url=$1
 fi
 
-curl -H "Content-Type: application/json" -X POST -d '{"url":"'$url'"}' https://tournify.migwel.dev/tournament/participants | json_pp
+curl https://tournify.migwel.dev/tournament/participants?url=$url | json_pp
