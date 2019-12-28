@@ -160,7 +160,7 @@ public abstract class AbstractTournamentService implements TournamentService {
 
         if(newTournament.isDone()) {
             oldTournament.setDone(true);
-            updates.add(new Update(null, "["+ oldTournament.getName() +"] Tournament is over"));
+            updates.add(new Update(null, "Tournament ["+ oldTournament.getName() +"] - Tournament is over"));
         }
 
         return new TournamentChanges(!areSame, updates);
@@ -208,7 +208,7 @@ public abstract class AbstractTournamentService implements TournamentService {
 
         if(newPhase.isDone()) {
             oldPhase.setDone(true);
-            updates.add(new Update(null, "["+ newPhase.getName() +"] Phase is over"));
+            updates.add(new Update(null, "Tournament ["+ tournamentName +"] - Phase ["+ newPhase.getName() +"] - Phase is over"));
         }
         return areSame;
     }
