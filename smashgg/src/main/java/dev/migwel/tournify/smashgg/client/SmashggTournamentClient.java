@@ -45,17 +45,22 @@ public class SmashggTournamentClient implements TournamentClient {
         log.info("Done with fetching tournament at url: "+ formattedUrl);
 
 
+        Date startDate = new Date(smashggEvent.getStartAt() * 1000);
         return new Tournament(String.valueOf(smashggEvent.getId()),
-                tournamentPhases,
-                smashggEvent.getTournament().getName() + " - "+ smashggEvent.getName(),
-                new GameType(smashggEvent.getVideogame().getDisplayName()),
-                buildAddress(smashggEvent.getTournament()),
-                formattedUrl,
-                new Date(smashggEvent.getStartAt()*1000),
-                isTournamentDone(tournamentPhases));
+                              tournamentPhases,
+                              smashggEvent.getTournament().getName() + " - "+ smashggEvent.getName(),
+                              new GameType(smashggEvent.getVideogame().getDisplayName()),
+                              buildAddress(smashggEvent.getTournament()),
+                              formattedUrl,
+                              startDate,
+                              isTournamentDone(startDate, tournamentPhases));
     }
 
-    private boolean isTournamentDone(Collection<Phase> tournamentPhases) {
+    private boolean isTournamentDone(Date startDate, Collection<Phase> tournamentPhases) {
+        boolean tournamentNotStarted = startDate.after(new Date());
+        if(tournamentNotStarted) {
+            return false;
+        }
         boolean tournamentDone = true;
         if(!tournamentPhases.stream().allMatch(Phase::isDone)) {
             tournamentDone = false;
