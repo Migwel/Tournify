@@ -153,6 +153,7 @@ public abstract class AbstractTournamentService implements TournamentService {
             if(oldPhase == null) {
                 oldPhases.add(newPhase);
                 updates.addAll(getNewSets(newPhase.getSets(), newTournament.getName(), newPhase.getName()));
+                areSame = false;
                 continue;
             }
             areSame = comparePhases(oldPhase, newPhase, updates, oldTournament.getName()) && areSame;
