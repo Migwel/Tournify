@@ -13,6 +13,10 @@ springBoot {
     mainClassName = 'dev.migwel.tournify.app.Application'
 }
 
+bootJar {
+    archiveFileName = "tournifyApp-${jarVersion}.jar"
+}
+
 startScripts {
     mainClassName = 'dev.migwel.tournify.app.Application'
 }
