@@ -10,7 +10,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'application'
 
 springBoot {
-    mainClass = 'dev.migwel.tournify.app.Application'
+    mainClassName = 'dev.migwel.tournify.app.Application'
 }
 
 applicationDefaultJvmArgs = [
