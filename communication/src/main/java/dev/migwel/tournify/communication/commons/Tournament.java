@@ -26,8 +26,8 @@ public class Tournament {
         this.gameType = gameType;
         this.address = address;
         this.url = url;
-        this.date = date;
         this.done = done;
+        this.date = date == null ? null : new Date(date.getTime());
     }
 
     public String getExternalId() {
@@ -79,11 +79,17 @@ public class Tournament {
     }
 
     public Date getDate() {
-        return date;
+        if(date == null) {
+            return null;
+        }
+        return new Date(date.getTime());
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        if(date == null) {
+            return;
+        }
+        this.date = new Date(date.getTime());
     }
 
     public boolean isDone() {

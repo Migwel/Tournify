@@ -37,11 +37,17 @@ public class ChallongeTournament {
     }
 
     public Date getStartDate() {
-        return startDate;
+        if(startDate == null) {
+            return null;
+        }
+        return new Date(startDate.getTime());
     }
 
     public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+        if (startDate == null) {
+            return;
+        }
+        this.startDate = new Date(startDate.getTime());
     }
 
     public String getGameName() {
