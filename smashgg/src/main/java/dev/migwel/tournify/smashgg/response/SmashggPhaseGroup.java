@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SmashggPhaseGroup {
     private long id;
-    private long phaseId;
+    private SmashggPhase phase;
     private String displayIdentifier;
     private int state;
     private SmashggPaginatedSets paginatedSets;
@@ -18,12 +18,20 @@ public class SmashggPhaseGroup {
         this.id = id;
     }
 
+    public SmashggPhase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(SmashggPhase phase) {
+        this.phase = phase;
+    }
+
     public long getPhaseId() {
-        return phaseId;
+        return phase.getId();
     }
 
     public void setPhaseId(long phaseId) {
-        this.phaseId = phaseId;
+        this.phase.setId(phaseId);
     }
 
     public String getDisplayIdentifier() {

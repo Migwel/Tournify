@@ -30,7 +30,7 @@ public class SmashggEventFetcher {
         return String.format("{\"query\":\"query event($slug: String!){  event(slug: $slug) { " +
                 "id slug startAt name" +
                 " tournament {id name city addrState venueAddress countryCode} " +
-                " phaseGroups {id state phaseId displayIdentifier} "+
+                " phaseGroups {id state phase{id} displayIdentifier} "+
                 " phases {id name} "+
                 " videogame {displayName}" +
                 " }}\", " +
