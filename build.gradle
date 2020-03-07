@@ -17,13 +17,13 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
 
-    sourceCompatibility = 1.11
+    sourceCompatibility = "$targetJavaVersion"
     group 'dev.migwel.tournify'
     version '1.0-SNAPSHOT'
 
     dependencyManagement {
         imports {
-            mavenBom("org.springframework.boot:spring-boot-dependencies:2.1.7.RELEASE")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:$spring_boot_version")
         }
     }
 

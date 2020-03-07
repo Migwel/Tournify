@@ -13,5 +13,9 @@ springBoot {
     mainClassName = 'dev.migwel.tournify.app.Application'
 }
 
+startScripts {
+    mainClassName = 'dev.migwel.tournify.app.Application'
+}
+
 applicationDefaultJvmArgs = [
         "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005" ]
