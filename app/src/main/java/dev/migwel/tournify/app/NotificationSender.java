@@ -17,6 +17,7 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -37,18 +38,17 @@ public class NotificationSender {
     public static final String ACCEPTED = "accepted";
 
     private final NotificationRepository notificationRepository;
-
     private final TournamentServiceFactory tournamentServiceFactory;
-
     private final RestTemplate restTemplate;
-
     private final ObjectMapper objectMapper;
+    private final PenaltyBox penaltyBox;
 
-    public NotificationSender(NotificationRepository notificationRepository, TournamentServiceFactory tournamentServiceFactory, RestTemplate restTemplate, ObjectMapper objectMapper) {
+    public NotificationSender(NotificationRepository notificationRepository, TournamentServiceFactory tournamentServiceFactory, RestTemplate restTemplate, ObjectMapper objectMapper, PenaltyBox penaltyBox) {
         this.notificationRepository = notificationRepository;
         this.tournamentServiceFactory = tournamentServiceFactory;
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
+        this.penaltyBox = penaltyBox;
     }
 
     @Scheduled(fixedDelay = NOTIFY_WAIT_MS)
@@ -66,12 +66,27 @@ public class NotificationSender {
             notification.setDone(true);
             return;
         }
-        NotificationResponse response = sendNotification(notification);
+        String callBackUrl = getCallbackUrl(notification.getSubscription());
+        if (callBackUrl == null) {
+            log.warn("Callback URL is null for subscription "+ notification.getSubscription());
+            notification.setDone(true);
+            return;
+        }
+
+        if(penaltyBox.isBlocked(callBackUrl)) {
+            log.info("URL is penalty boxed: "+ callBackUrl);
+            notification.setNextDate(computeNextDate(notification.getNoUpdateRetries()));
+            return;
+        }
+
+        NotificationResponse response = sendNotification(callBackUrl, notification);
         if (response != null && ACCEPTED.equals(response.getStatus())) {
             notification.setDone(true);
+            penaltyBox.success(callBackUrl);
         } else {
             notification.setNextDate(computeNextDate(notification.getNoUpdateRetries()));
             notification.setNoUpdateRetries(notification.getNoUpdateRetries() + 1);
+            penaltyBox.failure(callBackUrl);
         }
     }
 
@@ -88,12 +103,7 @@ public class NotificationSender {
     }
 
     @CheckForNull
-    private NotificationResponse sendNotification(Notification notification) {
-        String callBackUrl = getCallbackUrl(notification.getSubscription());
-        if(callBackUrl == null) {
-            return null;
-        }
-
+    private NotificationResponse sendNotification(@Nonnull String callBackUrl, Notification notification) {
         Update update;
         try {
             byte[] contentByte = Base64.getDecoder().decode(notification.getContent());
