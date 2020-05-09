@@ -1,12 +1,7 @@
 package dev.migwel.tournify.core.data;
 
 import javax.annotation.Nonnull;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -20,6 +15,7 @@ public class Phase {
     private String externalId;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "phase_id")
     private Collection<Set> sets;
 
     private String name;
