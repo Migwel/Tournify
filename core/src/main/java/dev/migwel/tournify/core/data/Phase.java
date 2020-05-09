@@ -15,7 +15,7 @@ public class Phase {
     private String externalId;
 
     @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "phase_id")
+    @JoinColumn(name = "phase_id", nullable = false)
     private Collection<Set> sets;
 
     private String name;

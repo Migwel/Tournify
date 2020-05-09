@@ -19,7 +19,7 @@ public class Tournament {
     private String externalId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) //This needs to be changed to fetch in repository
-    @JoinColumn(name = "tournament_id")
+    @JoinColumn(name = "tournament_id", nullable = false)
     private Collection<Phase> phases;
     private String name;
 
