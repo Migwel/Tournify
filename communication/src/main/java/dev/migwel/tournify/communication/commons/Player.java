@@ -1,8 +1,11 @@
 package dev.migwel.tournify.communication.commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Comparator;
 import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Player implements Comparable<Player> {
 
     //Copied from https://stackoverflow.com/questions/481813/how-to-simplify-a-null-safe-compareto-implementation/23908426#23908426
