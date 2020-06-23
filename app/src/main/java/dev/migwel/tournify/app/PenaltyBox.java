@@ -16,25 +16,31 @@ public class PenaltyBox {
     }
 
     public boolean isBlocked(String url) {
-        PenaltyItem penaltyItem = blockedUrls.get(url);
+        PenaltyItem penaltyItem;
+        synchronized (blockedUrls) {
+            penaltyItem = blockedUrls.get(url);
+        }
+
         if (penaltyItem == null) {
             return false;
         }
-
         Date releaseDate = penaltyItem.getReleaseDate();
-
         return releaseDate.after(new Date());
     }
 
     public void success(String url) {
-        blockedUrls.remove(url);
+        synchronized (blockedUrls) {
+            blockedUrls.remove(url);
+        }
     }
 
     public void failure(String url) {
-        if (!blockedUrls.containsKey(url)) {
-            blockedUrls.put(url, PenaltyItem.createItem(url));
-            return;
+        synchronized (blockedUrls) {
+            if (!blockedUrls.containsKey(url)) {
+                blockedUrls.put(url, PenaltyItem.createItem(url));
+                return;
+            }
+            blockedUrls.get(url).failure();
         }
-        blockedUrls.get(url).failure();
     }
 }
