@@ -72,8 +72,8 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
     @Scheduled(fixedDelay = TRACKING_WAIT_MS)
     private void startTracking() {
         Collection<TournamentTracking> trackingList = trackingRepository.findByNextDateBeforeAndDone(new Date(), false);
-        log.info("Tracking list size: "+ trackingList.size());
         for(TournamentTracking tracking : trackingList) {
+            log.info("Tracking tournament "+ tracking.getTournament().getName());
             Tournament tournament = tracking.getTournament();
             trackTournament(tracking, tournament);
             trackingRepository.save(tracking);

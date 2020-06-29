@@ -54,8 +54,8 @@ public class NotificationSender {
     @Scheduled(fixedDelay = NOTIFY_WAIT_MS)
     private void startNotifying() {
         Collection<Notification> notificationList = notificationRepository.findByNextDateBeforeAndDone(new Date(), false);
-        log.info("Notification list size: "+ notificationList.size());
         for(Notification notification : notificationList) {
+            log.info("Sending notification "+ notification.getId());
             processNotification(notification);
             notificationRepository.save(notification);
         }
