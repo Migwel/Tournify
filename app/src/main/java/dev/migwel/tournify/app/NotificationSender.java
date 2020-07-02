@@ -38,14 +38,12 @@ public class NotificationSender {
     public static final String ACCEPTED = "accepted";
 
     private final NotificationRepository notificationRepository;
-    private final TournamentServiceFactory tournamentServiceFactory;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final PenaltyBox penaltyBox;
 
-    public NotificationSender(NotificationRepository notificationRepository, TournamentServiceFactory tournamentServiceFactory, RestTemplate restTemplate, ObjectMapper objectMapper, PenaltyBox penaltyBox) {
+    public NotificationSender(NotificationRepository notificationRepository, RestTemplate restTemplate, ObjectMapper objectMapper, PenaltyBox penaltyBox) {
         this.notificationRepository = notificationRepository;
-        this.tournamentServiceFactory = tournamentServiceFactory;
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
         this.penaltyBox = penaltyBox;
