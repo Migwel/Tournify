@@ -53,7 +53,6 @@ public class Tournament {
         if (date != null) {
             this.date = new Date(date.getTime());
         }
-        this.players = new HashSet<>(players);
         this.done = done;
     }
 
