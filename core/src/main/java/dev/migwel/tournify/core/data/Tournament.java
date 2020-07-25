@@ -50,7 +50,10 @@ public class Tournament {
         this.gameType = gameType;
         this.address = address;
         this.url = url;
-        this.date = new Date(date.getTime());
+        if (date != null) {
+            this.date = new Date(date.getTime());
+        }
+        this.players = new HashSet<>(players);
         this.done = done;
     }
 
