@@ -94,7 +94,9 @@ public class Tournament {
     }
 
     public void setDate(Date date) {
-        this.date = new Date(date.getTime());
+        if (date != null) {
+            this.date = new Date(date.getTime());
+        }
     }
 
     public String getUrl() {
