@@ -1,11 +1,7 @@
 package dev.migwel.tournify.smashgg.client;
 
 import dev.migwel.tournify.core.client.TournamentClient;
-import dev.migwel.tournify.core.data.Address;
-import dev.migwel.tournify.core.data.GameType;
-import dev.migwel.tournify.core.data.Phase;
-import dev.migwel.tournify.core.data.Player;
-import dev.migwel.tournify.core.data.Tournament;
+import dev.migwel.tournify.core.data.*;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.smashgg.response.SmashggEvent;
 import dev.migwel.tournify.smashgg.response.SmashggTournament;
@@ -18,6 +14,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 
 @Component("SmashggClient")
@@ -41,7 +39,8 @@ public class SmashggTournamentClient implements TournamentClient {
     public Tournament fetchTournament(@Nonnull String formattedUrl) throws FetchException {
         log.info("Fetching tournament at url: " + formattedUrl);
         SmashggEvent smashggEvent = smashggEventFetcher.fetchEvent(formattedUrl);
-        Collection<Phase> tournamentPhases = smashggPhaseFetcher.fetchPhases(formattedUrl, smashggEvent);
+        Collection<Player> players = new HashSet<>();
+        Collection<Phase> tournamentPhases = smashggPhaseFetcher.fetchPhases(formattedUrl, smashggEvent, players);
         log.info("Done with fetching tournament at url: "+ formattedUrl);
 
 
@@ -53,6 +52,7 @@ public class SmashggTournamentClient implements TournamentClient {
                               buildAddress(smashggEvent.getTournament()),
                               formattedUrl,
                               startDate,
+                              players,
                               isTournamentDone(startDate, tournamentPhases));
     }
 

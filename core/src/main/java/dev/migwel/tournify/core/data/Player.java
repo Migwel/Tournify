@@ -1,10 +1,10 @@
 package dev.migwel.tournify.core.data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 public class Player implements Comparable<Player> {
@@ -14,8 +14,7 @@ public class Player implements Comparable<Player> {
             .nullsFirst(String::compareToIgnoreCase);
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
     private String prefix;
     private String username;
@@ -31,11 +30,11 @@ public class Player implements Comparable<Player> {
     }
 
     public Player(String prefix, String username) {
-        this.prefix = prefix;
-        this.username = username;
+        this(prefix, username, null);
     }
 
     public Player(String prefix, String username, String externalId) {
+        this.id = UUID.randomUUID().toString();
         this.prefix = prefix;
         this.username = username;
         this.externalId = externalId;

@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Component
 public class SmashggPhaseFetcher {
@@ -33,10 +34,10 @@ public class SmashggPhaseFetcher {
         this.smashggPhaseGroupFetcher = smashggPhaseGroupFetcher;
     }
 
-    Collection<Phase> fetchPhases(@Nonnull String formattedUrl, SmashggEvent smashggEvent) throws FetchException {
+    Collection<Phase> fetchPhases(@Nonnull String formattedUrl, SmashggEvent smashggEvent, Collection<Player> players) throws FetchException {
         Collection<Phase> existingPhases = getExistingPhases(formattedUrl);
         Map<Long, Collection<SmashggPhaseGroup>> phaseGroupsPerPhase = getPhaseGroupsPerPhase(smashggEvent.getPhaseGroups());
-        return getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase);
+        return getPhases(existingPhases, smashggEvent.getPhases(), phaseGroupsPerPhase, players);
     }
 
     private Collection<Phase> getExistingPhases(String formattedUrl) {
@@ -57,7 +58,8 @@ public class SmashggPhaseFetcher {
 
     private Collection<Phase> getPhases(Collection<Phase> existingPhases,
                                         Collection<SmashggPhase> smashggPhases,
-                                        Map<Long, Collection<SmashggPhaseGroup>> smashggGroups) throws FetchException {
+                                        Map<Long, Collection<SmashggPhaseGroup>> smashggGroups,
+                                        Collection<Player> players) throws FetchException {
         Collection<Phase> tournamentPhases = new ArrayList<>();
         for(SmashggPhase smashGgPhase : smashggPhases) {
             Collection<Set> phaseSets = new ArrayList<>();
@@ -66,7 +68,7 @@ public class SmashggPhaseFetcher {
             }
             boolean phaseDone = true;
             for(SmashggPhaseGroup smashGgGroup : smashggGroups.get(smashGgPhase.getId())) {
-                Collection<Set> sets = fetchSets(smashGgGroup.getId());
+                Collection<Set> sets = fetchSets(smashGgGroup.getId(), players);
                 if(sets.isEmpty() || !sets.stream().allMatch(Set::isDone)) {
                     phaseDone = false;
                 }
@@ -78,7 +80,7 @@ public class SmashggPhaseFetcher {
     }
 
     @Nonnull
-    private Collection<Set> fetchSets(long phaseGroupId) throws FetchException {
+    private Collection<Set> fetchSets(long phaseGroupId, Collection<Player> players) throws FetchException {
         Collection<Set> sets = new ArrayList<>();
         SmashggPhaseGroup phaseGroup;
         long page = 0;
@@ -91,7 +93,7 @@ public class SmashggPhaseFetcher {
                 break;
             }
 
-            sets.addAll(getSets(phaseGroup.getDisplayIdentifier(), phaseGroup.getPaginatedSets().getNodes()));
+            sets.addAll(getSets(phaseGroup.getDisplayIdentifier(), phaseGroup.getPaginatedSets().getNodes(), players));
 
         } while (phaseGroup.getPaginatedSets().getPageInfo().getTotalPages() != page);
 
@@ -101,15 +103,15 @@ public class SmashggPhaseFetcher {
 
 
     @Nonnull
-    private Collection<Set> getSets(String phaseGroupName, Collection<SmashggNode> nodes) {
+    private Collection<Set> getSets(String phaseGroupName, Collection<SmashggNode> nodes, Collection<Player> players) {
         Collection<Set> sets = new ArrayList<>();
         for(SmashggNode node : nodes) {
             if(node == null || node.getId().startsWith("preview")) {
                 continue;
             }
             long winnerId = node.getWinnerId();
-            java.util.Set<Player> winners = null;
-            java.util.Set<Player> players = new HashSet<>();
+            java.util.Set<Player> setWinners = null;
+            java.util.Set<Player> setPlayers = new HashSet<>();
             for(SmashggSlot slot : node.getSlots()) {
                 if(slot == null) {
                     continue;
@@ -119,22 +121,31 @@ public class SmashggPhaseFetcher {
                     continue;
                 }
 
-                java.util.Set<Player> slotPlayers = buildPlayerList(entrant);
-                players.addAll(slotPlayers);
+                java.util.Set<Player> slotPlayers = buildPlayerList(entrant, players);
+                setPlayers.addAll(slotPlayers);
                 if(entrant.getId() == winnerId) {
-                    winners = slotPlayers;
+                    setWinners = slotPlayers;
                 }
             }
-            sets.add(new Set(node.getId(), players, winners, phaseGroupName+ " - "+ node.getFullRoundText(), winners != null && !winners.isEmpty()));
+            sets.add(new Set(node.getId(), setPlayers, setWinners, phaseGroupName+ " - "+ node.getFullRoundText(), setWinners != null && !setWinners.isEmpty()));
         }
 
         return sets;
     }
 
-    private java.util.Set<Player> buildPlayerList(SmashggEntrant entrant) {
+    private java.util.Set<Player> buildPlayerList(SmashggEntrant entrant, Collection<Player> tournamentPlayers) {
         java.util.Set<Player> players = new HashSet<>();
         for(Participant participant : entrant.getParticipants()) {
-            players.add(new Player(participant.getPrefix(), participant.getGamerTag()));
+            final Player tmpPlayer = new Player(participant.getPrefix(), participant.getGamerTag());
+            Player setPlayer;
+            if (tournamentPlayers.contains(tmpPlayer)) {
+                setPlayer = tournamentPlayers.stream().filter(p -> p.equals(tmpPlayer)).findAny().orElseThrow(() -> new NoSuchElementException(tmpPlayer.toString()));
+            }
+            else {
+                setPlayer = tmpPlayer;
+                tournamentPlayers.add(tmpPlayer);
+            }
+            players.add(setPlayer);
         }
         return players;
     }

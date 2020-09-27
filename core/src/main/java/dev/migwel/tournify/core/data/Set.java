@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import java.util.Collection;
 import java.util.HashSet;
 
 @Entity
@@ -51,8 +52,8 @@ public class Set {
         return players != null ? players : new HashSet<>();
     }
 
-    public void setPlayers(java.util.Set<Player> players) {
-        this.players = players;
+    public void setPlayers(Collection<Player> players) {
+        this.players = new HashSet<>(players);
     }
 
     public java.util.Set<Player> getWinners() {

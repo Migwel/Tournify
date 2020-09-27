@@ -20,9 +20,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 public abstract class AbstractTournamentService implements TournamentService {
@@ -143,6 +145,7 @@ public abstract class AbstractTournamentService implements TournamentService {
     private TournamentChanges compareTournaments(Tournament oldTournament, Tournament newTournament) {
         boolean areSame = true;
         List<Update> updates = new ArrayList<>();
+        Collection<Player> tournamentPlayers = oldTournament.getPlayers();
 
         Collection<Phase> oldPhases = oldTournament.getPhases();
         Collection<Phase> newPhases = newTournament.getPhases();
@@ -156,7 +159,7 @@ public abstract class AbstractTournamentService implements TournamentService {
                 areSame = false;
                 continue;
             }
-            areSame = comparePhases(oldPhase, newPhase, updates, oldTournament.getName()) && areSame;
+            areSame = comparePhases(oldPhase, newPhase, updates, oldTournament.getName(), tournamentPlayers) && areSame;
         }
 
         if(newTournament.isDone()) {
@@ -177,7 +180,7 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     //Returns true if phases are the same
-    private boolean comparePhases(@Nonnull Phase oldPhase, Phase newPhase, Collection<Update> updates, String tournamentName) {
+    private boolean comparePhases(@Nonnull Phase oldPhase, Phase newPhase, Collection<Update> updates, String tournamentName, Collection<Player> tournamentPlayers) {
         if(newPhase == null) {
             return true; //Is this correct?
         }
@@ -204,7 +207,7 @@ public abstract class AbstractTournamentService implements TournamentService {
                 continue;
             }
 
-            areSame = compareSets(oldSet, newSet, updates, tournamentName, oldPhase.getName()) && areSame;
+            areSame = compareSets(oldSet, newSet, updates, tournamentName, oldPhase.getName(), tournamentPlayers) && areSame;
         }
 
         if(newPhase.isDone()) {
@@ -215,17 +218,26 @@ public abstract class AbstractTournamentService implements TournamentService {
     }
 
     //Returns true if sets are the same
-    private boolean compareSets(@Nonnull Set oldSet, Set newSet, Collection<Update> updates, String tournamentName, String phaseName) {
+    private boolean compareSets(@Nonnull Set oldSet, Set newSet, Collection<Update> updates, String tournamentName, String phaseName, Collection<Player> tournamentPlayers) {
         if(newSet == null || newSet.getWinners() == null) {
             return true;
         }
 
         Collection<Player> oldPlayers = oldSet.getPlayers();
-        for (Player player : newSet.getPlayers()) {
-            if(!oldPlayers.contains(player)) {
-                oldPlayers.add(player);
+        for (final Player newPlayer : newSet.getPlayers()) {
+            Player setPlayer;
+            if (tournamentPlayers.contains(newPlayer)) {
+                setPlayer = tournamentPlayers.stream().filter(p -> p.equals(newPlayer)).findAny().orElseThrow(() -> new NoSuchElementException(newPlayer.toString()));
+            }
+            else {
+                setPlayer = newPlayer;
+                tournamentPlayers.add(newPlayer);
+            }
+            if (!oldPlayers.contains(setPlayer)) {
+                oldPlayers.add(setPlayer);
             }
         }
+        oldSet.setPlayers(oldPlayers);
 
         if(!CollectionsUtil.containsSameItems(newSet.getWinners(), oldSet.getWinners())) {
             oldSet.setWinners(newSet.getWinners());

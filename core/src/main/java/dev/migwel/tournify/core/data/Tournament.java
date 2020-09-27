@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
@@ -32,6 +34,9 @@ public class Tournament {
     @Column(unique = true)
     private String url;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Player> players;
+
     private Date date;
 
     private boolean done;
@@ -43,7 +48,7 @@ public class Tournament {
         this.url = url;
     }
 
-    public Tournament(String externalId, Collection<Phase> phases, String name, GameType gameType, Address address, String url, Date date, boolean done) {
+    public Tournament(String externalId, Collection<Phase> phases, String name, GameType gameType, Address address, String url, Date date, Collection<Player> players, boolean done) {
         this.externalId = externalId;
         this.phases = phases;
         this.name = name;
@@ -53,6 +58,7 @@ public class Tournament {
         if (date != null) {
             this.date = new Date(date.getTime());
         }
+        this.players = new HashSet<>(players);
         this.done = done;
     }
 
@@ -121,6 +127,14 @@ public class Tournament {
 
     public void setGameType(GameType gameType) {
         this.gameType = gameType;
+    }
+
+    public Collection<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Collection<Player> players) {
+        this.players = new HashSet<>(players);
     }
 
     @Override

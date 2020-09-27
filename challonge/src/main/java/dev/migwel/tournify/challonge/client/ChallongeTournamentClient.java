@@ -61,6 +61,7 @@ public class ChallongeTournamentClient implements TournamentClient {
                 null,
                 formattedUrl,
                 challongeTournament.getStartDate(),
+                players,
                 isDone);
     }
 
