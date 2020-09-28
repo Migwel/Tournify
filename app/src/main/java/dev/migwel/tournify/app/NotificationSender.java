@@ -21,9 +21,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 @Component
 @Immutable
@@ -37,6 +45,9 @@ public class NotificationSender {
     private final static long[] NO_UPDATE_WAIT_MS = {MIN, MIN, 5 * MIN, 5 * MIN};
     public static final String ACCEPTED = "accepted";
 
+    private static final int NB_THREADS = 10; //If needed, make this configurable
+    private final ExecutorService threadPool;
+
     private final NotificationRepository notificationRepository;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -47,15 +58,28 @@ public class NotificationSender {
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
         this.penaltyBox = penaltyBox;
+
+        this.threadPool = Executors.newFixedThreadPool(NB_THREADS);
     }
 
     @Scheduled(fixedDelay = NOTIFY_WAIT_MS)
     private void startNotifying() {
         Collection<Notification> notificationList = notificationRepository.findByNextDateBeforeAndDone(new Date(), false);
+        List<Future<?>> futureList = new ArrayList<>();
         for(Notification notification : notificationList) {
-            log.info("Sending notification "+ notification.getId());
-            processNotification(notification);
-            notificationRepository.save(notification);
+            futureList.add(threadPool.submit(() -> {
+                log.info("Sending notification "+ notification.getId());
+                processNotification(notification);
+                notificationRepository.save(notification);
+            }
+            ));
+        }
+        for(Future<?> futureItem : futureList) {
+            try {
+                futureItem.get(20, TimeUnit.MINUTES);
+            } catch (InterruptedException | ExecutionException | TimeoutException e) {
+                log.warn("An exception occurred while sending notification", e);
+            }
         }
     }
 
