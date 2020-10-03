@@ -49,3 +49,6 @@ If you have suggestions of tournament hosts that you would like to see being sup
 # Existing clients
 Here's a list of clients that integrate with Tournify:
 * [tournify-discord-bot](https://github.com/Migwel/tournify_discord_bot): A discord bot that will post update in your Discord from the tournament you want to follow. Created by me :) 
+
+# Getting in touch
+If you have questions or suggestions, feel free to join the discord channel using [this link](https://discord.gg/D6GvMuR)
