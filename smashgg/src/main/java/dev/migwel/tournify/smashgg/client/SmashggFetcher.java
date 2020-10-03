@@ -68,7 +68,7 @@ public class SmashggFetcher {
         try {
             @SuppressWarnings("unchecked")
             SmashggResponse<T> response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
-            if(response == null || response.getData() == null) {
+            if(response == null || response.getData() == null || response.getData().getObject() == null) {
                 throw new FetchException();
             }
             return response.getData().getObject();
