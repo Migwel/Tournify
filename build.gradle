@@ -34,7 +34,6 @@ allprojects {
 
     dependencies {
         compile 'org.springframework.boot:spring-boot-starter-web'
-        compile 'org.springframework.boot:spring-boot-starter-data-rest'
         compile 'org.springframework.boot:spring-boot-starter-data-jpa'
         compile 'org.apache.httpcomponents:httpclient:4.5.6'
         compile group: 'org.json', name: 'json', version: '20180813'
