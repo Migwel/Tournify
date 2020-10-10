@@ -1,25 +1,21 @@
 package dev.migwel.tournify.communication.commons;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value=SetUpdate.class, name = "SetUpdate"),
+        @JsonSubTypes.Type(value=TournamentUpdate.class, name = "TournamentUpdate")
+})
 public class Update {
-
-    private Set set;
-
     private String description;
 
     public Update() {
     }
 
-    public Update(Set set, String description) {
-        this.set = set;
+    public Update(String description) {
         this.description = description;
-    }
-
-    public Set getSet() {
-        return set;
-    }
-
-    public void setSet(Set set) {
-        this.set = set;
     }
 
     public String getDescription() {
@@ -33,7 +29,6 @@ public class Update {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Update{");
-        sb.append(", set=").append(set);
         sb.append(", description='").append(description).append('\'');
         sb.append('}');
         return sb.toString();

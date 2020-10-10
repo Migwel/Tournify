@@ -1,5 +1,6 @@
 package dev.migwel.tournify.core.service;
 
+import dev.migwel.tournify.communication.commons.SetUpdate;
 import dev.migwel.tournify.communication.commons.Update;
 import dev.migwel.tournify.communication.commons.Updates;
 import dev.migwel.tournify.core.client.TournamentClient;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -164,7 +164,7 @@ public abstract class AbstractTournamentService implements TournamentService {
 
         if(newTournament.isDone()) {
             oldTournament.setDone(true);
-            updates.add(new Update(null, "Tournament ["+ oldTournament.getName() +"] - Tournament is over"));
+            updates.add(new Update("Tournament ["+ oldTournament.getName() +"] - Tournament is over"));
         }
 
         return new TournamentChanges(!areSame, updates);
@@ -174,7 +174,7 @@ public abstract class AbstractTournamentService implements TournamentService {
         Collection<Update> updates = new LinkedList<>();
         for(Set set : sets) {
             dev.migwel.tournify.communication.commons.Set setSO = DataToServiceConverter.convertSet(tournamentName, phaseName, set);
-            updates.add(new Update(setSO, "New set found")); //TODO: Change description
+            updates.add(new SetUpdate(setSO, "New set found")); //TODO: Change description
         }
         return updates;
     }
@@ -201,7 +201,7 @@ public abstract class AbstractTournamentService implements TournamentService {
                 oldSets.add(newSet);
                 if(newSet.isDone()) {
                     String description = buildSetUpdateDescription(tournamentName, oldPhase.getName(), newSet.getName(), newSet.getPlayers(), newSet.getWinners());
-                    updates.add(new Update(DataToServiceConverter.convertSet(tournamentName, oldPhase.getName(), newSet), description));
+                    updates.add(new SetUpdate(DataToServiceConverter.convertSet(tournamentName, oldPhase.getName(), newSet), description));
                 }
                 areSame = false;
                 continue;
@@ -212,7 +212,7 @@ public abstract class AbstractTournamentService implements TournamentService {
 
         if(newPhase.isDone()) {
             oldPhase.setDone(true);
-            updates.add(new Update(null, "Tournament ["+ tournamentName +"] - Phase ["+ newPhase.getName() +"] - Phase is over"));
+            updates.add(new Update("Tournament ["+ tournamentName +"] - Phase ["+ newPhase.getName() +"] - Phase is over"));
         }
         return areSame;
     }
@@ -243,7 +243,7 @@ public abstract class AbstractTournamentService implements TournamentService {
             oldSet.setWinners(newSet.getWinners());
             oldSet.setDone(true);
             String description = buildSetUpdateDescription(tournamentName, phaseName, oldSet.getName(), oldSet.getPlayers(), newSet.getWinners());
-            updates.add(new Update(DataToServiceConverter.convertSet(tournamentName, phaseName, oldSet), description));
+            updates.add(new SetUpdate(DataToServiceConverter.convertSet(tournamentName, phaseName, oldSet), description));
             return false;
         }
 

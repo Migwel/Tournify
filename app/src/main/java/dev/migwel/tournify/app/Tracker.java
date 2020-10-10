@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.migwel.tournify.app.service.TournamentServiceFactory;
 import dev.migwel.tournify.communication.commons.Player;
+import dev.migwel.tournify.communication.commons.SetUpdate;
 import dev.migwel.tournify.communication.commons.Update;
 import dev.migwel.tournify.communication.commons.Updates;
 import dev.migwel.tournify.core.data.Notification;
@@ -144,13 +145,17 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
     }
 
     private boolean relevantUpdate(Update update, List<String> followedPlayers) {
-        boolean noPlayersInvolved = update.getSet() == null || update.getSet().getPlayers().isEmpty();
+        if (! (update instanceof SetUpdate)) {
+            return true;
+        }
+        SetUpdate setUpdate = (SetUpdate) update;
+        boolean noPlayersInvolved = setUpdate.getSet() == null || setUpdate.getSet().getPlayers().isEmpty();
         boolean noPlayersFollowed = followedPlayers.isEmpty();
         if(noPlayersInvolved || noPlayersFollowed) {
             return true;
         }
 
-        for(Player setPlayer : update.getSet().getPlayers()) {
+        for(Player setPlayer : setUpdate.getSet().getPlayers()) {
             boolean updatedPlayerIsFollowed = followedPlayers.contains(setPlayer.getDisplayUsername());
             if(updatedPlayerIsFollowed) {
                 return true;
