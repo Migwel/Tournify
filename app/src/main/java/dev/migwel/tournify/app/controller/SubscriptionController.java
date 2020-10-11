@@ -24,7 +24,7 @@ public class SubscriptionController {
 
     @RequestMapping(method= RequestMethod.POST)
     public SubscriptionResponse addSubscription(@RequestBody SubscriptionRequest request) {
-        Subscription subscription = subscriptionService.addSubscription(request.getTournamentUrl(), request.getCallbackUrl(), request.getPlayers());
+        Subscription subscription = subscriptionService.addSubscription(request.getTournamentUrl(), request.getCallbackUrl(), request.getPlayers(), request.getUsername(), request.getPassword());
         return new SubscriptionResponse(subscription.getId().toString(),
                                         subscription.getTournament().getUrl(),
                                         subscription.getCallbackUrl());

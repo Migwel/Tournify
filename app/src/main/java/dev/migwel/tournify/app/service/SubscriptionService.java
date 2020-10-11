@@ -38,7 +38,7 @@ public class SubscriptionService {
         this.tournamentServiceFactory = tournamentServiceFactory;
     }
 
-    public Subscription addSubscription(String tournamentUrl, String callbackUrl, List<String> players) {
+    public Subscription addSubscription(String tournamentUrl, String callbackUrl, List<String> players, String username, String password) {
         TournamentService tournamentService = tournamentServiceFactory.getTournamentService(tournamentUrl);
         String normalizedTournamentUrl = tournamentService.normalizeUrl(tournamentUrl);
         Subscription subscription = subscriptionRepository.findByCallbackUrlAndTournamentUrl(callbackUrl, normalizedTournamentUrl);
@@ -51,7 +51,7 @@ public class SubscriptionService {
             tournament = createAndTrackTournament(normalizedTournamentUrl);
         }
 
-        subscription = new Subscription(tournament, callbackUrl, players, true);
+        subscription = new Subscription(tournament, callbackUrl, players, true, username, password);
         subscriptionRepository.save(subscription);
 
         return subscription;

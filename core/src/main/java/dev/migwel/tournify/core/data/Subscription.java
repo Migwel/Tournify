@@ -50,11 +50,13 @@ public class Subscription {
     public Subscription() {
     }
 
-    public Subscription(Tournament tournament, String callbackUrl, List<String> players, boolean active) {
+    public Subscription(Tournament tournament, String callbackUrl, List<String> players, boolean active, String username, String password) {
         this.tournament = tournament;
         this.callbackUrl = callbackUrl;
         this.players = players;
         this.active = active;
+        this.username = username;
+        this.password = password;
     }
 
     public UUID getId() {
