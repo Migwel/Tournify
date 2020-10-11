@@ -125,7 +125,7 @@ public class NotificationSender {
     }
 
     @CheckForNull
-    private NotificationResponse sendNotification(@Nonnull String callBackUrl, Notification notification) {
+    NotificationResponse sendNotification(@Nonnull String callBackUrl, Notification notification) {
         Update update;
         try {
             byte[] contentByte = Base64.getDecoder().decode(notification.getContent());
