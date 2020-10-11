@@ -2,15 +2,17 @@ package dev.migwel.tournify.app;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.migwel.tournify.app.service.TournamentServiceFactory;
 import dev.migwel.tournify.communication.commons.Update;
 import dev.migwel.tournify.communication.request.NotificationRequest;
 import dev.migwel.tournify.communication.response.NotificationResponse;
 import dev.migwel.tournify.core.data.Notification;
 import dev.migwel.tournify.core.data.Subscription;
 import dev.migwel.tournify.core.store.NotificationRepository;
+import dev.migwel.tournify.util.TextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
@@ -88,9 +90,17 @@ public class NotificationSender {
             notification.setDone(true);
             return;
         }
-        String callBackUrl = getCallbackUrl(notification.getSubscription());
+
+        Subscription subscription = notification.getSubscription();
+        if (!subscription.isActive()) {
+            log.info("Subscription is no longer active: "+ subscription.getId());
+            notification.setDone(true);
+            return;
+        }
+
+        String callBackUrl = subscription.getCallbackUrl();
         if (callBackUrl == null) {
-            log.warn("Callback URL is null for subscription "+ notification.getSubscription());
+            log.warn("Callback URL is null for subscription "+ subscription);
             notification.setDone(true);
             return;
         }
@@ -101,7 +111,9 @@ public class NotificationSender {
             return;
         }
 
-        NotificationResponse response = sendNotification(callBackUrl, notification);
+        String username = subscription.getUsername();
+        String password = subscription.getPassword();
+        NotificationResponse response = sendNotification(callBackUrl, notification, username, password);
         if (response != null && ACCEPTED.equals(response.getStatus())) {
             notification.setDone(true);
             penaltyBox.success(callBackUrl);
@@ -125,7 +137,7 @@ public class NotificationSender {
     }
 
     @CheckForNull
-    NotificationResponse sendNotification(@Nonnull String callBackUrl, Notification notification) {
+    NotificationResponse sendNotification(@Nonnull String callBackUrl, Notification notification, String username, String password) {
         Update update;
         try {
             byte[] contentByte = Base64.getDecoder().decode(notification.getContent());
@@ -136,22 +148,29 @@ public class NotificationSender {
         }
 
         NotificationRequest request = new NotificationRequest(update);
+        HttpHeaders headers = null;
+        if (TextUtil.hasText(username) && TextUtil.hasText(password)) {
+            headers = createHeaders(username, password);
+        }
+        HttpEntity<NotificationRequest> entity = new HttpEntity<>(request,headers);
         try {
-            return restTemplate.postForObject(callBackUrl, request, NotificationResponse.class);
+            return restTemplate.postForObject(callBackUrl, entity, NotificationResponse.class);
         }
         catch(RestClientException e) {
-            log.info("Could not send notification: "+ e.getMessage());
+            log.info("Could not send notification: "+ notification.getId(), e);
         }
         return null;
     }
 
-    @CheckForNull
-    private String getCallbackUrl(Subscription subscription) {
-        if(!subscription.isActive()) {
-            return null;
-        }
+    private HttpHeaders createHeaders(String username, String password){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        String auth = username + ":" + password;
+        byte[] encodedAuth = Base64.getEncoder().encode(
+                auth.getBytes(StandardCharsets.UTF_8) );
+        String authHeader = "Basic " + new String( encodedAuth );
+        httpHeaders.set( "Authorization", authHeader );
 
-        return subscription.getCallbackUrl();
+        return httpHeaders;
     }
 
     private Date computeNextDate(int noUpdateRetries) {

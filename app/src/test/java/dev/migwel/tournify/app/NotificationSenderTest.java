@@ -45,7 +45,7 @@ class NotificationSenderTest {
         Update update = new SetUpdate(set, "Test Description");
         String contentStr = objectMapper.writeValueAsString(update);
         Notification notification = new Notification(null, Base64.getEncoder().encodeToString(contentStr.getBytes(StandardCharsets.UTF_8)), new Date(), new Date());
-        NotificationResponse response = notificationSender.sendNotification("validUrl", notification);
+        NotificationResponse response = notificationSender.sendNotification("validUrl", notification, null, null);
         assertNotNull(response);
         assertEquals("accepted", response.getStatus());
     }
@@ -56,7 +56,7 @@ class NotificationSenderTest {
         Update update = new SetUpdate(set, "Test Description");
         String contentStr = objectMapper.writeValueAsString(update);
         Notification notification = new Notification(null, Base64.getEncoder().encodeToString(contentStr.getBytes(StandardCharsets.UTF_8)), new Date(), new Date());
-        NotificationResponse response = notificationSender.sendNotification("invalidUrl", notification);
+        NotificationResponse response = notificationSender.sendNotification("invalidUrl", notification, null, null);
         assertNull(response);
     }
 

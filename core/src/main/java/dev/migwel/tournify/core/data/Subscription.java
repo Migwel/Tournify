@@ -35,6 +35,10 @@ public class Subscription {
 
     private String callbackUrl;
 
+    private String username;
+
+    private String password;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "subscription_players", joinColumns = @JoinColumn(name = "subscription_id"))
     @Column(name = "player")
@@ -73,6 +77,22 @@ public class Subscription {
         this.callbackUrl = callbackUrl;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Nonnull
     public List<String> getPlayers() {
         if(players == null) {
@@ -99,6 +119,7 @@ public class Subscription {
         sb.append("id=").append(id);
         sb.append(", tournament=").append(tournament);
         sb.append(", callbackUrl=").append(callbackUrl);
+        sb.append(", username=").append(username);
         sb.append(", players=").append(players);
         sb.append(", active=").append(active);
         sb.append('}');
