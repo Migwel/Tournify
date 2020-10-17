@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ChallongeParticipant {
+public class ChallongeParticipant implements Comparable<ChallongeParticipant> {
     private String id;
 
     @JsonProperty("display_name")
@@ -27,5 +27,10 @@ public class ChallongeParticipant {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    @Override
+    public int compareTo(ChallongeParticipant o) {
+        return displayName.compareTo(o.displayName);
     }
 }
