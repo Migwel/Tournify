@@ -27,13 +27,17 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 @Component
 @Immutable
@@ -67,13 +71,16 @@ public class NotificationSender {
     @Scheduled(fixedDelay = NOTIFY_WAIT_MS)
     private void startNotifying() {
         Collection<Notification> notificationList = notificationRepository.findByNextDateBeforeAndDone(new Date(), false);
+        Map<?, List<Notification>> notificationMap = buildNotificationMap(notificationList);
         List<Future<?>> futureList = new ArrayList<>();
-        for(Notification notification : notificationList) {
+        for(List<Notification> notifications : notificationMap.values()) {
             futureList.add(threadPool.submit(() -> {
-                log.info("Sending notification "+ notification.getId());
-                processNotification(notification);
-                notificationRepository.save(notification);
-            }
+                        for (Notification notification : notifications) {
+                            log.info("Sending notification " + notification.getId());
+                            processNotification(notification);
+                            notificationRepository.save(notification);
+                        }
+                    }
             ));
         }
         for(Future<?> futureItem : futureList) {
@@ -83,6 +90,10 @@ public class NotificationSender {
                 log.warn("An exception occurred while sending notification", e);
             }
         }
+    }
+
+    private Map<UUID, List<Notification>> buildNotificationMap(Collection<Notification> notificationList) {
+        return notificationList.stream().collect(Collectors.groupingBy(notification -> notification.getSubscription().getId()));
     }
 
     private void processNotification(Notification notification) {
