@@ -58,6 +58,22 @@ public class ChallongeTournamentClientTest {
     }
 
     @Test
+    void testParticipantsAreOrdered() throws FetchException {
+        String url = "https://api.challonge.com/v1/tournaments/xgt2019nov";
+        Set<Player> players = tournamentClient.getParticipants(url);
+        Player previousPlayer = null;
+        for (Player player : players) {
+            if (previousPlayer == null) {
+                previousPlayer = player;
+                continue;
+            }
+            System.out.println(player.getDisplayUsername());
+            assertTrue(player.compareTo(previousPlayer) > 0);
+            previousPlayer = player;
+        }
+    }
+
+    @Test
     void testGetTournament() throws FetchException {
         String url = "https://api.challonge.com/v1/tournaments/xgt2019nov";
         Tournament tournament = tournamentClient.fetchTournament(url);

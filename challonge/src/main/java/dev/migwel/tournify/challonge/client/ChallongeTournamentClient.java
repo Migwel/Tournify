@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.TreeSet;
 
 @Component
 public class ChallongeTournamentClient implements TournamentClient {
@@ -81,7 +82,7 @@ public class ChallongeTournamentClient implements TournamentClient {
     }
 
     private java.util.Set<Player> convertChallongeParticipantResponse(@Nonnull ParticipantsResponse[] participantsResponses) {
-        final java.util.Set<Player> players = new HashSet<>();
+        final java.util.Set<Player> players = new TreeSet<>();
         for(ParticipantsResponse participantsResponse : participantsResponses) {
             if(participantsResponse == null ||
                participantsResponse.getParticipant() == null ||
