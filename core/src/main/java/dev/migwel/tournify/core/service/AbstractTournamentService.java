@@ -129,9 +129,9 @@ public abstract class AbstractTournamentService implements TournamentService {
         return compareTournaments(oldTournament, newTournament);
     }
 
-    private TournamentChanges compareTournamentsFirstTime(Tournament oldTournament, Tournament newTournament) {
+    private void compareTournamentsFirstTime(Tournament oldTournament, Tournament newTournament) {
         fillGeneralTournamentInfo(oldTournament, newTournament);
-        return compareTournaments(oldTournament, newTournament);
+        compareTournaments(oldTournament, newTournament);
     }
 
     private void fillGeneralTournamentInfo(Tournament oldTournament, Tournament newTournament) {
