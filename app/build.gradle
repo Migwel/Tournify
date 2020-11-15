@@ -4,6 +4,7 @@ dependencies {
     compile project(':communication')
     compile project(':smashgg')
     compile project(':challonge')
+    compile project(':chesscom')
 }
 
 apply plugin: 'org.springframework.boot'
