@@ -15,22 +15,22 @@ public class TournamentServiceFactory {
 
     private final TournamentService smashggTournamentService;
     private final TournamentService challongeTournamentService;
+    private final TournamentService chesscomTournamentService;
 
     public TournamentServiceFactory(@Qualifier("SmashggTournamentService") TournamentService smashggTournamentService,
-                                    @Qualifier("ChallongeTournamentService") TournamentService challongeTournamentService) {
+                                    @Qualifier("ChallongeTournamentService") TournamentService challongeTournamentService,
+                                    @Qualifier("ChesscomTournamentService") TournamentService chesscomTournamentService) {
         this.smashggTournamentService = smashggTournamentService;
         this.challongeTournamentService = challongeTournamentService;
+        this.chesscomTournamentService = chesscomTournamentService;
     }
 
     @Nonnull
     public TournamentService getTournamentService(String url) {
-        switch(Source.getSource(url)) {
-            case Smashgg:
-                return smashggTournamentService;
-            case Challonge:
-                return challongeTournamentService;
-        }
-
-        throw new IllegalArgumentException("The provided url is not supported: "+ url);
+        return switch (Source.getSource(url)) {
+            case Smashgg -> smashggTournamentService;
+            case Challonge -> challongeTournamentService;
+            case Chesscom -> chesscomTournamentService;
+        };
     }
 }
