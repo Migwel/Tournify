@@ -1,0 +1,131 @@
+{
+  "name": "*** Titled Tuesday Blitz",
+  "url": "https://www.chess.com/tournament/live/-titled-tuesday-blitz-1692727",
+  "description": null,
+  "creator": "CHESScom",
+  "status": "finished",
+  "finish_time": 1605039387,
+  "settings": {
+    "type": "swiss",
+    "rules": "chess",
+    "time_class": "blitz",
+    "time_control": "1800+10",
+    "is_rated": true,
+    "is_official": true,
+    "is_invite_only": false,
+    "initial_group_size": null,
+    "user_advance_count": 1,
+    "use_tiebreak": null,
+    "allow_vacation": null,
+    "winner_places": 3,
+    "registered_user_count": 707,
+    "games_per_opponent": null,
+    "total_rounds": 11,
+    "concurrent_games_per_opponent": null
+  },
+  "players": [
+    {
+      "username": "dropstonedp",
+      "status": "winner"
+    },
+    {
+      "username": "raunaksadhwani2005",
+      "status": "registered"
+    },
+    {
+      "username": "zkid",
+      "status": "registered"
+    },
+    {
+      "username": "bocharovd",
+      "status": "registered"
+    },
+    {
+      "username": "lyonbeast",
+      "status": "registered"
+    },
+    {
+      "username": "bigfish1995",
+      "status": "registered"
+    },
+    {
+      "username": "bogdandeac",
+      "status": "registered"
+    },
+    {
+      "username": "parhamov",
+      "status": "registered"
+    },
+    {
+      "username": "gukeshdommaraju",
+      "status": "registered"
+    },
+    {
+      "username": "erichansen",
+      "status": "registered"
+    },
+    {
+      "username": "zhigalko_sergei",
+      "status": "registered"
+    },
+    {
+      "username": "gogieff",
+      "status": "registered"
+    },
+    {
+      "username": "anishonyoutube",
+      "status": "registered"
+    },
+    {
+      "username": "joppie2",
+      "status": "registered"
+    },
+    {
+      "username": "paralinch",
+      "status": "registered"
+    },
+    {
+      "username": "verdenotte",
+      "status": "registered"
+    },
+    {
+      "username": "chopper1905",
+      "status": "registered"
+    },
+    {
+      "username": "sibelephant",
+      "status": "registered"
+    },
+    {
+      "username": "azerichess",
+      "status": "registered"
+    },
+    {
+      "username": "gregshahade",
+      "status": "registered"
+    },
+    {
+      "username": "chesswarrior7197",
+      "status": "registered"
+    },
+    {
+      "username": "jefferyx",
+      "status": "registered"
+    },
+    {
+      "username": "kuzubovyuriy",
+      "status": "registered"
+    },
+    {
+      "username": "formerprodigy",
+      "status": "registered"
+    },
+    {
+      "username": "timofeevar",
+      "status": "registered"
+    }
+  ],
+  "rounds": [
+    "https://api.chess.com/pub/tournament/-titled-tuesday-blitz-1692727/11"
+  ]
+}

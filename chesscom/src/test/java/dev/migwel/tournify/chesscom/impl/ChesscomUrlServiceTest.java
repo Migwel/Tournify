@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ChesscomUrlServiceTest {
+public class ChesscomUrlServiceTest {
 
     private ChesscomUrlService chesscomUrlService = new ChesscomUrlService();
     private String[] validChesscomUrls = {"https://api.chess.com/pub/tournament/-33rd-chesscom-quick-knockouts-1401-1600",
