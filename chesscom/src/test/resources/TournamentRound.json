@@ -1,0 +1,2835 @@
+{
+  "groups": [
+    "https://api.chess.com/pub/tournament/-titled-tuesday-blitz-1692727/11/1"
+  ],
+  "players": [
+    {
+      "username": "andrzej",
+      "is_advancing": null
+    },
+    {
+      "username": "parintele_chess",
+      "is_advancing": null
+    },
+    {
+      "username": "ecwinslow",
+      "is_advancing": null
+    },
+    {
+      "username": "guriempire",
+      "is_advancing": null
+    },
+    {
+      "username": "gmkrikor",
+      "is_advancing": null
+    },
+    {
+      "username": "davigator",
+      "is_advancing": null
+    },
+    {
+      "username": "zivicd",
+      "is_advancing": null
+    },
+    {
+      "username": "jrenatomaranhao",
+      "is_advancing": null
+    },
+    {
+      "username": "b-man",
+      "is_advancing": null
+    },
+    {
+      "username": "erichansen",
+      "is_advancing": null
+    },
+    {
+      "username": "ukchessbomber",
+      "is_advancing": null
+    },
+    {
+      "username": "fins0905",
+      "is_advancing": null
+    },
+    {
+      "username": "gregshahade",
+      "is_advancing": null
+    },
+    {
+      "username": "geordie_derraugh",
+      "is_advancing": null
+    },
+    {
+      "username": "durin",
+      "is_advancing": null
+    },
+    {
+      "username": "zkid",
+      "is_advancing": null
+    },
+    {
+      "username": "nachsueb",
+      "is_advancing": null
+    },
+    {
+      "username": "novakcabarkapa",
+      "is_advancing": null
+    },
+    {
+      "username": "cottage_cheese",
+      "is_advancing": null
+    },
+    {
+      "username": "lacafi",
+      "is_advancing": null
+    },
+    {
+      "username": "bigal",
+      "is_advancing": null
+    },
+    {
+      "username": "billcoe",
+      "is_advancing": null
+    },
+    {
+      "username": "oldweakgm",
+      "is_advancing": null
+    },
+    {
+      "username": "dennisodessa",
+      "is_advancing": null
+    },
+    {
+      "username": "profofchess",
+      "is_advancing": null
+    },
+    {
+      "username": "zurzan",
+      "is_advancing": null
+    },
+    {
+      "username": "vmikhalevski",
+      "is_advancing": null
+    },
+    {
+      "username": "mc4chess",
+      "is_advancing": null
+    },
+    {
+      "username": "wanyaland",
+      "is_advancing": null
+    },
+    {
+      "username": "martinmatthiesen",
+      "is_advancing": null
+    },
+    {
+      "username": "craiggoryc",
+      "is_advancing": null
+    },
+    {
+      "username": "natesolon",
+      "is_advancing": null
+    },
+    {
+      "username": "isurualahakoon",
+      "is_advancing": null
+    },
+    {
+      "username": "erikronka",
+      "is_advancing": null
+    },
+    {
+      "username": "beto-betun",
+      "is_advancing": null
+    },
+    {
+      "username": "bikingbrian",
+      "is_advancing": null
+    },
+    {
+      "username": "catzapto",
+      "is_advancing": null
+    },
+    {
+      "username": "semetey",
+      "is_advancing": null
+    },
+    {
+      "username": "kasparicy",
+      "is_advancing": null
+    },
+    {
+      "username": "chesstrainer1",
+      "is_advancing": null
+    },
+    {
+      "username": "kiborg95",
+      "is_advancing": null
+    },
+    {
+      "username": "zq1",
+      "is_advancing": null
+    },
+    {
+      "username": "guillembaches",
+      "is_advancing": null
+    },
+    {
+      "username": "capatl",
+      "is_advancing": null
+    },
+    {
+      "username": "kidagent",
+      "is_advancing": null
+    },
+    {
+      "username": "alexeishirov",
+      "is_advancing": null
+    },
+    {
+      "username": "notfischer",
+      "is_advancing": null
+    },
+    {
+      "username": "zhani-z",
+      "is_advancing": null
+    },
+    {
+      "username": "malev212",
+      "is_advancing": null
+    },
+    {
+      "username": "r31415",
+      "is_advancing": null
+    },
+    {
+      "username": "cassoulet",
+      "is_advancing": null
+    },
+    {
+      "username": "alphaz3r0",
+      "is_advancing": null
+    },
+    {
+      "username": "littleplotkin",
+      "is_advancing": null
+    },
+    {
+      "username": "joppie2",
+      "is_advancing": null
+    },
+    {
+      "username": "vnkm",
+      "is_advancing": null
+    },
+    {
+      "username": "northridgehawk",
+      "is_advancing": null
+    },
+    {
+      "username": "emiliochess",
+      "is_advancing": null
+    },
+    {
+      "username": "zenbull",
+      "is_advancing": null
+    },
+    {
+      "username": "blitzstream",
+      "is_advancing": null
+    },
+    {
+      "username": "aungtz",
+      "is_advancing": null
+    },
+    {
+      "username": "batradz",
+      "is_advancing": null
+    },
+    {
+      "username": "nochewycandy",
+      "is_advancing": null
+    },
+    {
+      "username": "xtrmntr78",
+      "is_advancing": null
+    },
+    {
+      "username": "sm_sharon",
+      "is_advancing": null
+    },
+    {
+      "username": "ecztery",
+      "is_advancing": null
+    },
+    {
+      "username": "imrosen",
+      "is_advancing": null
+    },
+    {
+      "username": "akanga001",
+      "is_advancing": null
+    },
+    {
+      "username": "verdenotte",
+      "is_advancing": null
+    },
+    {
+      "username": "vrekhson",
+      "is_advancing": null
+    },
+    {
+      "username": "pooh2012",
+      "is_advancing": null
+    },
+    {
+      "username": "novocane",
+      "is_advancing": null
+    },
+    {
+      "username": "indfraeng",
+      "is_advancing": null
+    },
+    {
+      "username": "asms9699",
+      "is_advancing": null
+    },
+    {
+      "username": "biostatistician",
+      "is_advancing": null
+    },
+    {
+      "username": "tyoma88888",
+      "is_advancing": null
+    },
+    {
+      "username": "731291",
+      "is_advancing": null
+    },
+    {
+      "username": "leejunhyeok",
+      "is_advancing": null
+    },
+    {
+      "username": "grigorgrigorov",
+      "is_advancing": null
+    },
+    {
+      "username": "flopezin",
+      "is_advancing": null
+    },
+    {
+      "username": "flutaga",
+      "is_advancing": null
+    },
+    {
+      "username": "djano",
+      "is_advancing": null
+    },
+    {
+      "username": "janumber1",
+      "is_advancing": null
+    },
+    {
+      "username": "alohamora11",
+      "is_advancing": null
+    },
+    {
+      "username": "legendinunknown",
+      "is_advancing": null
+    },
+    {
+      "username": "arej94",
+      "is_advancing": null
+    },
+    {
+      "username": "robperesian",
+      "is_advancing": null
+    },
+    {
+      "username": "penguingm1",
+      "is_advancing": null
+    },
+    {
+      "username": "zmeeed67",
+      "is_advancing": null
+    },
+    {
+      "username": "tandaleo",
+      "is_advancing": null
+    },
+    {
+      "username": "mbojan",
+      "is_advancing": null
+    },
+    {
+      "username": "denisq",
+      "is_advancing": null
+    },
+    {
+      "username": "jaaborok",
+      "is_advancing": null
+    },
+    {
+      "username": "narutosmith",
+      "is_advancing": null
+    },
+    {
+      "username": "gameoverbro",
+      "is_advancing": null
+    },
+    {
+      "username": "fy_rakotomaharo",
+      "is_advancing": null
+    },
+    {
+      "username": "mariafominykh",
+      "is_advancing": null
+    },
+    {
+      "username": "pattycastillo",
+      "is_advancing": null
+    },
+    {
+      "username": "chessfrois",
+      "is_advancing": null
+    },
+    {
+      "username": "quintilianor",
+      "is_advancing": null
+    },
+    {
+      "username": "qvalda",
+      "is_advancing": null
+    },
+    {
+      "username": "gulkov_igor",
+      "is_advancing": null
+    },
+    {
+      "username": "pawneatingzombie",
+      "is_advancing": null
+    },
+    {
+      "username": "stockholmmissile",
+      "is_advancing": null
+    },
+    {
+      "username": "vinniethepooh",
+      "is_advancing": null
+    },
+    {
+      "username": "lawrencetrent",
+      "is_advancing": null
+    },
+    {
+      "username": "stepanosinovsky",
+      "is_advancing": null
+    },
+    {
+      "username": "jacky72",
+      "is_advancing": null
+    },
+    {
+      "username": "agibileg",
+      "is_advancing": null
+    },
+    {
+      "username": "andreikka",
+      "is_advancing": null
+    },
+    {
+      "username": "mpgm",
+      "is_advancing": null
+    },
+    {
+      "username": "ingoscarardila",
+      "is_advancing": null
+    },
+    {
+      "username": "a-fier",
+      "is_advancing": null
+    },
+    {
+      "username": "initiatingasc",
+      "is_advancing": null
+    },
+    {
+      "username": "enriquetejedor",
+      "is_advancing": null
+    },
+    {
+      "username": "dopolian",
+      "is_advancing": null
+    },
+    {
+      "username": "jefferyx",
+      "is_advancing": null
+    },
+    {
+      "username": "reniite",
+      "is_advancing": null
+    },
+    {
+      "username": "leo_c",
+      "is_advancing": null
+    },
+    {
+      "username": "j2806",
+      "is_advancing": null
+    },
+    {
+      "username": "goldenpuppy",
+      "is_advancing": null
+    },
+    {
+      "username": "joshukid",
+      "is_advancing": null
+    },
+    {
+      "username": "dpopadic",
+      "is_advancing": null
+    },
+    {
+      "username": "salomez",
+      "is_advancing": null
+    },
+    {
+      "username": "avitalbor",
+      "is_advancing": null
+    },
+    {
+      "username": "tomekas1",
+      "is_advancing": null
+    },
+    {
+      "username": "chesswarrior7197",
+      "is_advancing": null
+    },
+    {
+      "username": "sacbutt",
+      "is_advancing": null
+    },
+    {
+      "username": "limeinthecoconut",
+      "is_advancing": null
+    },
+    {
+      "username": "jenia84",
+      "is_advancing": null
+    },
+    {
+      "username": "vandros57",
+      "is_advancing": null
+    },
+    {
+      "username": "maciek_92",
+      "is_advancing": null
+    },
+    {
+      "username": "natelleka",
+      "is_advancing": null
+    },
+    {
+      "username": "maxip32",
+      "is_advancing": null
+    },
+    {
+      "username": "albi1999",
+      "is_advancing": null
+    },
+    {
+      "username": "xdps",
+      "is_advancing": null
+    },
+    {
+      "username": "shivagami",
+      "is_advancing": null
+    },
+    {
+      "username": "improvidence",
+      "is_advancing": null
+    },
+    {
+      "username": "julinha97",
+      "is_advancing": null
+    },
+    {
+      "username": "shahmatkanal",
+      "is_advancing": null
+    },
+    {
+      "username": "christopheryoo",
+      "is_advancing": null
+    },
+    {
+      "username": "imaghasiyevkamal",
+      "is_advancing": null
+    },
+    {
+      "username": "tampachess",
+      "is_advancing": null
+    },
+    {
+      "username": "aygehovit1992",
+      "is_advancing": null
+    },
+    {
+      "username": "chamal_gedgafov",
+      "is_advancing": null
+    },
+    {
+      "username": "hikaru",
+      "is_advancing": null
+    },
+    {
+      "username": "louis198",
+      "is_advancing": null
+    },
+    {
+      "username": "tst2014",
+      "is_advancing": null
+    },
+    {
+      "username": "anijak",
+      "is_advancing": null
+    },
+    {
+      "username": "sara_khm",
+      "is_advancing": null
+    },
+    {
+      "username": "fmjoseherrera",
+      "is_advancing": null
+    },
+    {
+      "username": "bjthechessgod",
+      "is_advancing": null
+    },
+    {
+      "username": "elohunter1999",
+      "is_advancing": null
+    },
+    {
+      "username": "nicolasbrunner",
+      "is_advancing": null
+    },
+    {
+      "username": "orest_vovk",
+      "is_advancing": null
+    },
+    {
+      "username": "semchik73",
+      "is_advancing": null
+    },
+    {
+      "username": "gui_borba",
+      "is_advancing": null
+    },
+    {
+      "username": "xberli",
+      "is_advancing": null
+    },
+    {
+      "username": "maknouchi-kun",
+      "is_advancing": null
+    },
+    {
+      "username": "evgeny81",
+      "is_advancing": null
+    },
+    {
+      "username": "hypert",
+      "is_advancing": null
+    },
+    {
+      "username": "wonderfultime",
+      "is_advancing": null
+    },
+    {
+      "username": "anton_demchenko",
+      "is_advancing": null
+    },
+    {
+      "username": "lupul_cenusiu",
+      "is_advancing": null
+    },
+    {
+      "username": "lyonbeast",
+      "is_advancing": null
+    },
+    {
+      "username": "chopper1905",
+      "is_advancing": null
+    },
+    {
+      "username": "eljanov",
+      "is_advancing": null
+    },
+    {
+      "username": "andrii_prydun",
+      "is_advancing": null
+    },
+    {
+      "username": "03revilo",
+      "is_advancing": null
+    },
+    {
+      "username": "mishanick",
+      "is_advancing": null
+    },
+    {
+      "username": "mikhail_golubev",
+      "is_advancing": null
+    },
+    {
+      "username": "pedromartinez91",
+      "is_advancing": null
+    },
+    {
+      "username": "oskariot",
+      "is_advancing": null
+    },
+    {
+      "username": "chito89",
+      "is_advancing": null
+    },
+    {
+      "username": "promacherr",
+      "is_advancing": null
+    },
+    {
+      "username": "training_day",
+      "is_advancing": null
+    },
+    {
+      "username": "igor_lysyj",
+      "is_advancing": null
+    },
+    {
+      "username": "fortitudine",
+      "is_advancing": null
+    },
+    {
+      "username": "saraswathii",
+      "is_advancing": null
+    },
+    {
+      "username": "forantes",
+      "is_advancing": null
+    },
+    {
+      "username": "thekingdoctor",
+      "is_advancing": null
+    },
+    {
+      "username": "malysch",
+      "is_advancing": null
+    },
+    {
+      "username": "gedeblas",
+      "is_advancing": null
+    },
+    {
+      "username": "hrvojezagreb",
+      "is_advancing": null
+    },
+    {
+      "username": "ze-pequeno",
+      "is_advancing": null
+    },
+    {
+      "username": "exoticprincess",
+      "is_advancing": null
+    },
+    {
+      "username": "fmolexandrprohorov",
+      "is_advancing": null
+    },
+    {
+      "username": "iball95",
+      "is_advancing": null
+    },
+    {
+      "username": "mbachez",
+      "is_advancing": null
+    },
+    {
+      "username": "garicradomir",
+      "is_advancing": null
+    },
+    {
+      "username": "newbornnow",
+      "is_advancing": null
+    },
+    {
+      "username": "morechessjulia",
+      "is_advancing": null
+    },
+    {
+      "username": "gen-gutman",
+      "is_advancing": null
+    },
+    {
+      "username": "tdf98pantani",
+      "is_advancing": null
+    },
+    {
+      "username": "ambaixador",
+      "is_advancing": null
+    },
+    {
+      "username": "sanan_sjugirov",
+      "is_advancing": null
+    },
+    {
+      "username": "vovachesss",
+      "is_advancing": null
+    },
+    {
+      "username": "tteshan",
+      "is_advancing": null
+    },
+    {
+      "username": "matibar",
+      "is_advancing": null
+    },
+    {
+      "username": "zhuu96",
+      "is_advancing": null
+    },
+    {
+      "username": "petrpalachev",
+      "is_advancing": null
+    },
+    {
+      "username": "wpwpwp-2015",
+      "is_advancing": null
+    },
+    {
+      "username": "arqmadson",
+      "is_advancing": null
+    },
+    {
+      "username": "mokshanovalexey",
+      "is_advancing": null
+    },
+    {
+      "username": "zarikovs1999",
+      "is_advancing": null
+    },
+    {
+      "username": "chigorinetz",
+      "is_advancing": null
+    },
+    {
+      "username": "youngkid",
+      "is_advancing": null
+    },
+    {
+      "username": "rd4ever",
+      "is_advancing": null
+    },
+    {
+      "username": "margency",
+      "is_advancing": null
+    },
+    {
+      "username": "amiralfio",
+      "is_advancing": null
+    },
+    {
+      "username": "vitaliybernadskiy",
+      "is_advancing": null
+    },
+    {
+      "username": "orestn",
+      "is_advancing": null
+    },
+    {
+      "username": "msb2",
+      "is_advancing": null
+    },
+    {
+      "username": "buryshin_vasyl",
+      "is_advancing": null
+    },
+    {
+      "username": "mazetovic",
+      "is_advancing": null
+    },
+    {
+      "username": "fandorine",
+      "is_advancing": null
+    },
+    {
+      "username": "renatoterrylujan",
+      "is_advancing": null
+    },
+    {
+      "username": "nellija99",
+      "is_advancing": null
+    },
+    {
+      "username": "grandmaster1369",
+      "is_advancing": null
+    },
+    {
+      "username": "sboshaon21",
+      "is_advancing": null
+    },
+    {
+      "username": "paulfromspb",
+      "is_advancing": null
+    },
+    {
+      "username": "grandcoach",
+      "is_advancing": null
+    },
+    {
+      "username": "midedu",
+      "is_advancing": null
+    },
+    {
+      "username": "jens1102",
+      "is_advancing": null
+    },
+    {
+      "username": "besztok",
+      "is_advancing": null
+    },
+    {
+      "username": "chessalary",
+      "is_advancing": null
+    },
+    {
+      "username": "santoblue",
+      "is_advancing": null
+    },
+    {
+      "username": "warre",
+      "is_advancing": null
+    },
+    {
+      "username": "oneofmyturns",
+      "is_advancing": null
+    },
+    {
+      "username": "kaslask",
+      "is_advancing": null
+    },
+    {
+      "username": "harry_rakkel",
+      "is_advancing": null
+    },
+    {
+      "username": "sven_tica",
+      "is_advancing": null
+    },
+    {
+      "username": "grunbergmihai",
+      "is_advancing": null
+    },
+    {
+      "username": "iljin_timofey",
+      "is_advancing": null
+    },
+    {
+      "username": "yashasd1995",
+      "is_advancing": null
+    },
+    {
+      "username": "lillegutt_00",
+      "is_advancing": null
+    },
+    {
+      "username": "plotnikovpavel",
+      "is_advancing": null
+    },
+    {
+      "username": "denispopov",
+      "is_advancing": null
+    },
+    {
+      "username": "vladgoncharov",
+      "is_advancing": null
+    },
+    {
+      "username": "radzio1987",
+      "is_advancing": null
+    },
+    {
+      "username": "gilbert_gm",
+      "is_advancing": null
+    },
+    {
+      "username": "natalya_buksa",
+      "is_advancing": null
+    },
+    {
+      "username": "gajuchess",
+      "is_advancing": null
+    },
+    {
+      "username": "zala02",
+      "is_advancing": null
+    },
+    {
+      "username": "vanyakuba",
+      "is_advancing": null
+    },
+    {
+      "username": "aleksandar-topalov",
+      "is_advancing": null
+    },
+    {
+      "username": "sorito",
+      "is_advancing": null
+    },
+    {
+      "username": "yuki_chess123",
+      "is_advancing": null
+    },
+    {
+      "username": "robertojbm",
+      "is_advancing": null
+    },
+    {
+      "username": "sergo055",
+      "is_advancing": null
+    },
+    {
+      "username": "gabrielian_artur",
+      "is_advancing": null
+    },
+    {
+      "username": "yobdc",
+      "is_advancing": null
+    },
+    {
+      "username": "shimanovalex",
+      "is_advancing": null
+    },
+    {
+      "username": "zefirka",
+      "is_advancing": null
+    },
+    {
+      "username": "roman_ovetchkin",
+      "is_advancing": null
+    },
+    {
+      "username": "redbaroncanada",
+      "is_advancing": null
+    },
+    {
+      "username": "alika2810",
+      "is_advancing": null
+    },
+    {
+      "username": "fabianvivasz",
+      "is_advancing": null
+    },
+    {
+      "username": "thedjoker98",
+      "is_advancing": null
+    },
+    {
+      "username": "ftorodent",
+      "is_advancing": null
+    },
+    {
+      "username": "paralinch",
+      "is_advancing": null
+    },
+    {
+      "username": "timofeevar",
+      "is_advancing": null
+    },
+    {
+      "username": "klimkoj",
+      "is_advancing": null
+    },
+    {
+      "username": "wnstop",
+      "is_advancing": null
+    },
+    {
+      "username": "arminmusovic",
+      "is_advancing": null
+    },
+    {
+      "username": "plumalka",
+      "is_advancing": null
+    },
+    {
+      "username": "quiet_desperation",
+      "is_advancing": null
+    },
+    {
+      "username": "lovilek",
+      "is_advancing": null
+    },
+    {
+      "username": "chelsiemonica",
+      "is_advancing": null
+    },
+    {
+      "username": "queen_iryna",
+      "is_advancing": null
+    },
+    {
+      "username": "vugarrasulov",
+      "is_advancing": null
+    },
+    {
+      "username": "flamps8",
+      "is_advancing": null
+    },
+    {
+      "username": "ilves_21",
+      "is_advancing": null
+    },
+    {
+      "username": "bigfish1995",
+      "is_advancing": null
+    },
+    {
+      "username": "nikolakis2014",
+      "is_advancing": null
+    },
+    {
+      "username": "shuvalov",
+      "is_advancing": null
+    },
+    {
+      "username": "pavelalexandru07",
+      "is_advancing": null
+    },
+    {
+      "username": "onischuk_v",
+      "is_advancing": null
+    },
+    {
+      "username": "morshynska",
+      "is_advancing": null
+    },
+    {
+      "username": "kuzubovyuriy",
+      "is_advancing": null
+    },
+    {
+      "username": "zhigalko_sergei",
+      "is_advancing": null
+    },
+    {
+      "username": "jospem",
+      "is_advancing": null
+    },
+    {
+      "username": "grischuk",
+      "is_advancing": null
+    },
+    {
+      "username": "esapunov",
+      "is_advancing": null
+    },
+    {
+      "username": "gm_loading",
+      "is_advancing": null
+    },
+    {
+      "username": "malakismayil",
+      "is_advancing": null
+    },
+    {
+      "username": "arabicfalcon",
+      "is_advancing": null
+    },
+    {
+      "username": "vladimirssvesnikovs",
+      "is_advancing": null
+    },
+    {
+      "username": "lastreetcmamaison",
+      "is_advancing": null
+    },
+    {
+      "username": "igorbjelobrk",
+      "is_advancing": null
+    },
+    {
+      "username": "gm_crest",
+      "is_advancing": null
+    },
+    {
+      "username": "bascheyaro",
+      "is_advancing": null
+    },
+    {
+      "username": "bilodeaua",
+      "is_advancing": null
+    },
+    {
+      "username": "zaur-mammadov",
+      "is_advancing": null
+    },
+    {
+      "username": "chernov_mikhail",
+      "is_advancing": null
+    },
+    {
+      "username": "filali-marouan",
+      "is_advancing": null
+    },
+    {
+      "username": "elisak43",
+      "is_advancing": null
+    },
+    {
+      "username": "stolencandy13",
+      "is_advancing": null
+    },
+    {
+      "username": "predatoru",
+      "is_advancing": null
+    },
+    {
+      "username": "valeriocarnicelli",
+      "is_advancing": null
+    },
+    {
+      "username": "monalize",
+      "is_advancing": null
+    },
+    {
+      "username": "oleksandr_bortnyk",
+      "is_advancing": null
+    },
+    {
+      "username": "tigrvshlyape",
+      "is_advancing": null
+    },
+    {
+      "username": "gm4life",
+      "is_advancing": null
+    },
+    {
+      "username": "maxleto",
+      "is_advancing": null
+    },
+    {
+      "username": "sankalp_gupta2003",
+      "is_advancing": null
+    },
+    {
+      "username": "gogolev_artemy",
+      "is_advancing": null
+    },
+    {
+      "username": "andriipalchuk",
+      "is_advancing": null
+    },
+    {
+      "username": "tashik",
+      "is_advancing": null
+    },
+    {
+      "username": "supernotar",
+      "is_advancing": null
+    },
+    {
+      "username": "gennady_kozlov",
+      "is_advancing": null
+    },
+    {
+      "username": "gmjustin",
+      "is_advancing": null
+    },
+    {
+      "username": "infernal_xam",
+      "is_advancing": null
+    },
+    {
+      "username": "alexandrabotez",
+      "is_advancing": null
+    },
+    {
+      "username": "annawel",
+      "is_advancing": null
+    },
+    {
+      "username": "nikolaj_6",
+      "is_advancing": null
+    },
+    {
+      "username": "timator",
+      "is_advancing": null
+    },
+    {
+      "username": "shtembuliak",
+      "is_advancing": null
+    },
+    {
+      "username": "kaua18",
+      "is_advancing": null
+    },
+    {
+      "username": "shapkinanatoliy",
+      "is_advancing": null
+    },
+    {
+      "username": "pastouche06",
+      "is_advancing": null
+    },
+    {
+      "username": "goryachkina",
+      "is_advancing": null
+    },
+    {
+      "username": "romulocardoso",
+      "is_advancing": null
+    },
+    {
+      "username": "giantslayer83",
+      "is_advancing": null
+    },
+    {
+      "username": "kirillshevchenko",
+      "is_advancing": null
+    },
+    {
+      "username": "lolo9292",
+      "is_advancing": null
+    },
+    {
+      "username": "campelov",
+      "is_advancing": null
+    },
+    {
+      "username": "guenplen",
+      "is_advancing": null
+    },
+    {
+      "username": "124chess",
+      "is_advancing": null
+    },
+    {
+      "username": "maximnovik",
+      "is_advancing": null
+    },
+    {
+      "username": "federtiu",
+      "is_advancing": null
+    },
+    {
+      "username": "neftegor",
+      "is_advancing": null
+    },
+    {
+      "username": "semen_khanin",
+      "is_advancing": null
+    },
+    {
+      "username": "vasily85",
+      "is_advancing": null
+    },
+    {
+      "username": "erikblomqvist",
+      "is_advancing": null
+    },
+    {
+      "username": "piwan",
+      "is_advancing": null
+    },
+    {
+      "username": "aldokhinivan",
+      "is_advancing": null
+    },
+    {
+      "username": "amintabatabaei",
+      "is_advancing": null
+    },
+    {
+      "username": "drvelja",
+      "is_advancing": null
+    },
+    {
+      "username": "ehrenfeld",
+      "is_advancing": null
+    },
+    {
+      "username": "1977ivan",
+      "is_advancing": null
+    },
+    {
+      "username": "witik",
+      "is_advancing": null
+    },
+    {
+      "username": "joakimvonand",
+      "is_advancing": null
+    },
+    {
+      "username": "kotofeyca",
+      "is_advancing": null
+    },
+    {
+      "username": "talman67",
+      "is_advancing": null
+    },
+    {
+      "username": "jumbo",
+      "is_advancing": null
+    },
+    {
+      "username": "bogdandeac",
+      "is_advancing": null
+    },
+    {
+      "username": "ketigrant",
+      "is_advancing": null
+    },
+    {
+      "username": "vinzentspitzl",
+      "is_advancing": null
+    },
+    {
+      "username": "nubair1198",
+      "is_advancing": null
+    },
+    {
+      "username": "davidkalashian",
+      "is_advancing": null
+    },
+    {
+      "username": "dishonoronyourcow",
+      "is_advancing": null
+    },
+    {
+      "username": "borsuk_konstantin",
+      "is_advancing": null
+    },
+    {
+      "username": "algeriano22",
+      "is_advancing": null
+    },
+    {
+      "username": "rasmussvane",
+      "is_advancing": null
+    },
+    {
+      "username": "baki83",
+      "is_advancing": null
+    },
+    {
+      "username": "martynkovaelena",
+      "is_advancing": null
+    },
+    {
+      "username": "shushik",
+      "is_advancing": null
+    },
+    {
+      "username": "dyziotomi99",
+      "is_advancing": null
+    },
+    {
+      "username": "mirciulica14",
+      "is_advancing": null
+    },
+    {
+      "username": "parhamov",
+      "is_advancing": null
+    },
+    {
+      "username": "savva09022009",
+      "is_advancing": null
+    },
+    {
+      "username": "grandelicious",
+      "is_advancing": null
+    },
+    {
+      "username": "vladislavkovalev",
+      "is_advancing": null
+    },
+    {
+      "username": "swimmerchess",
+      "is_advancing": null
+    },
+    {
+      "username": "canary2016",
+      "is_advancing": null
+    },
+    {
+      "username": "vamostodorecto",
+      "is_advancing": null
+    },
+    {
+      "username": "albano87",
+      "is_advancing": null
+    },
+    {
+      "username": "leonid_starozhilov",
+      "is_advancing": null
+    },
+    {
+      "username": "swisspower96",
+      "is_advancing": null
+    },
+    {
+      "username": "politeplayer",
+      "is_advancing": null
+    },
+    {
+      "username": "vanina1989",
+      "is_advancing": null
+    },
+    {
+      "username": "lelya96",
+      "is_advancing": null
+    },
+    {
+      "username": "shnitez",
+      "is_advancing": null
+    },
+    {
+      "username": "tactictic",
+      "is_advancing": null
+    },
+    {
+      "username": "makswolf200817",
+      "is_advancing": null
+    },
+    {
+      "username": "sibelephant",
+      "is_advancing": null
+    },
+    {
+      "username": "gothamchess",
+      "is_advancing": null
+    },
+    {
+      "username": "ariadna_atreides",
+      "is_advancing": null
+    },
+    {
+      "username": "dr_thomas_quilter",
+      "is_advancing": null
+    },
+    {
+      "username": "denlaz",
+      "is_advancing": null
+    },
+    {
+      "username": "sergeyshtyka",
+      "is_advancing": null
+    },
+    {
+      "username": "bykov_egor",
+      "is_advancing": null
+    },
+    {
+      "username": "hanschut",
+      "is_advancing": null
+    },
+    {
+      "username": "woodhy",
+      "is_advancing": null
+    },
+    {
+      "username": "phenix2k",
+      "is_advancing": null
+    },
+    {
+      "username": "gumimis",
+      "is_advancing": null
+    },
+    {
+      "username": "vladimirpotkin",
+      "is_advancing": null
+    },
+    {
+      "username": "misterlamine",
+      "is_advancing": null
+    },
+    {
+      "username": "kopytkin",
+      "is_advancing": null
+    },
+    {
+      "username": "ave_mariia",
+      "is_advancing": null
+    },
+    {
+      "username": "polish_vvonderboy",
+      "is_advancing": null
+    },
+    {
+      "username": "slovak_fighter2000",
+      "is_advancing": null
+    },
+    {
+      "username": "paladin61",
+      "is_advancing": null
+    },
+    {
+      "username": "triumphmate",
+      "is_advancing": null
+    },
+    {
+      "username": "bazar-wokzal",
+      "is_advancing": null
+    },
+    {
+      "username": "gogieff",
+      "is_advancing": null
+    },
+    {
+      "username": "kingcrusher275",
+      "is_advancing": null
+    },
+    {
+      "username": "kavyev_ruslan",
+      "is_advancing": null
+    },
+    {
+      "username": "aleksey_sorokin",
+      "is_advancing": null
+    },
+    {
+      "username": "lilleper1",
+      "is_advancing": null
+    },
+    {
+      "username": "nemsko",
+      "is_advancing": null
+    },
+    {
+      "username": "26andrej26",
+      "is_advancing": null
+    },
+    {
+      "username": "karateloru",
+      "is_advancing": null
+    },
+    {
+      "username": "agnes66678",
+      "is_advancing": null
+    },
+    {
+      "username": "nakajo",
+      "is_advancing": null
+    },
+    {
+      "username": "nikolagry",
+      "is_advancing": null
+    },
+    {
+      "username": "zverr1",
+      "is_advancing": null
+    },
+    {
+      "username": "matheusmdr2005",
+      "is_advancing": null
+    },
+    {
+      "username": "flawless_fighter",
+      "is_advancing": null
+    },
+    {
+      "username": "barbara25",
+      "is_advancing": null
+    },
+    {
+      "username": "hasangatin_ramil",
+      "is_advancing": null
+    },
+    {
+      "username": "frederiksvane",
+      "is_advancing": null
+    },
+    {
+      "username": "siemba",
+      "is_advancing": null
+    },
+    {
+      "username": "dinamo3",
+      "is_advancing": null
+    },
+    {
+      "username": "stormeman100100",
+      "is_advancing": null
+    },
+    {
+      "username": "igorknyazev",
+      "is_advancing": null
+    },
+    {
+      "username": "harsha_bharathakoti",
+      "is_advancing": null
+    },
+    {
+      "username": "volodar_murzin",
+      "is_advancing": null
+    },
+    {
+      "username": "manukyan_artak",
+      "is_advancing": null
+    },
+    {
+      "username": "korchmar_vasiliy",
+      "is_advancing": null
+    },
+    {
+      "username": "malik02",
+      "is_advancing": null
+    },
+    {
+      "username": "ural58",
+      "is_advancing": null
+    },
+    {
+      "username": "olksuna",
+      "is_advancing": null
+    },
+    {
+      "username": "kuli4ik",
+      "is_advancing": null
+    },
+    {
+      "username": "littlemymoomin",
+      "is_advancing": null
+    },
+    {
+      "username": "paulrusan",
+      "is_advancing": null
+    },
+    {
+      "username": "dominikaf",
+      "is_advancing": null
+    },
+    {
+      "username": "youtube-kelvinchess",
+      "is_advancing": null
+    },
+    {
+      "username": "h3nriquetv",
+      "is_advancing": null
+    },
+    {
+      "username": "mr_sinigami",
+      "is_advancing": null
+    },
+    {
+      "username": "temus_galaktionov",
+      "is_advancing": null
+    },
+    {
+      "username": "vuk2000",
+      "is_advancing": null
+    },
+    {
+      "username": "tvjosue",
+      "is_advancing": null
+    },
+    {
+      "username": "chesswarrior3",
+      "is_advancing": null
+    },
+    {
+      "username": "gukeshdommaraju",
+      "is_advancing": null
+    },
+    {
+      "username": "josephgirel87",
+      "is_advancing": null
+    },
+    {
+      "username": "svv65",
+      "is_advancing": null
+    },
+    {
+      "username": "bocharovd",
+      "is_advancing": null
+    },
+    {
+      "username": "kyrgyzfighter",
+      "is_advancing": null
+    },
+    {
+      "username": "elcandado",
+      "is_advancing": null
+    },
+    {
+      "username": "pertinhez76",
+      "is_advancing": null
+    },
+    {
+      "username": "never_again_ever",
+      "is_advancing": null
+    },
+    {
+      "username": "loy_konstantin",
+      "is_advancing": null
+    },
+    {
+      "username": "tylityli",
+      "is_advancing": null
+    },
+    {
+      "username": "eightbyeightchess",
+      "is_advancing": null
+    },
+    {
+      "username": "kai_nov",
+      "is_advancing": null
+    },
+    {
+      "username": "xeniya2005",
+      "is_advancing": null
+    },
+    {
+      "username": "kristina_kim",
+      "is_advancing": null
+    },
+    {
+      "username": "sunerorlater",
+      "is_advancing": null
+    },
+    {
+      "username": "alejanchess73",
+      "is_advancing": null
+    },
+    {
+      "username": "freshfoodcompany",
+      "is_advancing": null
+    },
+    {
+      "username": "nitpicker",
+      "is_advancing": null
+    },
+    {
+      "username": "kinga2008",
+      "is_advancing": null
+    },
+    {
+      "username": "starworld123",
+      "is_advancing": null
+    },
+    {
+      "username": "asahoffmann",
+      "is_advancing": null
+    },
+    {
+      "username": "nikithebest",
+      "is_advancing": null
+    },
+    {
+      "username": "googlegoom",
+      "is_advancing": null
+    },
+    {
+      "username": "jozefkneht",
+      "is_advancing": null
+    },
+    {
+      "username": "hulkmania8949",
+      "is_advancing": null
+    },
+    {
+      "username": "dinabelenkaya",
+      "is_advancing": null
+    },
+    {
+      "username": "sokidze",
+      "is_advancing": null
+    },
+    {
+      "username": "azikom",
+      "is_advancing": null
+    },
+    {
+      "username": "iwkooo",
+      "is_advancing": null
+    },
+    {
+      "username": "basyak97",
+      "is_advancing": null
+    },
+    {
+      "username": "obito24",
+      "is_advancing": null
+    },
+    {
+      "username": "gigaquparadze",
+      "is_advancing": null
+    },
+    {
+      "username": "smile2005",
+      "is_advancing": null
+    },
+    {
+      "username": "pavlovdanila",
+      "is_advancing": null
+    },
+    {
+      "username": "masterkroket",
+      "is_advancing": null
+    },
+    {
+      "username": "mjray79",
+      "is_advancing": null
+    },
+    {
+      "username": "diehardcuban",
+      "is_advancing": null
+    },
+    {
+      "username": "matols",
+      "is_advancing": null
+    },
+    {
+      "username": "blitzking1729",
+      "is_advancing": null
+    },
+    {
+      "username": "matychess1",
+      "is_advancing": null
+    },
+    {
+      "username": "sueetin",
+      "is_advancing": null
+    },
+    {
+      "username": "kacperpolok",
+      "is_advancing": null
+    },
+    {
+      "username": "adriangschnitzer",
+      "is_advancing": null
+    },
+    {
+      "username": "ironicsteal05",
+      "is_advancing": null
+    },
+    {
+      "username": "katerinamiroshnik",
+      "is_advancing": null
+    },
+    {
+      "username": "samuelghimpu2003",
+      "is_advancing": null
+    },
+    {
+      "username": "mamonika",
+      "is_advancing": null
+    },
+    {
+      "username": "s2pac",
+      "is_advancing": null
+    },
+    {
+      "username": "azerichess",
+      "is_advancing": null
+    },
+    {
+      "username": "german_bazeev",
+      "is_advancing": null
+    },
+    {
+      "username": "chessdude1987",
+      "is_advancing": null
+    },
+    {
+      "username": "ruilopezgotdeported",
+      "is_advancing": null
+    },
+    {
+      "username": "jonahwillow",
+      "is_advancing": null
+    },
+    {
+      "username": "sadykov_ramil",
+      "is_advancing": null
+    },
+    {
+      "username": "kingofthenil",
+      "is_advancing": null
+    },
+    {
+      "username": "grieve72",
+      "is_advancing": null
+    },
+    {
+      "username": "karwowskikacper",
+      "is_advancing": null
+    },
+    {
+      "username": "funo09",
+      "is_advancing": null
+    },
+    {
+      "username": "suyu28",
+      "is_advancing": null
+    },
+    {
+      "username": "donpreuss",
+      "is_advancing": null
+    },
+    {
+      "username": "mazanchenko_dmitry",
+      "is_advancing": null
+    },
+    {
+      "username": "chessmaster759",
+      "is_advancing": null
+    },
+    {
+      "username": "ajedrezhoy",
+      "is_advancing": null
+    },
+    {
+      "username": "kononenkod",
+      "is_advancing": null
+    },
+    {
+      "username": "sofiia_hryzlova",
+      "is_advancing": null
+    },
+    {
+      "username": "markope",
+      "is_advancing": null
+    },
+    {
+      "username": "piotrek1979",
+      "is_advancing": null
+    },
+    {
+      "username": "savagelittlemole",
+      "is_advancing": null
+    },
+    {
+      "username": "kazmin_dmitrij",
+      "is_advancing": null
+    },
+    {
+      "username": "potapovam",
+      "is_advancing": null
+    },
+    {
+      "username": "szachuspl",
+      "is_advancing": null
+    },
+    {
+      "username": "ailime26",
+      "is_advancing": null
+    },
+    {
+      "username": "ramyrescoelho",
+      "is_advancing": null
+    },
+    {
+      "username": "chernobay_artem",
+      "is_advancing": null
+    },
+    {
+      "username": "ashedu66",
+      "is_advancing": null
+    },
+    {
+      "username": "papa12341234",
+      "is_advancing": null
+    },
+    {
+      "username": "michaelson_11",
+      "is_advancing": null
+    },
+    {
+      "username": "gelmanalexander",
+      "is_advancing": null
+    },
+    {
+      "username": "kamilllw",
+      "is_advancing": null
+    },
+    {
+      "username": "nils_03",
+      "is_advancing": null
+    },
+    {
+      "username": "formerprodigy",
+      "is_advancing": null
+    },
+    {
+      "username": "rugbyclub",
+      "is_advancing": null
+    },
+    {
+      "username": "czechmviii",
+      "is_advancing": null
+    },
+    {
+      "username": "fm_magua",
+      "is_advancing": null
+    },
+    {
+      "username": "chess2019player",
+      "is_advancing": null
+    },
+    {
+      "username": "attractivemustard",
+      "is_advancing": null
+    },
+    {
+      "username": "25-sigma",
+      "is_advancing": null
+    },
+    {
+      "username": "chessmachine14",
+      "is_advancing": null
+    },
+    {
+      "username": "bastiandash",
+      "is_advancing": null
+    },
+    {
+      "username": "aridannie",
+      "is_advancing": null
+    },
+    {
+      "username": "weaintsurepal",
+      "is_advancing": null
+    },
+    {
+      "username": "pliukha_mikhail",
+      "is_advancing": null
+    },
+    {
+      "username": "sofaceindisguise",
+      "is_advancing": null
+    },
+    {
+      "username": "mr65",
+      "is_advancing": null
+    },
+    {
+      "username": "nelsoncopa",
+      "is_advancing": null
+    },
+    {
+      "username": "crazy_girl99",
+      "is_advancing": null
+    },
+    {
+      "username": "denishevm",
+      "is_advancing": null
+    },
+    {
+      "username": "zajka-molotok",
+      "is_advancing": null
+    },
+    {
+      "username": "goltsevdmitry2000",
+      "is_advancing": null
+    },
+    {
+      "username": "ljuks68",
+      "is_advancing": null
+    },
+    {
+      "username": "pintacara",
+      "is_advancing": null
+    },
+    {
+      "username": "emperor87",
+      "is_advancing": null
+    },
+    {
+      "username": "nicoderboss24",
+      "is_advancing": null
+    },
+    {
+      "username": "pheonixking2000",
+      "is_advancing": null
+    },
+    {
+      "username": "azoulas1",
+      "is_advancing": null
+    },
+    {
+      "username": "frenchmonster2002",
+      "is_advancing": null
+    },
+    {
+      "username": "aemulus20",
+      "is_advancing": null
+    },
+    {
+      "username": "pedro_nascimento85",
+      "is_advancing": null
+    },
+    {
+      "username": "lenyas66",
+      "is_advancing": null
+    },
+    {
+      "username": "karstenhansch",
+      "is_advancing": null
+    },
+    {
+      "username": "samidescalona2002",
+      "is_advancing": null
+    },
+    {
+      "username": "seorobert1971",
+      "is_advancing": null
+    },
+    {
+      "username": "rital44",
+      "is_advancing": null
+    },
+    {
+      "username": "monkkk",
+      "is_advancing": null
+    },
+    {
+      "username": "petrkostenko",
+      "is_advancing": null
+    },
+    {
+      "username": "firegrizzly",
+      "is_advancing": null
+    },
+    {
+      "username": "banane_verte",
+      "is_advancing": null
+    },
+    {
+      "username": "crazy_but_lazy",
+      "is_advancing": null
+    },
+    {
+      "username": "carrotsandpizza",
+      "is_advancing": null
+    },
+    {
+      "username": "marcoriehle",
+      "is_advancing": null
+    },
+    {
+      "username": "sharapovevgeny",
+      "is_advancing": null
+    },
+    {
+      "username": "mlev0907",
+      "is_advancing": null
+    },
+    {
+      "username": "picturesquecheck",
+      "is_advancing": null
+    },
+    {
+      "username": "lamachampetre",
+      "is_advancing": null
+    },
+    {
+      "username": "serhanberat_ozdemir",
+      "is_advancing": null
+    },
+    {
+      "username": "liamvrolijk",
+      "is_advancing": null
+    },
+    {
+      "username": "matveev_vladimir",
+      "is_advancing": null
+    },
+    {
+      "username": "margarita2907",
+      "is_advancing": null
+    },
+    {
+      "username": "mijuanreyesrosa",
+      "is_advancing": null
+    },
+    {
+      "username": "raunaksadhwani2005",
+      "is_advancing": null
+    },
+    {
+      "username": "juli2512",
+      "is_advancing": null
+    },
+    {
+      "username": "ward-tsh",
+      "is_advancing": null
+    },
+    {
+      "username": "mikasinski",
+      "is_advancing": null
+    },
+    {
+      "username": "blitzking642",
+      "is_advancing": null
+    },
+    {
+      "username": "evachess2006",
+      "is_advancing": null
+    },
+    {
+      "username": "meri-arabidze",
+      "is_advancing": null
+    },
+    {
+      "username": "gusarov91",
+      "is_advancing": null
+    },
+    {
+      "username": "klavdia_nik",
+      "is_advancing": null
+    },
+    {
+      "username": "enajer77",
+      "is_advancing": null
+    },
+    {
+      "username": "chesslh19",
+      "is_advancing": null
+    },
+    {
+      "username": "wonderwoman004",
+      "is_advancing": null
+    },
+    {
+      "username": "umarovsabir",
+      "is_advancing": null
+    },
+    {
+      "username": "ajdemipopushi",
+      "is_advancing": null
+    },
+    {
+      "username": "willychess95",
+      "is_advancing": null
+    },
+    {
+      "username": "bulldog167",
+      "is_advancing": null
+    },
+    {
+      "username": "anothergrumpy",
+      "is_advancing": null
+    },
+    {
+      "username": "drag0s3l",
+      "is_advancing": null
+    },
+    {
+      "username": "psvidler",
+      "is_advancing": null
+    },
+    {
+      "username": "rud_makarian",
+      "is_advancing": null
+    },
+    {
+      "username": "mikhal867",
+      "is_advancing": null
+    },
+    {
+      "username": "tenamu",
+      "is_advancing": null
+    },
+    {
+      "username": "chenxiaoyuer",
+      "is_advancing": null
+    },
+    {
+      "username": "iskusnyh",
+      "is_advancing": null
+    },
+    {
+      "username": "akhayan",
+      "is_advancing": null
+    },
+    {
+      "username": "shcufnairolf",
+      "is_advancing": null
+    },
+    {
+      "username": "icebelka",
+      "is_advancing": null
+    },
+    {
+      "username": "wiktoriapol",
+      "is_advancing": null
+    },
+    {
+      "username": "prisachu",
+      "is_advancing": null
+    },
+    {
+      "username": "chuchofrio1",
+      "is_advancing": null
+    },
+    {
+      "username": "oneshot007",
+      "is_advancing": null
+    },
+    {
+      "username": "awareidea",
+      "is_advancing": null
+    },
+    {
+      "username": "mikheeva86",
+      "is_advancing": null
+    },
+    {
+      "username": "sergey85rodchenkov",
+      "is_advancing": null
+    },
+    {
+      "username": "susal_de_silva",
+      "is_advancing": null
+    },
+    {
+      "username": "omk124",
+      "is_advancing": null
+    },
+    {
+      "username": "joksijoksi",
+      "is_advancing": null
+    },
+    {
+      "username": "dropstonedp",
+      "is_advancing": null
+    },
+    {
+      "username": "sviridov_valery",
+      "is_advancing": null
+    },
+    {
+      "username": "aleksanderhnydiuk",
+      "is_advancing": null
+    },
+    {
+      "username": "stalri",
+      "is_advancing": null
+    },
+    {
+      "username": "annacramling",
+      "is_advancing": null
+    },
+    {
+      "username": "restartingchess",
+      "is_advancing": null
+    },
+    {
+      "username": "arthurcoach",
+      "is_advancing": null
+    },
+    {
+      "username": "praslov",
+      "is_advancing": null
+    },
+    {
+      "username": "juancruzarias",
+      "is_advancing": null
+    },
+    {
+      "username": "ranindu2003",
+      "is_advancing": null
+    },
+    {
+      "username": "hungrycaterpillar4",
+      "is_advancing": null
+    },
+    {
+      "username": "zverevlev",
+      "is_advancing": null
+    },
+    {
+      "username": "kuban1991",
+      "is_advancing": null
+    },
+    {
+      "username": "rakhimzhan_alen",
+      "is_advancing": null
+    },
+    {
+      "username": "mastermk73",
+      "is_advancing": null
+    },
+    {
+      "username": "grineva_marianna",
+      "is_advancing": null
+    },
+    {
+      "username": "kranke007",
+      "is_advancing": null
+    },
+    {
+      "username": "keepitcoming",
+      "is_advancing": null
+    },
+    {
+      "username": "pavlov_sergey",
+      "is_advancing": null
+    },
+    {
+      "username": "trickov",
+      "is_advancing": null
+    },
+    {
+      "username": "majalaviri",
+      "is_advancing": null
+    },
+    {
+      "username": "markberk",
+      "is_advancing": null
+    },
+    {
+      "username": "alomaterapia",
+      "is_advancing": null
+    },
+    {
+      "username": "bogdanb96",
+      "is_advancing": null
+    },
+    {
+      "username": "caroltorres84h",
+      "is_advancing": null
+    },
+    {
+      "username": "rududuyk",
+      "is_advancing": null
+    },
+    {
+      "username": "joker_smile888",
+      "is_advancing": null
+    },
+    {
+      "username": "fmalexhdez",
+      "is_advancing": null
+    },
+    {
+      "username": "petrolulsah",
+      "is_advancing": null
+    },
+    {
+      "username": "turbosteen",
+      "is_advancing": null
+    },
+    {
+      "username": "jiihart",
+      "is_advancing": null
+    },
+    {
+      "username": "the_machine04",
+      "is_advancing": null
+    },
+    {
+      "username": "sergienko_sergey",
+      "is_advancing": null
+    },
+    {
+      "username": "eternauta2400",
+      "is_advancing": null
+    },
+    {
+      "username": "mambastik-fantastic",
+      "is_advancing": null
+    },
+    {
+      "username": "mvm2008",
+      "is_advancing": null
+    },
+    {
+      "username": "elamier",
+      "is_advancing": null
+    },
+    {
+      "username": "wonderchampion",
+      "is_advancing": null
+    },
+    {
+      "username": "m_ezat",
+      "is_advancing": null
+    },
+    {
+      "username": "scarabee43",
+      "is_advancing": null
+    },
+    {
+      "username": "alexrustemov",
+      "is_advancing": null
+    },
+    {
+      "username": "boudicca64",
+      "is_advancing": null
+    },
+    {
+      "username": "oglob71",
+      "is_advancing": null
+    },
+    {
+      "username": "lubovmarkelova",
+      "is_advancing": null
+    },
+    {
+      "username": "marceloplaya",
+      "is_advancing": null
+    },
+    {
+      "username": "viktoriyatarasova",
+      "is_advancing": null
+    },
+    {
+      "username": "bostjanj",
+      "is_advancing": null
+    },
+    {
+      "username": "beltraxtor",
+      "is_advancing": null
+    },
+    {
+      "username": "nara_kh",
+      "is_advancing": null
+    },
+    {
+      "username": "extremelearner",
+      "is_advancing": null
+    },
+    {
+      "username": "ladislav1969",
+      "is_advancing": null
+    },
+    {
+      "username": "chronicunhappiness",
+      "is_advancing": null
+    },
+    {
+      "username": "tsaruk_maks",
+      "is_advancing": null
+    },
+    {
+      "username": "tokchess",
+      "is_advancing": null
+    },
+    {
+      "username": "saqo007",
+      "is_advancing": null
+    },
+    {
+      "username": "love_craft",
+      "is_advancing": null
+    },
+    {
+      "username": "lider34",
+      "is_advancing": null
+    },
+    {
+      "username": "vsevolod_ovchinnikov",
+      "is_advancing": null
+    },
+    {
+      "username": "happy1712drummer",
+      "is_advancing": null
+    },
+    {
+      "username": "a-s-00",
+      "is_advancing": null
+    },
+    {
+      "username": "dosto07",
+      "is_advancing": null
+    },
+    {
+      "username": "danylo_biletskiy",
+      "is_advancing": null
+    },
+    {
+      "username": "pavelshkapenko",
+      "is_advancing": null
+    },
+    {
+      "username": "ermito2020",
+      "is_advancing": null
+    },
+    {
+      "username": "brave_spirit12",
+      "is_advancing": null
+    },
+    {
+      "username": "galperinplaton",
+      "is_advancing": null
+    },
+    {
+      "username": "gerodot71",
+      "is_advancing": null
+    },
+    {
+      "username": "joliyroger",
+      "is_advancing": null
+    },
+    {
+      "username": "gochessgoa",
+      "is_advancing": null
+    },
+    {
+      "username": "nuvas",
+      "is_advancing": null
+    },
+    {
+      "username": "begmuratovkh2010",
+      "is_advancing": null
+    },
+    {
+      "username": "ural_bogatyr",
+      "is_advancing": null
+    },
+    {
+      "username": "ianov0007",
+      "is_advancing": null
+    },
+    {
+      "username": "nemam_blage_veze",
+      "is_advancing": null
+    },
+    {
+      "username": "can_i_call_you_suzy",
+      "is_advancing": null
+    },
+    {
+      "username": "lucachess49",
+      "is_advancing": null
+    },
+    {
+      "username": "alexsuv",
+      "is_advancing": null
+    },
+    {
+      "username": "winniethepooh04",
+      "is_advancing": null
+    },
+    {
+      "username": "vladasviridova",
+      "is_advancing": null
+    },
+    {
+      "username": "galatians522",
+      "is_advancing": null
+    },
+    {
+      "username": "chessdreamer2020",
+      "is_advancing": null
+    },
+    {
+      "username": "imshadow027",
+      "is_advancing": null
+    },
+    {
+      "username": "anishonyoutube",
+      "is_advancing": null
+    },
+    {
+      "username": "antonovanadezhda",
+      "is_advancing": null
+    },
+    {
+      "username": "niki_2003",
+      "is_advancing": null
+    },
+    {
+      "username": "rpatel16720",
+      "is_advancing": null
+    },
+    {
+      "username": "mapleaff",
+      "is_advancing": null
+    },
+    {
+      "username": "drmamaliga",
+      "is_advancing": null
+    },
+    {
+      "username": "deepweb2020",
+      "is_advancing": null
+    },
+    {
+      "username": "ponzianipower",
+      "is_advancing": null
+    },
+    {
+      "username": "smartinusa",
+      "is_advancing": null
+    },
+    {
+      "username": "horripile",
+      "is_advancing": null
+    },
+    {
+      "username": "darzay",
+      "is_advancing": null
+    },
+    {
+      "username": "sjam6687",
+      "is_advancing": null
+    },
+    {
+      "username": "vidityt",
+      "is_advancing": null
+    },
+    {
+      "username": "das_virus_2020",
+      "is_advancing": null
+    },
+    {
+      "username": "brandonjacobson",
+      "is_advancing": null
+    },
+    {
+      "username": "lady_nika",
+      "is_advancing": null
+    },
+    {
+      "username": "atousa1",
+      "is_advancing": null
+    },
+    {
+      "username": "make_it_shine060",
+      "is_advancing": null
+    },
+    {
+      "username": "ajedrez_con_german",
+      "is_advancing": null
+    },
+    {
+      "username": "skat2704",
+      "is_advancing": null
+    },
+    {
+      "username": "lefonghua",
+      "is_advancing": null
+    },
+    {
+      "username": "makogon_natalya",
+      "is_advancing": null
+    },
+    {
+      "username": "fmgordon",
+      "is_advancing": null
+    },
+    {
+      "username": "millyneuf",
+      "is_advancing": null
+    },
+    {
+      "username": "luklei17",
+      "is_advancing": null
+    }
+  ]
+}

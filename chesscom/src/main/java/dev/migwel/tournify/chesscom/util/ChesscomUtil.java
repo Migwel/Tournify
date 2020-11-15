@@ -17,4 +17,26 @@ public class ChesscomUtil {
 
         return null;
     }
+
+    public static String findRoundSlug(String roundUrl) {
+        Pattern p = Pattern.compile(Source.Chesscom.getUrlPattern() + "\\/([0-9a-zA-Z-]+)");
+        Matcher m = p.matcher(roundUrl);
+
+        if (m.find()) {
+            return m.group(8);
+        }
+
+        return null;
+    }
+
+    public static String findGroupSlug(String groupUrl) {
+        Pattern p = Pattern.compile(Source.Chesscom.getUrlPattern() + "\\/([0-9a-zA-Z-]+)\\/([0-9a-zA-Z-]+)");
+        Matcher m = p.matcher(groupUrl);
+
+        if (m.find()) {
+            return m.group(9);
+        }
+
+        return null;
+    }
 }
