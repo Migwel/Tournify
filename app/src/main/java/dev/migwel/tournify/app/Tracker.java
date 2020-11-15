@@ -145,10 +145,9 @@ public class Tracker { //TODO: Tracking should be more fine-grained (events or s
     }
 
     private boolean relevantUpdate(Update update, List<String> followedPlayers) {
-        if (! (update instanceof SetUpdate)) {
+        if (! (update instanceof SetUpdate setUpdate)) {
             return true;
         }
-        SetUpdate setUpdate = (SetUpdate) update;
         boolean noPlayersInvolved = setUpdate.getSet() == null || setUpdate.getSet().getPlayers().isEmpty();
         boolean noPlayersFollowed = followedPlayers.isEmpty();
         if(noPlayersInvolved || noPlayersFollowed) {
