@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service("ChesscomTournamentService")
 public class ChesscomTournamentService extends AbstractTournamentService {
 
-    public ChesscomTournamentService(TournamentRepository tournamentRepository, TrackingService trackingService, UrlService urlService, ChesscomTournamentClient tournamentClient) {
+    public ChesscomTournamentService(TournamentRepository tournamentRepository, TrackingService trackingService, ChesscomUrlService urlService, ChesscomTournamentClient tournamentClient) {
         super(tournamentRepository, trackingService, urlService, tournamentClient);
     }
 }
