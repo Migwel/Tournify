@@ -12,7 +12,7 @@ public class ChesscomUtil {
         Matcher m = p.matcher(eventUrl);
 
         if (m.find()) {
-            return m.group(7);
+            return m.group(8);
         }
 
         return null;
@@ -23,7 +23,7 @@ public class ChesscomUtil {
         Matcher m = p.matcher(roundUrl);
 
         if (m.find()) {
-            return m.group(8);
+            return m.group(9);
         }
 
         return null;

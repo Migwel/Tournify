@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public enum Source {
     Smashgg("^((http(s)?:\\/\\/)?((www|api)\\.)?)?smash\\.gg\\/tournament\\/([0-9a-zA-Z-]+)\\/event(s)?\\/([0-9a-zA-Z-]+)"),
     Challonge("^((http(s)?:\\/\\/)?((www|api)\\.)?)?challonge\\.com\\/([0-9a-zA-Z-]+)"),
-    Chesscom("^((http(s)?:\\/\\/)?((www|api)\\.)?)?chess\\.com\\/(pub\\/)?tournament\\/([0-9a-zA-Z-]+)"),
+    Chesscom("^((http(s)?:\\/\\/)?((www|api)\\.)?)?chess\\.com\\/(pub\\/)?tournament\\/(live\\/)?([0-9a-zA-Z-]+)"),
     ;
 
     private String urlPattern;

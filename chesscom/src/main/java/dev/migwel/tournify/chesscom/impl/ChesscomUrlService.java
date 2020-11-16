@@ -26,6 +26,6 @@ public class ChesscomUrlService implements UrlService {
             throw new IllegalArgumentException("Invalid url: "+ url);
         }
 
-        return "https://api.chess.com/pub/tournament/"+ m.group(7);
+        return "https://api.chess.com/pub/tournament/"+ m.group(8);
     }
 }

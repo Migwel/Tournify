@@ -14,6 +14,7 @@ public class ChesscomUrlServiceTest {
             "https://chess.com/tournament/-33rd-chesscom-quick-knockouts-1401-1600",
             "chess.com/tournament/-33rd-chesscom-quick-knockouts-1401-1600",
             "chess.com/tournament/-33rd-chesscom-quick-knockouts-1401-1600/1",
+            "https://www.chess.com/tournament/live/-titled-tuesday-blitz-1692727"
     };
 
     private String[] expectedChesscomUrls = {"https://api.chess.com/pub/tournament/-33rd-chesscom-quick-knockouts-1401-1600",
@@ -23,6 +24,7 @@ public class ChesscomUrlServiceTest {
             "https://api.chess.com/pub/tournament/-33rd-chesscom-quick-knockouts-1401-1600",
             "https://api.chess.com/pub/tournament/-33rd-chesscom-quick-knockouts-1401-1600",
             "https://api.chess.com/pub/tournament/-33rd-chesscom-quick-knockouts-1401-1600",
+            "https://api.chess.com/pub/tournament/-titled-tuesday-blitz-1692727"
     };
 
     @Test
