@@ -51,7 +51,7 @@ public class ChesscomTournamentClient implements TournamentClient {
         if (isDone) {
             phases.forEach(e -> e.setDone(true));
         }
-        return new Tournament(null,
+        return new Tournament(tournamentSlug,
                 phases,
                 chesscomTournament.name(),
                 new GameType("Chess"),
