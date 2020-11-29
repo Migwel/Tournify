@@ -47,6 +47,10 @@ public class ChesscomTournamentClient implements TournamentClient {
         for (String roundStr: chesscomTournament.rounds()) {
             phases.add(fetchPhase(tournamentSlug, ChesscomUtil.findRoundSlug(roundStr), players));
         }
+        boolean isDone = chesscomTournament.finishTime() != null;
+        if (isDone) {
+            phases.forEach(e -> e.setDone(true));
+        }
         return new Tournament(null,
                 phases,
                 chesscomTournament.name(),
@@ -55,7 +59,7 @@ public class ChesscomTournamentClient implements TournamentClient {
                 chesscomTournament.url(),
                 null,
                 players,
-                chesscomTournament.finishTime() != null
+                isDone
                 );
     }
 
@@ -65,7 +69,9 @@ public class ChesscomTournamentClient implements TournamentClient {
         for (String groupStr : chesscomRound.groups()) {
             sets.addAll(fetchSets(tournamentSlug, round, ChesscomUtil.findGroupSlug(groupStr), tournamentPlayers));
         }
-        return new Phase(null, sets, "Round "+ round, sets.stream().allMatch(Set::isDone));
+
+        //We always set done to false because chess.com doesn't give us any indication whether a phase is over or not and may add games to phase that look to be done
+        return new Phase(null, sets, "Round "+ round, false);
     }
 
     private Collection<Set> fetchSets(String tournamentSlug, String round, String groupStr, Collection<Player> tournamentPlayers) {
