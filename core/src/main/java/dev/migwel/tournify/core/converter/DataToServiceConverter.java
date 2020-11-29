@@ -80,7 +80,10 @@ public final class DataToServiceConverter {
                           playerData.getExternalId());
     }
 
-    public static Address convertAddress(@Nonnull dev.migwel.tournify.core.data.Address address) {
+    public static Address convertAddress(@CheckForNull dev.migwel.tournify.core.data.Address address) {
+        if (address == null) {
+            return null;
+        }
         return new Address(address.getCity(),
                            address.getState(),
                            address.getStreet(),
