@@ -23,10 +23,13 @@ public class ChallongeTournamentFetcher {
         this.challongeFetcher = challongeFetcher;
     }
 
-    @CheckForNull
+    @Nonnull
     public ChallongeTournament fetchTournament(@Nonnull String formattedUrl) throws FetchException {
         String getTournamentUrl = challongeUrlService.buildTournamentUrl(formattedUrl);
         TournamentResponse tournamentResponse = challongeFetcher.fetchWithRetries(getTournamentUrl, TournamentResponse.class);
+        if (tournamentResponse.getTournament() == null) {
+            throw new FetchException("Could not fetch tournament for url: "+ formattedUrl);
+        }
         return tournamentResponse.getTournament();
     }
 }
