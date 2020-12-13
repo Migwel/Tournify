@@ -18,8 +18,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.*;
 
@@ -41,6 +40,7 @@ class ChesscomTournamentClientTest {
         when(tournamentService.getTournament(contains("-titled-tuesday-blitz-1692727"))).thenReturn(tournament);
         when(tournamentService.getRound(contains("-titled-tuesday-blitz-1692727"), contains("11"))).thenReturn(round);
         when(tournamentService.getGroup(contains("-titled-tuesday-blitz-1692727"), contains("11"), contains("1"))).thenReturn(group);
+        when(tournamentService.getTournament(contains("tournamentdoesntexists"))).thenReturn(null);
     }
 
 
@@ -58,5 +58,11 @@ class ChesscomTournamentClientTest {
         assertEquals(1, tournament.getPhases().size());
         Phase phase = tournament.getPhases().iterator().next();
         assertEquals(3055, phase.getSets().size());
+    }
+
+    @Test
+    void tournamentDoesntExist() {
+        String url = "https://api.chess.com/pub/tournament/tournamentdoesntexists";
+        assertThrows(FetchException.class, () -> tournamentClient.fetchTournament(url));
     }
 }

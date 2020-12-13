@@ -9,28 +9,21 @@ import dev.migwel.tournify.core.data.Player;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.exception.FetchException;
 import dev.migwel.tournify.core.http.HttpClient;
-import dev.migwel.tournify.util.FileUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyCollection;
-import static org.mockito.ArgumentMatchers.contains;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
-public class ChallongeTournamentClientTest {
+public class ChallongeTournamentClientManualTest {
 
 
     private ChallongeConfiguration challongeConfiguration = new ChallongeConfiguration();
     private ChallongeUrlService challongeUrlService = new ChallongeUrlService();
-    private HttpClient httpClient =  mock(HttpClient.class);
+    private HttpClient httpClient =  new HttpClient();
     private ObjectMapper objectMapper = new ObjectMapper();
     private ChallongeFetcher challongeFetcher = new ChallongeFetcher(challongeConfiguration, challongeUrlService, httpClient, objectMapper);
     private ChallongeTournamentFetcher challongeTournamentFetcher = new ChallongeTournamentFetcher(challongeUrlService, challongeFetcher);
@@ -38,19 +31,10 @@ public class ChallongeTournamentClientTest {
     private TournamentClient tournamentClient = new ChallongeTournamentClient(challongeFetcher, challongeUrlService, challongeTournamentFetcher, challongeMatchesFetcher);
 
     @BeforeEach
-    void before() throws URISyntaxException, IOException {
+    void before() {
         challongeConfiguration.setUsername("username");
         challongeConfiguration.setApiToken("password");
         challongeConfiguration.setRetryNumber(3);
-
-        String participantsJson = FileUtil.loadFile("ParticipantResponse.json");
-        String tournamentJson = FileUtil.loadFile("TournamentResponse.json");
-        String matchesJson = FileUtil.loadFile("MatchesResponse.json");
-        String tournamentDoesntExistJson = FileUtil.loadFile("TournamentDoesntExistResponse.json");
-        when(httpClient.get(contains("participants"), anyCollection())).thenReturn(participantsJson);
-        when(httpClient.get(contains("xgt2019nov.json"), anyCollection())).thenReturn(tournamentJson);
-        when(httpClient.get(contains("matches.json"), anyCollection())).thenReturn(matchesJson);
-        when(httpClient.get(contains("tournamentdoesntexist"), anyCollection())).thenReturn(tournamentDoesntExistJson);
     }
 
     @Test
@@ -78,7 +62,7 @@ public class ChallongeTournamentClientTest {
 
     @Test
     void testGetTournament() throws FetchException {
-        String url = "https://api.challonge.com/v1/tournaments/xgt2019nov";
+        String url = "https://api.challonge.com/v1/tournaments/ow0d3cot";
         Tournament tournament = tournamentClient.fetchTournament(url);
         Assertions.assertEquals("Super Smash Bros. Ultimate", tournament.getGameType().getName());
         Assertions.assertEquals(1, tournament.getPhases().size());

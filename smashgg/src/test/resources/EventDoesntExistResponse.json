@@ -1,0 +1,21 @@
+{
+  "data": {
+    "event": null
+  },
+  "extensions": {
+    "cacheControl": {
+      "version": 1,
+      "hints": [
+        {
+          "path": [
+            "event"
+          ],
+          "maxAge": 60,
+          "scope": "PRIVATE"
+        }
+      ]
+    },
+    "queryComplexity": 1
+  },
+  "actionRecords": []
+}
