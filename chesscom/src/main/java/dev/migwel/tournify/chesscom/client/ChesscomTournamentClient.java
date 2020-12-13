@@ -42,6 +42,9 @@ public class ChesscomTournamentClient implements TournamentClient {
     public Tournament fetchTournament(String formattedUrl) throws FetchException {
         String tournamentSlug = ChesscomUtil.findTournamentSlug(formattedUrl);
         dev.migwel.chesscomjava.api.data.tournament.Tournament chesscomTournament = tournamentService.getTournament(tournamentSlug);
+        if (chesscomTournament == null) {
+            throw new FetchException("Could not fetch tournament at url: "+ formattedUrl);
+        }
         java.util.Set<Phase> phases = new HashSet<>();
         Collection<Player> players = new HashSet<>();
         for (String roundStr: chesscomTournament.rounds()) {
