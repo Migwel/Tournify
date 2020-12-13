@@ -34,7 +34,7 @@ public class ChesscomUtil {
         Matcher m = p.matcher(groupUrl);
 
         if (m.find()) {
-            return m.group(9);
+            return m.group(10);
         }
 
         return null;
