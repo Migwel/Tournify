@@ -14,4 +14,11 @@ public interface TournamentClient {
 
     @Nonnull
     Set<Player> getParticipants(String url) throws FetchException;
+
+    /*
+     * Method to quickly verify that a tournament exists.
+     * This may be redundant with fetchTournament but the idea is to have a fast method to check if a tournament exists
+     * without the need to fully fetch it if it's the case
+     */
+    boolean tournamentExists(String url);
 }

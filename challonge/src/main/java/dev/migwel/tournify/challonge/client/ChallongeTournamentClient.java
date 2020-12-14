@@ -81,6 +81,17 @@ public class ChallongeTournamentClient implements TournamentClient {
         return convertChallongeParticipantResponse(participantResponses);
     }
 
+    @Override
+    public boolean tournamentExists(String formattedUrl) {
+        try {
+            challongeTournamentFetcher.fetchTournament(formattedUrl);
+            return true;
+        } catch (FetchException e) {
+            log.warn("Could not fetch event at url "+ formattedUrl, e);
+            return false;
+        }
+    }
+
     private java.util.Set<Player> convertChallongeParticipantResponse(@Nonnull ParticipantsResponse[] participantsResponses) {
         final java.util.Set<Player> players = new TreeSet<>();
         for(ParticipantsResponse participantsResponse : participantsResponses) {

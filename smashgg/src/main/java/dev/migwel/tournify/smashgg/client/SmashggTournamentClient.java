@@ -76,6 +76,16 @@ public class SmashggTournamentClient implements TournamentClient {
         return smashggParticipantsFetcher.fetchParticipants(eventSlug);
     }
 
+    @Override
+    public boolean tournamentExists(String formattedUrl) {
+        try {
+            return smashggEventFetcher.fetchEvent(formattedUrl) != null;
+        } catch (FetchException e) {
+            log.warn("Could not fetch event at url "+ formattedUrl, e);
+            return false;
+        }
+    }
+
     private Address buildAddress(SmashggTournament tournament) {
         return new Address(tournament.getCity(), tournament.getAddrState(), tournament.getVenueAddress(), null, tournament.getCountryCode());
     }

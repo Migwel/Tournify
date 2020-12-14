@@ -15,8 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ChallongeTournamentClientManualTest {
 
@@ -62,7 +61,7 @@ public class ChallongeTournamentClientManualTest {
 
     @Test
     void testGetTournament() throws FetchException {
-        String url = "https://api.challonge.com/v1/tournaments/ow0d3cot";
+        String url = "https://api.challonge.com/v1/tournaments/xgt2019nov";
         Tournament tournament = tournamentClient.fetchTournament(url);
         Assertions.assertEquals("Super Smash Bros. Ultimate", tournament.getGameType().getName());
         Assertions.assertEquals(1, tournament.getPhases().size());
@@ -71,8 +70,20 @@ public class ChallongeTournamentClientManualTest {
     }
 
     @Test
-    void tournamentDoesntExist() {
+    void exceptionWhenFetchingTournamentThatDoesntExist() {
         String url = "https://api.challonge.com/v1/tournaments/tournamentdoesntexist";
         assertThrows(FetchException.class, () -> tournamentClient.fetchTournament(url));
+    }
+
+    @Test
+    void tournamentExistsMethodWhenTournamentExists() {
+        String url = "https://api.challonge.com/v1/tournaments/xgt2019nov";
+        assertTrue(tournamentClient.tournamentExists(url));
+    }
+
+    @Test
+    void tournamentExistsMethodWhenTournamentDoesntExist() {
+        String url = "https://api.challonge.com/v1/tournaments/tournamentdoesntexist";
+        assertFalse(tournamentClient.tournamentExists(url));
     }
 }

@@ -1,6 +1,7 @@
 package dev.migwel.tournify.communication.response;
 
 public class SubscriptionResponse {
+    private boolean success;
     private String id;
     private String tournamentUrl;
     private String callbackUrl;
@@ -12,6 +13,7 @@ public class SubscriptionResponse {
         this.id = id;
         this.tournamentUrl = tournamentUrl;
         this.callbackUrl = callbackUrl;
+        this.success = true;
     }
 
     public String getId() {
@@ -24,5 +26,15 @@ public class SubscriptionResponse {
 
     public String getCallbackUrl() {
         return callbackUrl;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public static SubscriptionResponse error() {
+        SubscriptionResponse response = new SubscriptionResponse();
+        response.success = false;
+        return response;
     }
 }

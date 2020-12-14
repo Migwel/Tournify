@@ -109,11 +109,17 @@ public class ChesscomTournamentClient implements TournamentClient {
 
     @Override
     @Nonnull
-    public java.util.Set<Player> getParticipants(String formattedUrl) throws FetchException {
+    public java.util.Set<Player> getParticipants(String formattedUrl) {
         log.info("Fetching tournament at url: " + formattedUrl);
         String tournamentSlug = ChesscomUtil.findTournamentSlug(formattedUrl);
         dev.migwel.chesscomjava.api.data.tournament.Tournament tournament = tournamentService.getTournament(tournamentSlug);
         return tournament.players().stream().map(this::convertPlayer).collect(Collectors.toSet());
+    }
+
+    @Override
+    public boolean tournamentExists(String formattedUrl) {
+        String tournamentSlug = ChesscomUtil.findTournamentSlug(formattedUrl);
+        return tournamentService.getTournament(tournamentSlug) != null;
     }
 
     private Player convertPlayer(TournamentPlayer p) {

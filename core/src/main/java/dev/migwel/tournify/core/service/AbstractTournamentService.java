@@ -280,6 +280,13 @@ public abstract class AbstractTournamentService implements TournamentService {
         return phasesMap;
     }
 
+    @Override
+    public boolean tournamentExists(String url) {
+        String formattedUrl = normalizeUrl(url);
+        return tournamentClient.tournamentExists(formattedUrl);
+
+    }
+
     static class TournamentChanges {
         private boolean hasChanged;
         private List<Update> updates;

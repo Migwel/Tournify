@@ -35,8 +35,20 @@ class ChesscomTournamentClientManualTest {
     }
 
     @Test
-    void tournamentDoesntExist() {
+    void exceptionWhenFetchingTournamentThatDoesntExist() {
         String url = "https://api.chess.com/pub/tournament/tournamentdoesntexists";
         assertThrows(FetchException.class, () -> tournamentClient.fetchTournament(url));
+    }
+
+    @Test
+    void tournamentExistsMethodWhenTournamentExists() {
+        String url = "https://api.chess.com/pub/tournament/-titled-tuesday-blitz-1692727";
+        assertTrue(tournamentClient.tournamentExists(url));
+    }
+
+    @Test
+    void tournamentExistsMethodWhenTournamentDoesntExist() {
+        String url = "https://api.chess.com/pub/tournament/tournamentdoesntexists";
+        assertFalse(tournamentClient.tournamentExists(url));
     }
 }

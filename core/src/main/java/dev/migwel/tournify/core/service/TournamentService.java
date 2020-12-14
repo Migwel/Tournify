@@ -11,7 +11,7 @@ import java.util.Set;
 public interface TournamentService {
 
     @Nonnull
-    String normalizeUrl(String tournamentUrl);
+    String normalizeUrl(String url);
 
     @Nonnull
     Updates updateTournament(String url);
@@ -21,4 +21,6 @@ public interface TournamentService {
 
     @Nonnull
     Set<Player> getParticipants(String url);
+
+    boolean tournamentExists(String url);
 }

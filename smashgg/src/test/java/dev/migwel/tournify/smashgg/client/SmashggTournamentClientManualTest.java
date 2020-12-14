@@ -60,9 +60,21 @@ public class SmashggTournamentClientManualTest {
     }
 
     @Test
-    void tournamentDoesntExist() {
+    void exceptionWhenFetchingTournamentThatDoesntExist() {
         String url = "https://api.smash.gg/tournament/invalid/event/invalid";
         assertThrows(FetchException.class, () -> tournamentClient.fetchTournament(url));
+    }
+
+    @Test
+    void tournamentExistsMethodWhenTournamentExists() {
+        String url = "https://api.smash.gg/tournament/jackpot-4/event/smash-ultimate-1vs1";
+        assertTrue(tournamentClient.tournamentExists(url));
+    }
+
+    @Test
+    void tournamentExistsMethodWhenTournamentDoesntExist() {
+        String url = "https://api.smash.gg/tournament/invalid/event/invalid";
+        assertFalse(tournamentClient.tournamentExists(url));
     }
 
 }

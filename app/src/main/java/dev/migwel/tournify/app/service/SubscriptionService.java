@@ -1,5 +1,6 @@
 package dev.migwel.tournify.app.service;
 
+import dev.migwel.tournify.app.exception.SubscriptionException;
 import dev.migwel.tournify.core.data.Subscription;
 import dev.migwel.tournify.core.data.Tournament;
 import dev.migwel.tournify.core.service.TournamentService;
@@ -38,7 +39,7 @@ public class SubscriptionService {
         this.tournamentServiceFactory = tournamentServiceFactory;
     }
 
-    public Subscription addSubscription(String tournamentUrl, String callbackUrl, List<String> players, String username, String password) {
+    public Subscription addSubscription(String tournamentUrl, String callbackUrl, List<String> players, String username, String password) throws SubscriptionException {
         TournamentService tournamentService = tournamentServiceFactory.getTournamentService(tournamentUrl);
         String normalizedTournamentUrl = tournamentService.normalizeUrl(tournamentUrl);
         Subscription subscription = subscriptionRepository.findByCallbackUrlAndTournamentUrl(callbackUrl, normalizedTournamentUrl);
@@ -48,6 +49,9 @@ public class SubscriptionService {
 
         Tournament tournament = tournamentRepository.findByUrl(normalizedTournamentUrl);
         if(tournament == null) {
+            if (!tournamentService.tournamentExists(normalizedTournamentUrl)) {
+                throw new SubscriptionException("Tournament doesn't exist");
+            }
             tournament = createAndTrackTournament(normalizedTournamentUrl);
         }
 
