@@ -52,7 +52,7 @@ public class SmashggTournamentClientTest {
         when(httpClient.postRequest(contains("entrants("), anyString(), anyCollection())).thenReturn(participantsJson);
         when(httpClient.postRequest(contains("tournament {"), anyString(), anyCollection())).thenReturn(eventJson);
         when(httpClient.postRequest(contains("query phaseGroup("), anyString(), anyCollection())).thenReturn(phaseGroupJson);
-        when(httpClient.postRequest(anyString(), contains("invalid"), anyCollection())).thenReturn(eventDoesntExistJson);
+        when(httpClient.postRequest(contains("invalid"), anyString(), anyCollection())).thenReturn(eventDoesntExistJson);
     }
 
     @Test
