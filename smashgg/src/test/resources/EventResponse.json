@@ -17,7 +17,9 @@
         {
           "id": 1149999,
           "state": 3,
-          "phaseId": 710213,
+          "phase": {
+            "id": 710213
+          },
           "displayIdentifier": "1"
         }
       ],
@@ -45,7 +47,7 @@
         }
       ]
     },
-    "queryComplexity": 6
+    "queryComplexity": 7
   },
   "actionRecords": []
 }
