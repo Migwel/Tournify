@@ -1,7 +1,7 @@
 dependencies {
     compile project(':core')
 
-    implementation group: 'dev.migwel.chesscomjava', name: 'api', version: '1.0-SNAPSHOT'
-    implementation group: 'dev.migwel.chesscomjava', name: 'implementation', version: '1.0-SNAPSHOT'
+    implementation group: 'dev.migwel.chesscomjava', name: 'api', version: '1.0-RELEASE'
+    implementation group: 'dev.migwel.chesscomjava', name: 'implementation', version: '1.0-RELEASE'
 
 }
