@@ -11,6 +11,9 @@
     </parent>
     <artifactId>app</artifactId>
     <packaging>jar</packaging>
+    <build>
+        <finalName>tournifyApp</finalName>
+    </build>
 
     <dependencies>
         <dependency>
