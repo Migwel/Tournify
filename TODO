@@ -5,4 +5,3 @@
 - Give option to use certificate for notifications
 - Make communication.jar available on maven so that people can use it to handle requests and responses instead of creating objects themselves (Maybe not needed anymore now that we have a open API file)
 - Generate objects automatically based on OpenAPI (Not sure if I want that. For example, Player has a method getDisplayUsername)
-- Clean up gradle (it's a mess at the moment)
