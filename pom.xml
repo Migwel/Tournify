@@ -118,6 +118,9 @@
                 <version>2.22.2</version>
                 <configuration>
                     <argLine>--enable-preview</argLine>
+                    <excludes>
+                        <exclude>**ManualTest.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
