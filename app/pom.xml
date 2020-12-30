@@ -11,9 +11,6 @@
     </parent>
     <artifactId>app</artifactId>
     <packaging>jar</packaging>
-    <build>
-        <finalName>tournifyApp</finalName>
-    </build>
 
     <dependencies>
         <dependency>
@@ -49,6 +46,7 @@
     </dependencies>
 
     <build>
+        <finalName>tournifyApp</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
