@@ -69,6 +69,7 @@ public class SmashggFetcher {
             @SuppressWarnings("unchecked")
             SmashggResponse<T> response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
             if(response == null || response.getData() == null || response.getData().getObject() == null) {
+                log.warn("Could not cast response: "+ responseStr);
                 throw new FetchException();
             }
             return response.getData().getObject();
