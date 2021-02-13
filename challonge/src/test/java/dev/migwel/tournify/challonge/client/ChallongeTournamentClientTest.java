@@ -69,7 +69,6 @@ public class ChallongeTournamentClientTest {
                 previousPlayer = player;
                 continue;
             }
-            System.out.println(player.getDisplayUsername());
             assertTrue(player.compareTo(previousPlayer) > 0);
             previousPlayer = player;
         }
