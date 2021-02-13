@@ -44,7 +44,7 @@ public class SmashggFetcher {
             }
         }
         log.warn("Could not execute the fetch, no retries left");
-        throw new FetchException("Could not execute request after " + configuration.getRetryNumber() + " retries");
+        throw new FetchException("Could not execute request after " + configuration.getRetryNumber() + " retries", false);
     }
 
     @Nonnull
@@ -59,8 +59,9 @@ public class SmashggFetcher {
             return httpClient.postRequest(request, configuration.getApiUrl(), headers);
         }
         catch (HTTPException e) {
+            boolean retryable = httpClient.isRetryable(e);
             log.warn("HttpException while posting request", e);
-            throw new FetchException(e);
+            throw new FetchException("HttpException while posting request", e, retryable);
         }
     }
 
@@ -70,12 +71,12 @@ public class SmashggFetcher {
             SmashggResponse<T> response = responseClass.cast(objectMapper.readValue(responseStr, responseClass));
             if(response == null || response.getData() == null || response.getData().getObject() == null) {
                 log.warn("Could not cast response: "+ responseStr);
-                throw new FetchException();
+                throw new FetchException("Error while casting response", false);
             }
             return response.getData().getObject();
         } catch (IOException e) {
             log.warn("Could not convert JSON response "+ responseStr +" to "+ responseClass, e);
-            throw new FetchException(e);
+            throw new FetchException("Error while casting response", e, false);
         }
     }
 }

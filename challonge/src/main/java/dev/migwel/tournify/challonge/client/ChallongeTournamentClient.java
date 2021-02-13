@@ -46,7 +46,7 @@ public class ChallongeTournamentClient implements TournamentClient {
         ChallongeTournament challongeTournament = challongeTournamentFetcher.fetchTournament(formattedUrl);
 
         if(challongeTournament == null) {
-            throw new FetchException("Could not fetch tournalement for url "+ formattedUrl);
+            throw new FetchException("Could not fetch tournament for url "+ formattedUrl, false);
         }
 
         Collection<Player> players = getParticipants(formattedUrl);

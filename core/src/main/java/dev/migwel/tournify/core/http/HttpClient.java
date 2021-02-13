@@ -26,6 +26,8 @@ public class HttpClient {
 
     private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
 
+    public static final int HTTP_TOO_MANY_REQUESTS = 429;
+
     public HttpClient() {
         //
     }
@@ -103,5 +105,13 @@ public class HttpClient {
             log.warn("Could not get content from response entity", e);
             throw new HTTPException(HttpStatus.SC_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public boolean isRetryable(HTTPException e) {
+        int statusCode = e.getStatusCode();
+        if (statusCode == HTTP_TOO_MANY_REQUESTS || String.valueOf(statusCode).charAt(0) == '5') {
+            return true;
+        }
+        return false;
     }
 }

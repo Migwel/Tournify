@@ -1,18 +1,20 @@
 package dev.migwel.tournify.core.exception;
 
 public class FetchException extends Exception {
-    public FetchException() {
-    }
 
-    public FetchException(String reason) {
+    private final boolean retryable;
+
+    public FetchException(String reason, boolean retryable) {
         super(reason);
+        this.retryable = retryable;
     }
 
-    public FetchException(String reason, Throwable t) {
+    public FetchException(String reason, Throwable t, boolean retryable) {
         super(reason, t);
+        this.retryable = retryable;
     }
 
-    public FetchException(Throwable t) {
-        super(t);
+    public boolean isRetryable() {
+        return retryable;
     }
 }

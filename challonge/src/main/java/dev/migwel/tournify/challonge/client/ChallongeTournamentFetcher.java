@@ -28,7 +28,7 @@ public class ChallongeTournamentFetcher {
         String getTournamentUrl = challongeUrlService.buildTournamentUrl(formattedUrl);
         TournamentResponse tournamentResponse = challongeFetcher.fetchWithRetries(getTournamentUrl, TournamentResponse.class);
         if (tournamentResponse.getTournament() == null) {
-            throw new FetchException("Could not fetch tournament for url: "+ formattedUrl);
+            throw new FetchException("Could not fetch tournament for url: "+ formattedUrl, false);
         }
         return tournamentResponse.getTournament();
     }

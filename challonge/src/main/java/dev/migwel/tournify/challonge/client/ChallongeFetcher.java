@@ -38,6 +38,9 @@ public class ChallongeFetcher {
                 return fetch(urlWithToken, responseClass);
             } catch (FetchException e) {
                 log.info("An error occurred while fetching the data", e);
+                if (!e.isRetryable()) {
+                    throw e;
+                }
                 try {
                     Thread.sleep(1000L);
                 } catch (InterruptedException e1) {
@@ -46,7 +49,7 @@ public class ChallongeFetcher {
             }
         }
         log.warn("Could not execute the fetch, no retries left");
-        throw new FetchException("Could not execute request after " + configuration.getRetryNumber() + " retries");
+        throw new FetchException("Could not execute request after " + configuration.getRetryNumber() + " retries", false);
     }
 
     @Nonnull
@@ -60,8 +63,9 @@ public class ChallongeFetcher {
             return httpClient.get(url, Collections.emptyList());
         }
         catch (HTTPException e) {
+            boolean retryable = httpClient.isRetryable(e);
             log.warn("HttpException while posting request", e);
-            throw new FetchException(e);
+            throw new FetchException("HttpException while posting request", e, retryable);
         }
     }
 
@@ -71,7 +75,7 @@ public class ChallongeFetcher {
             return responseClass.cast(objectMapper.readValue(responseStr, responseClass));
         } catch (IOException e) {
             log.warn("Could not convert JSON response "+ responseStr +" to "+ responseClass, e);
-            throw new FetchException(e);
+            throw new FetchException("Could not convert JSON response "+ responseStr +" to "+ responseClass, e, false);
         }
     }
 }
