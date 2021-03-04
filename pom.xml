@@ -36,11 +36,11 @@
 
     <modules>
         <module>app</module>
-        <module>challonge</module>
-        <module>chesscom</module>
+        <module>providers/challonge</module>
+        <module>providers/chesscom</module>
         <module>communication</module>
         <module>core</module>
-        <module>smashgg</module>
+        <module>providers/smashgg</module>
         <module>util</module>
     </modules>
 
